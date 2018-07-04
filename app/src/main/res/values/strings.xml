@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">BuidAfrique</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="invite">Invite</string>
+    <string name="welcome_title_1">Refer business leads at the comfort of your phone</string>
 </resources>
