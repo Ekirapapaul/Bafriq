@@ -4,4 +4,11 @@
     <string name="register">Register</string>
     <string name="invite">Invite</string>
     <string name="welcome_title_1">Refer business leads at the comfort of your phone</string>
+    <string name="customers">Customers</string>
+    <string name="leads">Leads</string>
+    <string name="opportunities">Opportunities</string>
+    <string name="quotations">Quotations</string>
+    <string name="sales_orders">Sales Orders</string>
+    <string name="inbox">Inbox</string>
+    <string name="search">Search</string>
 </resources>
