@@ -22,7 +22,7 @@ import android.widget.TextView;
 
 import com.mesozi.app.buidafrique.R;
 
-public class WelcomeActivity extends AppCompatActivity {
+public class WelcomeActivity extends AppCompatActivity implements View.OnClickListener {
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
@@ -49,16 +49,23 @@ public class WelcomeActivity extends AppCompatActivity {
                 R.layout.fragment_welcome,
                 R.layout.fragment_welcome,
                 R.layout.fragment_welcome};
-
-        // adding bottom dots
         addBottomDots(0);
-
-        // making notification bar transparent
-        //changeStatusBarColor();
 
         myViewPagerAdapter = new MyViewPagerAdapter();
         viewPager.setAdapter(myViewPagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
+
+        registerViews();
+    }
+
+    private void registerViews() {
+        Button login = findViewById(R.id.btn_login);
+        Button register = findViewById(R.id.btn_register);
+        Button invite = findViewById(R.id.btn_invite);
+
+        login.setOnClickListener(this);
+        register.setOnClickListener(this);
+        invite.setOnClickListener(this);
     }
 
     private void addBottomDots(int currentPage) {
@@ -112,6 +119,20 @@ public class WelcomeActivity extends AppCompatActivity {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_login:
+                startActivity(new Intent(getBaseContext(), Login.class));
+                break;
+            case R.id.btn_register:
+                startActivity(new Intent(getBaseContext(), SignUp.class));
+                break;
+            case R.id.btn_invite:
+                break;
         }
     }
 

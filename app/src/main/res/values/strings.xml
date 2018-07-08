@@ -11,4 +11,13 @@
     <string name="sales_orders">Sales Orders</string>
     <string name="inbox">Inbox</string>
     <string name="search">Search</string>
+    <string name="name">Name</string>
+    <string name="email_address">Email address</string>
+    <string name="phone_number">Phone number</string>
+    <string name="password">Password</string>
+    <string name="continue_text">Continue</string>
+    <string name="current_location">Current location</string>
+    <string name="occupation">Occupation</string>
+    <string name="create_account">Create Account</string>
+    <string name="error_required">Required Field.</string>
 </resources>
