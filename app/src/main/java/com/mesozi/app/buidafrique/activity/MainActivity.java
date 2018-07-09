@@ -1,8 +1,10 @@
 package com.mesozi.app.buidafrique.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.widget.TextView;
@@ -12,9 +14,10 @@ import com.mesozi.app.buidafrique.R;
 /**
  * Created by ekirapa on 7/4/18 .
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private SearchView searchView;
     private TextView placeholder;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         registerViews();
     }
 
-    private void registerViews(){
+    private void registerViews() {
         placeholder = findViewById(R.id.tv_search_placeholder);
         searchView = findViewById(R.id.search_view);
         //searchView.onActionViewExpanded();
@@ -37,5 +40,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.menu_customers).setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.menu_customers:
+                startActivity(new Intent(getBaseContext(), ItemActivity.class));
+                break;
+        }
     }
 }

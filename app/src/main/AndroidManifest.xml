@@ -19,6 +19,7 @@
         <activity android:name=".activity.Login" />
         <activity android:name=".activity.SignUp" android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.ItemActivity" />
     </application>
 
 </manifest>
