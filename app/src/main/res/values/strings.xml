@@ -20,4 +20,5 @@
     <string name="occupation">Occupation</string>
     <string name="create_account">Create Account</string>
     <string name="error_required">Required Field.</string>
+    <string name="error_wrong_combinations">Wrong username and password</string>
 </resources>
