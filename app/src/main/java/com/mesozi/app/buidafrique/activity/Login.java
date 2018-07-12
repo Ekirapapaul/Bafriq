@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -81,9 +82,11 @@ public class Login extends AppCompatActivity {
     private void submitLogin(final String username, final String password) {
         try {
             JSONObject jsonObject = RequestBuilder.LoginRequest(username, password);
+            Log.d("Json ", jsonObject.toString());
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlsConfig.URL_LOGIN, jsonObject, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
+                    Log.d("response", response.toString());
                     if (response.has("result")) {
                         try {
                             JSONObject results = response.getJSONObject("result");

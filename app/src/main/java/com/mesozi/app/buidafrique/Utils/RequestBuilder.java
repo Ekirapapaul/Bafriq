@@ -1,5 +1,6 @@
 package com.mesozi.app.buidafrique.Utils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,4 +28,124 @@ public class RequestBuilder {
         return jsonObject;
 
     }
+
+    public static JSONObject fetchMessagesRequest() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("jsonrpc", JSON_VERS);
+        jsonObject.put("method", METHOD_CALL);
+        JSONObject params = new JSONObject();
+        params.put("model", "mail.channel");
+        params.put("method", "search_read");
+
+        JSONArray args = new JSONArray();
+        params.put("args", args);
+
+        JSONObject kwargs = new JSONObject();
+        params.put("kwargs", kwargs);
+
+        jsonObject.put("params", params);
+        jsonObject.put(ID, LOGIN_ID);
+
+        return jsonObject;
+    }
+
+    public static JSONObject salesOrders() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("jsonrpc", JSON_VERS);
+        jsonObject.put("method", METHOD_CALL);
+
+        JSONObject params = new JSONObject();
+        params.put("model", "sale.order");
+        params.put("method", "fetch_new_sales");
+
+        JSONArray args = new JSONArray();
+        params.put("args", args);
+
+        JSONObject kwargs = new JSONObject();
+        JSONArray ids = new JSONArray();
+        kwargs.put("existing_ids", ids);
+        kwargs.put("limit", 100);
+        params.put("kwargs", kwargs);
+
+        jsonObject.put("params", params);
+        jsonObject.put(ID, 123);
+
+        return jsonObject;
+    }
+
+    public static JSONObject readSalesOrders() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("jsonrpc", JSON_VERS);
+        jsonObject.put("method", METHOD_CALL);
+
+        JSONObject params = new JSONObject();
+        params.put("model", "sale.order");
+        params.put("method", "search_read");
+
+        String args = "[[[\"user_id\",\"=\",33],[\"id\", \"not in\", [241]]]]";
+        params.put("args", args);
+
+        JSONObject kwargs = new JSONObject();
+        JSONArray fields = new JSONArray();
+        kwargs.put("fields", fields);
+        kwargs.put("offset", 0);
+        kwargs.put("limit", 100);
+        kwargs.put("order", "id");
+        params.put("kwargs", kwargs);
+
+        jsonObject.put("params", params);
+        jsonObject.put(ID, 123);
+
+        return jsonObject;
+    }
+
+    public static JSONObject createLeads(String displayName, String name, String email, String addressName, String emailFrom) throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("jsonrpc", JSON_VERS);
+        jsonObject.put("method", METHOD_CALL);
+
+        JSONObject params = new JSONObject();
+        params.put("model", "crm.lead");
+        params.put("method", "create");
+
+        JSONArray args = new JSONArray();
+        JSONObject arg = new JSONObject();
+        arg.put("write_uid", 1);
+        arg.put("display_name", displayName);
+        arg.put("name", name);
+        arg.put("partner_address_email", email);
+        arg.put("partner_address_name", addressName);
+        arg.put("email_from", emailFrom);
+        args.put(arg);
+        params.put("args", args);
+
+        JSONObject kwargs = new JSONObject();
+        params.put("kwargs", kwargs);
+
+        jsonObject.put("params", params);
+        jsonObject.put(ID, 123);
+
+        return jsonObject;
+    }
+
+    public static JSONObject readLeads() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("jsonrpc", JSON_VERS);
+        jsonObject.put("method", METHOD_CALL);
+        JSONObject params = new JSONObject();
+        params.put("model", "crm.lead");
+        params.put("method", "search_read");
+
+        JSONArray args = new JSONArray();
+        params.put("args", args);
+
+        JSONObject kwargs = new JSONObject();
+        params.put("kwargs", kwargs);
+
+        jsonObject.put("params", params);
+        jsonObject.put(ID, LOGIN_ID);
+
+        return jsonObject;
+    }
+
 }
