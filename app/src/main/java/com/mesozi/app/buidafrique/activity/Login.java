@@ -18,6 +18,7 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
 import com.mesozi.app.buidafrique.R;
 import com.mesozi.app.buidafrique.Utils.RequestBuilder;
+import com.mesozi.app.buidafrique.Utils.SessionManager;
 import com.mesozi.app.buidafrique.Utils.UrlsConfig;
 import com.mesozi.app.buidafrique.Utils.VolleySingleton;
 
@@ -80,6 +81,7 @@ public class Login extends AppCompatActivity {
     }
 
     private void submitLogin(final String username, final String password) {
+        final SessionManager sessionManager = new SessionManager(getBaseContext());
         try {
             JSONObject jsonObject = RequestBuilder.LoginRequest(username, password);
             Log.d("Json ", jsonObject.toString());
@@ -90,10 +92,13 @@ public class Login extends AppCompatActivity {
                     if (response.has("result")) {
                         try {
                             JSONObject results = response.getJSONObject("result");
-                            if (!results.getBoolean("username")) {
+                            if (results.get("username") instanceof Boolean && !results.getBoolean("username")) {
                                 etEmail.requestFocus();
                                 etEmail.setError(getString(R.string.error_wrong_combinations));
                             } else {
+                                sessionManager.setLoggedIn(true);
+                                String sessionId = results.getString("session_id");
+                                sessionManager.setKeyBearerToken(sessionId);
                                 Toast.makeText(Login.this, "Login Successfull", Toast.LENGTH_SHORT).show();
                                 finishActivity();
                             }
