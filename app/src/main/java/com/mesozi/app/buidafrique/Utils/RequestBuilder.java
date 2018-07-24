@@ -1,5 +1,7 @@
 package com.mesozi.app.buidafrique.Utils;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -97,6 +99,25 @@ public class RequestBuilder {
         jsonObject.put(ID, 123);
 
         return jsonObject;
+    }
+
+    public static JSONObject salesRequest() throws JSONException {
+        String request = "\n" +
+                "{\n" +
+                "    \"jsonrpc\":\"2.0\",\n" +
+                "    \"method\":\"call\",\n" +
+                "    \"params\": {\n" +
+                "        \"model\":\"sale.order\",\n" +
+                "        \"method\":\"search_read\",\n" +
+                "        \"args\":[[[\"user_id\",\"=\",33],[\"id\", \"not in\", [241]]]],\n" +
+                "        \"kwargs\": {\n" +
+                "            \"fields\": [], \"offset\": 0, \"limit\": 100, \"order\": \"id\"\n" +
+                "        }\n" +
+                "    }\n" +
+                "    ,\n" +
+                "    \"id\":123\n" +
+                "}";
+        return new JSONObject(request);
     }
 
     public static JSONObject createLeads(String displayName, String name, String email, String addressName, String emailFrom) throws JSONException {

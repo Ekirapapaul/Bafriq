@@ -20,9 +20,6 @@ public class BuildAfrique extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        //CookieHandler.setDefault(new CookieManager());
-        CookieManager cookieManager = new CookieManager(new PersistentCookieStore(this), CookiePolicy.ACCEPT_ORIGINAL_SERVER);
-        CookieHandler.setDefault(cookieManager);
         FlowManager.init(FlowConfig.builder(this)
                 .addDatabaseConfig(DatabaseConfig.builder(AppDatabase.class)
                         .databaseName("AppDatabase")

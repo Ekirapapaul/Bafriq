@@ -9,6 +9,7 @@ import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.mesozi.app.buidafrique.Models.SalesOrder;
 import com.mesozi.app.buidafrique.R;
 
 /**
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         findViewById(R.id.menu_customers).setOnClickListener(this);
         findViewById(R.id.menu_leads).setOnClickListener(this);
+        findViewById(R.id.menu_sales_orders).setOnClickListener(this);
 
     }
 
@@ -53,6 +55,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.menu_leads:
                 startActivity(new Intent(getBaseContext(), LeadsActivity.class));
+                break;
+            case R.id.menu_sales_orders:
+                startActivity(new Intent(getBaseContext(), SalesOrderActivity.class));
                 break;
         }
     }
