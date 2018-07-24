@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.error.AuthFailureError;
@@ -81,6 +82,7 @@ public class Login extends AppCompatActivity {
     }
 
     private void submitLogin(final String username, final String password) {
+        progressDialog.show();
         final SessionManager sessionManager = new SessionManager(getBaseContext());
         try {
             JSONObject jsonObject = RequestBuilder.LoginRequest(username, password);
@@ -122,6 +124,16 @@ public class Login extends AppCompatActivity {
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> headers = new HashMap<>();
                     return headers;
+                }
+
+                @Override
+                protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+                    Log.i("response",response.headers.toString());
+                    Map<String, String> responseHeaders = response.headers;
+                    String cookie = responseHeaders.get("Set-Cookie");
+                    sessionManager.setCookie(cookie);
+                    Log.i("cookies",cookie);
+                    return super.parseNetworkResponse(response);
                 }
             };
             VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(jsonObjectRequest);

@@ -11,7 +11,7 @@ public class Lead {
     private int day_close;
     private int day_open;
     private String property_id;
-    private String message_summary;
+    private String message_summary = "";
     private String display_name;
     private String opt_out;
     private String title;
@@ -23,7 +23,7 @@ public class Lead {
     private String fax;
     private String[] child_ids= {"false"};
     private String partner_address_email;
-    private String name;
+    private String name = "";
     private String facing;
     private String medium_id;
     private String referred;
@@ -37,6 +37,7 @@ public class Lead {
     private String contact_name;
     private String[] partner_id = {"false"};
     private List<Object> country_id = new ArrayList<>();
+    private  String description = "";
 
     public boolean isFurnished() {
         return furnished;
@@ -293,4 +294,12 @@ public class Lead {
 //    public void setCountry_id(List<Object> country_id) {
 //        this.country_id = country_id;
 //    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

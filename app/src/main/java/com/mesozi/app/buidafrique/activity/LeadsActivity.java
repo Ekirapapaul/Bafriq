@@ -4,8 +4,11 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
+import org.apache.http.cookie.*;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -16,15 +19,22 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mesozi.app.buidafrique.Models.Lead;
 import com.mesozi.app.buidafrique.R;
+import com.mesozi.app.buidafrique.Utils.PersistentCookieStore;
 import com.mesozi.app.buidafrique.Utils.RequestBuilder;
+import com.mesozi.app.buidafrique.Utils.SessionManager;
 import com.mesozi.app.buidafrique.Utils.UrlsConfig;
 import com.mesozi.app.buidafrique.Utils.VolleySingleton;
+import com.mesozi.app.buidafrique.adapters.LeadsAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
+import java.net.HttpCookie;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +45,7 @@ import java.util.Map;
 public class LeadsActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     private List<Lead> leads = new ArrayList<>();
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,6 +57,9 @@ public class LeadsActivity extends AppCompatActivity {
         progressDialog.setMessage("Please Wait...");
 
         fetchLeads();
+
+        recyclerView = findViewById(R.id.recycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
     }
 
     private void fetchLeads() {
@@ -62,7 +76,10 @@ public class LeadsActivity extends AppCompatActivity {
                             parseLeads(jsonArray);
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            error();
                         }
+                    }else if(response.has("error")){
+                        error();
                     }
 
                 }
@@ -83,6 +100,10 @@ public class LeadsActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public void finishFetchLeads() {
+        if (progressDialog != null) progressDialog.dismiss();
     }
 
     private void error() {
@@ -121,6 +142,8 @@ public class LeadsActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+        if (progressDialog != null) progressDialog.dismiss();
+        recyclerView.setAdapter(new LeadsAdapter(getBaseContext(), leads));
         Log.d("leads size", String.valueOf(leads.size()));
     }
 }

@@ -21,6 +21,7 @@ public class SessionManager {
     private static final String DATE_TOKEN_REFRESHED = "TokenRefreshed";
     private static final String KEY_REFRESH_TOKEN = "refreshToken";
     private static final String USER_NAME = "userName";
+    private static final String COOKIE = "Cookie";
 
 
     public SessionManager(Context context) {
@@ -66,5 +67,13 @@ public class SessionManager {
 
     public String getUserName() {
         return pref.getString(USER_NAME, null);
+    }
+
+    public String getCookie() {
+        return pref.getString(COOKIE, null);
+    }
+
+    public void setCookie(String token) {
+        pref.edit().putString(COOKIE, token).apply();
     }
 }
