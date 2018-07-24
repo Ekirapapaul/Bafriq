@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         findViewById(R.id.menu_customers).setOnClickListener(this);
+        findViewById(R.id.menu_leads).setOnClickListener(this);
 
     }
 
@@ -49,6 +50,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.menu_customers:
                 startActivity(new Intent(getBaseContext(), ItemActivity.class));
+                break;
+            case R.id.menu_leads:
+                startActivity(new Intent(getBaseContext(), LeadsActivity.class));
                 break;
         }
     }

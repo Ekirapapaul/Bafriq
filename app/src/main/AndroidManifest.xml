@@ -9,6 +9,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:name=".BuildAfrique"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.WelcomeActivity">
             <intent-filter>
@@ -21,6 +22,7 @@
         <activity android:name=".activity.SignUp" android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.ItemActivity" />
+        <activity android:name=".activity.LeadsActivity" />
     </application>
 
 </manifest>

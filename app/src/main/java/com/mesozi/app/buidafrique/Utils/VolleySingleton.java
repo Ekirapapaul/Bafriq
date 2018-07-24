@@ -1,15 +1,18 @@
 package com.mesozi.app.buidafrique.Utils;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+import com.mesozi.app.buidafrique.BuildAfrique;
+
+import java.util.Map;
 
 /**
  * Created by ekirapa on 1/3/18.
- *
  */
 
 public class VolleySingleton {
@@ -21,22 +24,6 @@ public class VolleySingleton {
     private VolleySingleton(Context context) {
         mCtx = context;
         mRequestQueue = getRequestQueue();
-
-//        mImageLoader = new ImageLoader(mRequestQueue,
-//                new ImageLoader.ImageCache() {
-//                    private final LruCache<String, Bitmap>
-//                            cache = new LruCache<String, Bitmap>(20);
-//
-//                    @Override
-//                    public Bitmap getBitmap(String url) {
-//                        return cache.get(url);
-//                    }
-//
-//                    @Override
-//                    public void putBitmap(String url, Bitmap bitmap) {
-//                        cache.put(url, bitmap);
-//                    }
-//                });
     }
 
     public static synchronized VolleySingleton getInstance(Context context) {
