@@ -1,9 +1,7 @@
 package com.mesozi.app.buidafrique;
 
 import android.app.Application;
-import android.content.SharedPreferences;
 
-import com.android.volley.RequestQueue;
 import com.mesozi.app.buidafrique.Utils.AppDatabase;
 import com.mesozi.app.buidafrique.Utils.PersistentCookieStore;
 import com.raizlabs.android.dbflow.config.DatabaseConfig;
@@ -22,7 +20,9 @@ public class BuildAfrique extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        CookieHandler.setDefault(new CookieManager());
+        //CookieHandler.setDefault(new CookieManager());
+        CookieManager cookieManager = new CookieManager(new PersistentCookieStore(this), CookiePolicy.ACCEPT_ORIGINAL_SERVER);
+        CookieHandler.setDefault(cookieManager);
         FlowManager.init(FlowConfig.builder(this)
                 .addDatabaseConfig(DatabaseConfig.builder(AppDatabase.class)
                         .databaseName("AppDatabase")

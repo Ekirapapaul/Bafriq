@@ -8,15 +8,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
-import org.apache.http.cookie.*;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.error.AuthFailureError;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.mesozi.app.buidafrique.Models.Lead;
 import com.mesozi.app.buidafrique.R;
 import com.mesozi.app.buidafrique.Utils.PersistentCookieStore;
@@ -30,12 +29,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Type;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
+import java.net.CookieStore;
 import java.net.HttpCookie;
+import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -64,6 +65,8 @@ public class LeadsActivity extends AppCompatActivity {
 
     private void fetchLeads() {
         progressDialog.show();
+        final SessionManager sessionManager = new SessionManager(getBaseContext());
+        Log.d("session", sessionManager.getCookie());
         try {
             JSONObject jsonObject = RequestBuilder.readLeads();
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlsConfig.URL_DATASET, jsonObject, new Response.Listener<JSONObject>() {
@@ -93,7 +96,9 @@ public class LeadsActivity extends AppCompatActivity {
             }) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
-                    return super.getHeaders();
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Cookie", sessionManager.getCookie());
+                    return headers;
                 }
             };
             VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(jsonObjectRequest);
