@@ -39,6 +39,24 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
         holder.title.setText(lead.getName());
         holder.summary.setText(lead.getDescription());
 
+        if (lead.getStage_id().length >=2) {
+            String stage = lead.getStage_id()[1].substring(0, 1).toUpperCase() + lead.getStage_id()[1].substring(1);
+            holder.state.setText(stage);
+            if (stage.equals("WON Opportunity")){
+                holder.state.setText(R.string.won);
+                holder.state.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_radio_button_checked_green_24dp, 0, 0, 0);
+            }else if(stage.equals("Negotiation")){
+                holder.state.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_radio_button_checked_red_24dp, 0, 0, 0);
+            }else if(stage.equals("Qualification")) {
+                holder.state.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_radio_button_checked_blue_24dp, 0, 0, 0);
+            }else if(stage.equals("New")) {
+                holder.state.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_radio_button_checked_purple_24dp, 0, 0, 0);
+            }else{
+                holder.state.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_radio_button_checked_black_24dp, 0, 0, 0);
+            }
+
+        }
+
     }
 
     @Override
@@ -47,7 +65,7 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
     }
 
     class LeadsHolder extends RecyclerView.ViewHolder {
-        TextView month, year, day, title, summary;
+        TextView month, year, day, title, summary, state;
 
         public LeadsHolder(View itemView) {
             super(itemView);
@@ -56,6 +74,7 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
             year = itemView.findViewById(R.id.tv_date_year);
             title = itemView.findViewById(R.id.tv_lead_title);
             summary = itemView.findViewById(R.id.tv_lead_summary);
+            state = itemView.findViewById(R.id.tv_state);
         }
     }
 }

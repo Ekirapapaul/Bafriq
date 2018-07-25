@@ -10,7 +10,7 @@ public class Lead {
     private String[] categ_ids;
     private int day_close;
     private int day_open;
-    private String property_id;
+    private String[] property_id;
     private String message_summary = "";
     private String display_name;
     private String opt_out;
@@ -21,7 +21,7 @@ public class Lead {
     private String parent_id;
     private String min_price;
     private String fax;
-    private String[] child_ids= {"false"};
+    private String[] child_ids = {"false"};
     private String partner_address_email;
     private String name = "";
     private String facing;
@@ -36,8 +36,9 @@ public class Lead {
     private String partner_address_name;
     private String contact_name;
     private String[] partner_id = {"false"};
-    private List<Object> country_id = new ArrayList<>();
-    private  String description = "";
+    private String[] country_id;
+    private String description = "";
+    private String[] stage_id = {};
 
     public boolean isFurnished() {
         return furnished;
@@ -79,11 +80,11 @@ public class Lead {
         this.day_open = day_open;
     }
 
-    public String getProperty_id() {
+    public String[] getProperty_id() {
         return property_id;
     }
 
-    public void setProperty_id(String property_id) {
+    public void setProperty_id(String[] property_id) {
         this.property_id = property_id;
     }
 
@@ -286,14 +287,14 @@ public class Lead {
     public void setPartner_id(String[] partner_id) {
         this.partner_id = partner_id;
     }
-//
-//    public List<Object> getCountry_id() {
-//        return country_id;
-//    }
-//
-//    public void setCountry_id(List<Object> country_id) {
-//        this.country_id = country_id;
-//    }
+
+    public String[] getCountry_id() {
+        return country_id;
+    }
+
+    public void setCountry_id(String[] country_id) {
+        this.country_id = country_id;
+    }
 
     public String getDescription() {
         return description;
@@ -301,5 +302,13 @@ public class Lead {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String[] getStage_id() {
+        return stage_id;
+    }
+
+    public void setStage_id(String[] stage_id) {
+        this.stage_id = stage_id;
     }
 }

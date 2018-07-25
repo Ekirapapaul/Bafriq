@@ -134,6 +134,10 @@ public class LeadsActivity extends AppCompatActivity {
                     jsonObject.remove("child_ids");
                 } else if (jsonObject.get("message_follower_ids") instanceof Boolean) {
                     jsonObject.remove("message_follower_ids");
+                }else if (jsonObject.get("stage_id") instanceof Boolean) {
+                    jsonObject.remove("stage_id");
+                }else if (jsonObject.get("property_id") instanceof Boolean) {
+                    jsonObject.remove("property_id");
                 }
                 try {
                     Lead lead = gson.fromJson(jsonObject.toString(), Lead.class);
