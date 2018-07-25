@@ -6,7 +6,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +44,8 @@ public class SalesOrderActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     private List<SalesOrder> salesOrders = new ArrayList<>();
     private RecyclerView recyclerView;
+    private SearchView searchView;
+    private TextView placeholder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +53,20 @@ public class SalesOrderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_leads);
         TextView title = findViewById(R.id.tv_title);
         title.setText("Sales Orders");
+
+        placeholder = findViewById(R.id.tv_search_placeholder);
+        searchView = findViewById(R.id.search_view);
+        searchView.setFocusable(true);// searchView is null
+        searchView.setFocusableInTouchMode(true);
+
+        placeholder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                placeholder.setVisibility(View.GONE);
+                searchView.onActionViewExpanded();
+            }
+        });
+
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
         progressDialog.setTitle("Fetching Sales Orders");
@@ -119,7 +137,6 @@ public class SalesOrderActivity extends AppCompatActivity {
         Gson gson = new Gson();
         Log.d("array size", String.valueOf(jsonArray.length()));
         for (int i = 0; i < jsonArray.length(); i++) {
-            Log.d("Processing ", "" + i);
             try {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 if (jsonObject.get("message_follower_ids") instanceof Boolean) {
@@ -142,6 +159,8 @@ public class SalesOrderActivity extends AppCompatActivity {
                     jsonObject.remove("pricelist_id");
                 }else if (jsonObject.get("message_follower_ids") instanceof Boolean) {
                     jsonObject.remove("message_follower_ids");
+                }else if (jsonObject.get("payment_term") instanceof Boolean) {
+                    jsonObject.remove("payment_term");
                 }
 
                 try {
@@ -149,7 +168,6 @@ public class SalesOrderActivity extends AppCompatActivity {
                     salesOrders.add(salesOrder);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.d("Failed at", String.format(" with %s", jsonObject.toString()));
                 }
 
             } catch (JSONException e) {

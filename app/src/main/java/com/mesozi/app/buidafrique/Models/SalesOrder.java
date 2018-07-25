@@ -5,23 +5,23 @@ package com.mesozi.app.buidafrique.Models;
  */
 public class SalesOrder {
     private String origin;
-    private String[] message_follower_ids;
+    private String[] message_follower_ids = {};
     private String create_date;
-    private String[] categ_ids;
-    private String[] order_line;
+    private String[] categ_ids = {};
+    private String[] order_line = {};
     private String picking_policy;
     private String invoiced_rate;
     private String campaign_id;
     private String carrier_id;
-    private String[] write_uid;
-    private String[] currency_id;
-    private String[] invoice_ids;
+    private String[] write_uid = {};
+    private String[] currency_id = {};
+    private String[] invoice_ids = {};
     private boolean invoice_exists;
     private String client_order_ref;
     private String display_name;
     private String date_order;
-    private String[] partner_id;
-    private String[] message_ids;
+    private String[] partner_id = {};
+    private String[] message_ids ={};
     private boolean invoiced;
     private String amount_tax;
     private boolean procurement_group_id;
@@ -29,16 +29,16 @@ public class SalesOrder {
     private String amount_untaxed;
     private  boolean message_is_follower;
     private String __last_update;
-    private String payment_term;
+    private String[] payment_term = {};
     private String message_last_post;
-    private String[] company_id;
+    private String[] company_id = {};
     private String id;
     private String note;
     private String state;
     private String is_property;
-    private String[] order_line2;
+    private String[] order_line2 = {};
     private String paypal_url;
-    private String[] pricelist_id;
+    private String[] pricelist_id = {};
     private String message_summary;
 
 
@@ -242,11 +242,11 @@ public class SalesOrder {
         this.__last_update = __last_update;
     }
 
-    public String getPayment_term() {
+    public String[] getPayment_term() {
         return payment_term;
     }
 
-    public void setPayment_term(String payment_term) {
+    public void setPayment_term(String[] payment_term) {
         this.payment_term = payment_term;
     }
 
