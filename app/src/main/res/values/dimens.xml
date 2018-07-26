@@ -21,4 +21,5 @@
     <dimen name="dimen_menu_title_padding_top">10dp</dimen>
     <dimen name="dimen_signup_drawable_size">18dp</dimen>
     <dimen name="dimen_signup_drawable_padding_start">10dp</dimen>
+    <dimen name="dimen_order_line_text_padding">2dp</dimen>
 </resources>

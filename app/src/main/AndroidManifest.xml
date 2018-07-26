@@ -25,6 +25,7 @@
         <activity android:name=".activity.LeadsActivity" />
         <activity android:name=".activity.ReadSalesOrderActivity" />
         <activity android:name=".activity.SalesOrderActivity" />
+        <activity android:name=".activity.SalesOrderDetails" />
     </application>
 
 </manifest>

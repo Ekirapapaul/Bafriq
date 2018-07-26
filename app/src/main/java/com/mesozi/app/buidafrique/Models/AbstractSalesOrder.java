@@ -1,5 +1,8 @@
 package com.mesozi.app.buidafrique.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONObject;
 
 import java.util.List;
@@ -7,7 +10,7 @@ import java.util.List;
 /**
  * Abstract sales orders model
  */
-public class AbstractSalesOrder {
+public class AbstractSalesOrder implements Parcelable{
     private String state;
     private String user_id;
     private String name;
@@ -18,6 +21,30 @@ public class AbstractSalesOrder {
     private String id;
     private String amount_total;
 
+
+    protected AbstractSalesOrder(Parcel in) {
+        state = in.readString();
+        user_id = in.readString();
+        name = in.readString();
+        client_order_ref = in.readString();
+        order_line = in.createTypedArrayList(OrderLine.CREATOR);
+        date = in.readString();
+        partner_id = in.readString();
+        id = in.readString();
+        amount_total = in.readString();
+    }
+
+    public static final Creator<AbstractSalesOrder> CREATOR = new Creator<AbstractSalesOrder>() {
+        @Override
+        public AbstractSalesOrder createFromParcel(Parcel in) {
+            return new AbstractSalesOrder(in);
+        }
+
+        @Override
+        public AbstractSalesOrder[] newArray(int size) {
+            return new AbstractSalesOrder[size];
+        }
+    };
 
     public String getState() {
         return state;
@@ -89,5 +116,23 @@ public class AbstractSalesOrder {
 
     public void setAmount_total(String amount_total) {
         this.amount_total = amount_total;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(state);
+        parcel.writeString(user_id);
+        parcel.writeString(name);
+        parcel.writeString(client_order_ref);
+        parcel.writeTypedList(order_line);
+        parcel.writeString(date);
+        parcel.writeString(partner_id);
+        parcel.writeString(id);
+        parcel.writeString(amount_total);
     }
 }

@@ -1,6 +1,7 @@
 package com.mesozi.app.buidafrique.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import com.google.gson.JsonObject;
 import com.mesozi.app.buidafrique.Models.AbstractSalesOrder;
 import com.mesozi.app.buidafrique.Models.SalesOrder;
 import com.mesozi.app.buidafrique.R;
+import com.mesozi.app.buidafrique.Utils.RecyclerItemClickListener;
 import com.mesozi.app.buidafrique.Utils.RequestBuilder;
 import com.mesozi.app.buidafrique.Utils.SessionManager;
 import com.mesozi.app.buidafrique.Utils.UrlsConfig;
@@ -78,6 +80,15 @@ public class SalesOrderActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getBaseContext(), new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                AbstractSalesOrder salesOrder = salesOrders.get(position);
+                Intent intent = new Intent(getBaseContext(), SalesOrderDetails.class);
+                intent.putExtra("parcel_data", salesOrder);
+                startActivity(intent);
+            }
+        }));
     }
 
     private void fetchSalesOrders() {
