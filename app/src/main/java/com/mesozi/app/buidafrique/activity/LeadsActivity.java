@@ -1,6 +1,7 @@
 package com.mesozi.app.buidafrique.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +13,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.error.AuthFailureError;
@@ -21,7 +21,7 @@ import com.android.volley.request.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.mesozi.app.buidafrique.Models.Lead;
 import com.mesozi.app.buidafrique.R;
-import com.mesozi.app.buidafrique.Utils.PersistentCookieStore;
+import com.mesozi.app.buidafrique.Utils.RecyclerItemClickListener;
 import com.mesozi.app.buidafrique.Utils.RequestBuilder;
 import com.mesozi.app.buidafrique.Utils.SessionManager;
 import com.mesozi.app.buidafrique.Utils.UrlsConfig;
@@ -32,12 +32,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.CookieHandler;
-import java.net.CookieManager;
-import java.net.CookiePolicy;
-import java.net.CookieStore;
-import java.net.HttpCookie;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -80,6 +74,15 @@ public class LeadsActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getBaseContext(), new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Lead lead = leads.get(position);
+                Intent intent = new Intent(getBaseContext(), LeadDetailsActivity.class);
+                intent.putExtra("parcel_data", lead);
+                startActivity(intent);
+            }
+        }));
     }
 
     private void fetchLeads() {

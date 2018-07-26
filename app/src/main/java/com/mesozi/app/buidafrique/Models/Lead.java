@@ -1,10 +1,13 @@
 package com.mesozi.app.buidafrique.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 //Leads object model
-public class Lead {
+public class Lead  implements Parcelable{
     private boolean furnished;
     private String[] write_uid;
     private String[] categ_ids;
@@ -39,6 +42,59 @@ public class Lead {
     private String[] country_id;
     private String description = "";
     private String[] stage_id = {};
+    private String planned_revenue;
+    private String mobile;
+
+    protected Lead(Parcel in) {
+        furnished = in.readByte() != 0;
+        write_uid = in.createStringArray();
+        categ_ids = in.createStringArray();
+        day_close = in.readInt();
+        day_open = in.readInt();
+        property_id = in.createStringArray();
+        message_summary = in.readString();
+        display_name = in.readString();
+        opt_out = in.readString();
+        title = in.readString();
+        type_id = in.readString();
+        company_id = in.createStringArray();
+        max_bedroom = in.readString();
+        parent_id = in.readString();
+        min_price = in.readString();
+        fax = in.readString();
+        child_ids = in.createStringArray();
+        partner_address_email = in.readString();
+        name = in.readString();
+        facing = in.readString();
+        medium_id = in.readString();
+        referred = in.readString();
+        message_bounce = in.readString();
+        email_send = in.readString();
+        message_follower_ids = in.createStringArray();
+        create_date = in.readString();
+        date_last_stage_update = in.readString();
+        campaign_id = in.readString();
+        partner_address_name = in.readString();
+        contact_name = in.readString();
+        partner_id = in.createStringArray();
+        country_id = in.createStringArray();
+        description = in.readString();
+        stage_id = in.createStringArray();
+        planned_revenue = in.readString();
+        mobile = in.readString();
+    }
+
+    public static final Creator<Lead> CREATOR = new Creator<Lead>() {
+        @Override
+        public Lead createFromParcel(Parcel in) {
+            return new Lead(in);
+        }
+
+        @Override
+        public Lead[] newArray(int size) {
+            return new Lead[size];
+        }
+    };
 
     public boolean isFurnished() {
         return furnished;
@@ -311,4 +367,67 @@ public class Lead {
     public void setStage_id(String[] stage_id) {
         this.stage_id = stage_id;
     }
+
+    public String getPlanned_revenue() {
+        return planned_revenue;
+    }
+
+    public void setPlanned_revenue(String planned_revenue) {
+        this.planned_revenue = planned_revenue;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
+        parcel.writeByte((byte) (furnished ? 1 : 0));
+        parcel.writeStringArray(write_uid);
+        parcel.writeStringArray(categ_ids);
+        parcel.writeInt(day_close);
+        parcel.writeInt(day_open);
+        parcel.writeStringArray(property_id);
+        parcel.writeString(message_summary);
+        parcel.writeString(display_name);
+        parcel.writeString(opt_out);
+        parcel.writeString(title);
+        parcel.writeString(type_id);
+        parcel.writeStringArray(company_id);
+        parcel.writeString(max_bedroom);
+        parcel.writeString(parent_id);
+        parcel.writeString(min_price);
+        parcel.writeString(fax);
+        parcel.writeStringArray(child_ids);
+        parcel.writeString(partner_address_email);
+        parcel.writeString(name);
+        parcel.writeString(facing);
+        parcel.writeString(medium_id);
+        parcel.writeString(referred);
+        parcel.writeString(message_bounce);
+        parcel.writeString(email_send);
+        parcel.writeStringArray(message_follower_ids);
+        parcel.writeString(create_date);
+        parcel.writeString(date_last_stage_update);
+        parcel.writeString(campaign_id);
+        parcel.writeString(partner_address_name);
+        parcel.writeString(contact_name);
+        parcel.writeStringArray(partner_id);
+        parcel.writeStringArray(country_id);
+        parcel.writeString(description);
+        parcel.writeStringArray(stage_id);
+        parcel.writeString(planned_revenue);
+        parcel.writeString(mobile);
+    }
+
 }

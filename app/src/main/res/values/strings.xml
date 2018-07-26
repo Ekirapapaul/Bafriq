@@ -28,4 +28,11 @@
     <string name="state">State</string>
     <string name="order_line">Order Line</string>
     <string name="date_created">Date Created</string>
+    <string name="lead_name">Name of lead</string>
+    <string name="description">Description</string>
+    <string name="planned_review">Planned review</string>
+    <string name="partner">Partner</string>
+    <string name="partner_name">Partner Name</string>
+    <string name="name_of_contact">Name of contacct</string>
+    <string name="mobile">Mobile</string>
 </resources>
