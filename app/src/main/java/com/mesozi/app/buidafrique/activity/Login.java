@@ -97,6 +97,7 @@ public class Login extends AppCompatActivity {
                             if (results.get("username") instanceof Boolean && !results.getBoolean("username")) {
                                 etEmail.requestFocus();
                                 etEmail.setError(getString(R.string.error_wrong_combinations));
+                                progressDialog.cancel();
                             } else {
                                 sessionManager.setLoggedIn(true);
                                 String sessionId = results.getString("session_id");

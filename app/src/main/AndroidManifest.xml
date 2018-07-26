@@ -23,6 +23,7 @@
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.ItemActivity" />
         <activity android:name=".activity.LeadsActivity" />
+        <activity android:name=".activity.ReadSalesOrderActivity" />
         <activity android:name=".activity.SalesOrderActivity" />
     </application>
 

@@ -18,8 +18,6 @@ import com.android.volley.error.AuthFailureError;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.mesozi.app.buidafrique.Models.AbstractSalesOrder;
 import com.mesozi.app.buidafrique.Models.SalesOrder;
 import com.mesozi.app.buidafrique.R;
 import com.mesozi.app.buidafrique.Utils.RequestBuilder;
@@ -27,7 +25,6 @@ import com.mesozi.app.buidafrique.Utils.SessionManager;
 import com.mesozi.app.buidafrique.Utils.UrlsConfig;
 import com.mesozi.app.buidafrique.Utils.VolleySingleton;
 import com.mesozi.app.buidafrique.adapters.ReadSalesOrderAdapter;
-import com.mesozi.app.buidafrique.adapters.SalesOrderAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,9 +38,9 @@ import java.util.Map;
 /**
  * Created by ekirapa on 7/24/18 .
  */
-public class SalesOrderActivity extends AppCompatActivity {
+public class ReadSalesOrderActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
-    private List<AbstractSalesOrder> salesOrders = new ArrayList<>();
+    private List<SalesOrder> salesOrders = new ArrayList<>();
     private RecyclerView recyclerView;
     private SearchView searchView;
     private TextView placeholder;
@@ -73,19 +70,19 @@ public class SalesOrderActivity extends AppCompatActivity {
         progressDialog.setTitle("Fetching Sales Orders");
         progressDialog.setMessage("Please Wait...");
 
-        fetchSalesOrders();
+        fetchLeads();
 //        fetch();
 
         recyclerView = findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
     }
 
-    private void fetchSalesOrders() {
+    private void fetchLeads() {
         progressDialog.show();
         final SessionManager sessionManager = new SessionManager(getBaseContext());
         Log.d("session", sessionManager.getCookie());
         try {
-            JSONObject jsonObject = RequestBuilder.salesOrders();
+            JSONObject jsonObject = RequestBuilder.salesRequest();
             Log.i("json ", jsonObject.toString());
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlsConfig.URL_DATASET, jsonObject, new Response.Listener<JSONObject>() {
                 @Override
@@ -94,7 +91,7 @@ public class SalesOrderActivity extends AppCompatActivity {
                     if (response.has("result")) {
                         try {
                             JSONArray jsonArray = response.getJSONArray("result");
-                            parseSalesOrders(jsonArray);
+                            parseLeads(jsonArray);
                         } catch (JSONException e) {
                             e.printStackTrace();
                             error();
@@ -134,28 +131,49 @@ public class SalesOrderActivity extends AppCompatActivity {
         Toast.makeText(this, "Can not find a connection right now", Toast.LENGTH_SHORT).show();
     }
 
-    private void parseSalesOrders(JSONArray jsonArray) {
+    private void parseLeads(JSONArray jsonArray) {
         Gson gson = new Gson();
         Log.d("array size", String.valueOf(jsonArray.length()));
         for (int i = 0; i < jsonArray.length(); i++) {
-
-            JSONObject jsonObject = null;
             try {
-                jsonObject = jsonArray.getJSONObject(i);
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                if (jsonObject.get("message_follower_ids") instanceof Boolean) {
+                    jsonObject.remove("message_follower_ids");
+                } else if (jsonObject.get("order_line") instanceof Boolean) {
+                    jsonObject.remove("order_line");
+                } else if ((jsonObject.get("currency_id") instanceof Boolean && !jsonObject.getBoolean("currency_id")) || jsonObject.get("currency_id").toString().equals("false")) {
+                    jsonObject.remove("currency_id");
+                } else if (jsonObject.get("write_uid") instanceof Boolean) {
+                    jsonObject.remove("write_uid");
+                } else if (jsonObject.get("message_follower_ids") instanceof Boolean) {
+                    jsonObject.remove("message_follower_ids");
+                }else if (jsonObject.get("invoice_ids") instanceof Boolean) {
+                    jsonObject.remove("invoice_ids");
+                }else if (jsonObject.get("partner_id") instanceof Boolean) {
+                    jsonObject.remove("partner_id");
+                }else if (jsonObject.get("company_id") instanceof Boolean) {
+                    jsonObject.remove("company_id");
+                }else if (jsonObject.get("pricelist_id") instanceof Boolean) {
+                    jsonObject.remove("pricelist_id");
+                }else if (jsonObject.get("message_follower_ids") instanceof Boolean) {
+                    jsonObject.remove("message_follower_ids");
+                }else if (jsonObject.get("payment_term") instanceof Boolean) {
+                    jsonObject.remove("payment_term");
+                }
+
                 try {
-                    AbstractSalesOrder salesOrder = gson.fromJson(jsonObject.toString(), AbstractSalesOrder.class);
+                    SalesOrder salesOrder = gson.fromJson(jsonObject.toString(), SalesOrder.class);
                     salesOrders.add(salesOrder);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-
         }
         if (progressDialog != null) progressDialog.dismiss();
-        recyclerView.setAdapter(new SalesOrderAdapter(getBaseContext(), salesOrders));
+        recyclerView.setAdapter(new ReadSalesOrderAdapter(getBaseContext(), salesOrders));
         Log.d("salesOrders size", String.valueOf(salesOrders.size()));
     }
 }
