@@ -3,6 +3,7 @@ package com.mesozi.app.buidafrique.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +11,11 @@ import android.widget.TextView;
 
 import com.mesozi.app.buidafrique.Models.Lead;
 import com.mesozi.app.buidafrique.R;
+import com.mesozi.app.buidafrique.Utils.CommonUtils;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -55,6 +59,18 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
                 holder.state.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_radio_button_checked_black_24dp, 0, 0, 0);
             }
 
+        }
+
+        try {
+            Date date = CommonUtils.parseStringToDate(lead.getCreate_date());
+            String month = (String) DateFormat.format("EEE", date);
+            String day = (String) DateFormat.format("dd", date);
+            String year = (String) DateFormat.format("yyyy", date);
+            holder.day.setText(day);
+            holder.month.setText(month);
+            holder.year.setText(year);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
 
     }

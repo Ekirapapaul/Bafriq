@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.menu_customers:
-                startActivity(new Intent(getBaseContext(), ItemActivity.class));
+                startActivity(new Intent(getBaseContext(), CustomerActivity.class));
                 break;
             case R.id.menu_leads:
                 startActivity(new Intent(getBaseContext(), LeadsActivity.class));
