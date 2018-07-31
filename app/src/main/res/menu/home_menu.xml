@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/compose"
+        android:icon="@drawable/ic_mode_edit_white_24dp"
+        android:title="@string/compose"
+        android:orderInCategory="300"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/inbox"
+        android:icon="@drawable/ic_inbox_white_24dp"
+        android:title="@string/inbox"
+        android:orderInCategory="200"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/logout"
+        android:title="@string/log_out"
+        app:showAsAction="collapseActionView" />
+
+</menu>

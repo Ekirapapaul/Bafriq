@@ -35,4 +35,9 @@
     <string name="partner_name">Partner Name</string>
     <string name="name_of_contact">Name of contacct</string>
     <string name="mobile">Mobile</string>
+    <string name="tag_line"><![CDATA[Affiliate marketing & Online Referral Program]]></string>
+    <string name="compose">Compose</string>
+    <string name="log_out">Log Out</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
 </resources>
