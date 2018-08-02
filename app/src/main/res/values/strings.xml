@@ -40,4 +40,10 @@
     <string name="log_out">Log Out</string>
     <string name="yes">Yes</string>
     <string name="cancel">Cancel</string>
+    <string name="oportunities">Oportunities</string>
+    <string name="products">Products</string>
+    <string name="negotiation">Negotiation</string>
+    <string name="progress">Progress</string>
+    <string name="lost">Lost</string>
+    <string name="qualified">Qualified</string>
 </resources>
