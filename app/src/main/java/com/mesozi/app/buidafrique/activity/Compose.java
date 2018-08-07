@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.mesozi.app.buidafrique.R;
@@ -26,6 +27,12 @@ public class Compose extends AppCompatActivity {
     private void registerViews() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         TextView from = findViewById(R.id.tv_from);
         from.setText("From : partnernetwork@buildafrique.com");
     }

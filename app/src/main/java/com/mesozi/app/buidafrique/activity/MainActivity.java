@@ -59,7 +59,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                drawerLayout.closeDrawer(GravityCompat.START);
                 switch (item.getItemId()) {
+                    case R.id.nav_compose:
+                        startActivity(new Intent(getBaseContext(), Compose.class));
+                        break;
+                    case R.id.nav_inbox:
+                        break;
+                    case R.id.nav_negotiation:
+                        break;
+                    case R.id.nav_products:
+                        break;
+                    case R.id.nav_lost:
+                        break;
+                    case R.id.nav_qualified:
+                        break;
                 }
                 return false;
             }
