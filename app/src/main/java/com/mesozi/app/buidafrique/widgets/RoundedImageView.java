@@ -14,7 +14,7 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 /**
- * Created by dell on 7/25/2017.
+ * Custom rounded image view
  */
 
 public class RoundedImageView extends ImageView {

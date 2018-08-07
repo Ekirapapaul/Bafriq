@@ -6,7 +6,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -40,6 +43,8 @@ public class CustomerActivity extends AppCompatActivity {
     CustomerAdapter adapter;
     private ProgressDialog progressDialog;
     private RecyclerView recyclerView;
+    private SearchView searchView;
+    private TextView placeholder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,6 +59,20 @@ public class CustomerActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.setTitle("Fetching Customers");
         progressDialog.setMessage("Please Wait...");
+
+        placeholder = findViewById(R.id.tv_search_placeholder);
+        searchView = findViewById(R.id.search_view);
+        searchView.setFocusable(true);// searchView is null
+        searchView.setFocusableInTouchMode(true);
+
+        placeholder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                placeholder.setVisibility(View.GONE);
+                searchView.onActionViewExpanded();
+            }
+        });
+
 
         recyclerView = findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));

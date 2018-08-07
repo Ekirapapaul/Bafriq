@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -36,9 +37,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void registerViews() {
-
-        Toolbar mTopToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mTopToolbar);
         setDrawer();
 
         findViewById(R.id.menu_customers).setOnClickListener(this);
@@ -75,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 logout();
                 break;
             case R.id.compose:
+                startActivity(new Intent(getBaseContext(), Compose.class));
                 break;
             case R.id.inbox:
                 break;
@@ -125,4 +124,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         inflater.inflate(R.menu.home_menu, menu);
         return true;
     }
+
 }

@@ -46,4 +46,11 @@
     <string name="progress">Progress</string>
     <string name="lost">Lost</string>
     <string name="qualified">Qualified</string>
+    <string name="commisions">Commisions</string>
+    <string name="bonuses">Bonuses</string>
+    <string name="subject">Subject</string>
+    <string name="message">Message</string>
+    <string name="to">To</string>
+    <string name="save_draft">Save as Draft</string>
+    <string name="discard">Discard</string>
 </resources>
