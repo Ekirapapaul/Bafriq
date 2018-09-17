@@ -32,186 +32,158 @@
                     app:elevation="4dp"
                     app:navigationIcon="@drawable/ic_menu_white_24dp"
                     app:popupTheme="@style/AppTheme.PopupOverlay"
-                    app:title="@string/app_name"
+                    app:title="@string/dashboard"
                     app:titleTextColor="@color/white" />
             </android.support.design.widget.AppBarLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:paddingBottom="30dp"
-                android:weightSum="30">
+                android:weightSum="40">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="10"
                     android:orientation="horizontal"
-                    android:weightSum="1">
+                    android:weightSum="30">
 
                     <android.support.v7.widget.CardView
-                        android:id="@+id/menu_customers"
-                        android:layout_width="300dp"
+                        android:id="@+id/card_qualified"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginStart="20dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginEnd="@dimen/dimen_menu_item_margin"
+                        android:layout_marginStart="@dimen/dimen_menu_item_margin"
                         android:layout_marginTop="10dp"
-                        android:layout_weight=".5"
-                        app:cardCornerRadius="5dp"
-                        app:cardElevation="5dp">
+                        android:layout_weight="10"
+                        android:clickable="true"
+                        android:focusable="true">
+
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_weight="10"
                             android:gravity="center"
                             android:orientation="vertical">
 
-                            <ImageView
-                                android:layout_width="@dimen/home_icon_size"
-                                android:layout_height="@dimen/home_icon_size"
-                                android:src="@drawable/user" />
-
                             <TextView
-                                style="@style/home_menu_text"
+                                android:id="@+id/tv_qualified"
+                                style="@style/home_text_2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="@string/customers"
-                                android:textColor="@color/menu_orange" />
-                        </LinearLayout>
-                    </android.support.v7.widget.CardView>
-
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/menu_leads"
-                        android:layout_width="300dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_weight=".5"
-                        app:cardCornerRadius="5dp"
-                        app:cardElevation="5dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="@dimen/home_icon_size"
-                                android:layout_height="@dimen/home_icon_size"
-                                android:src="@drawable/rate" />
-
-                            <TextView
-                                style="@style/home_menu_text"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="@string/leads"
-                                android:textColor="@color/menu_green" />
-                        </LinearLayout>
-                    </android.support.v7.widget.CardView>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="10"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
-
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/menu_sales_orders"
-                        android:layout_width="300dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_weight=".5"
-                        app:cardCornerRadius="5dp"
-                        app:cardElevation="5dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="@dimen/home_icon_size"
-                                android:layout_height="@dimen/home_icon_size"
-                                android:src="@drawable/shopping_bag" />
-
-                            <TextView
-                                style="@style/home_menu_text"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="@string/sales_orders"
+                                android:text="@string/qualified"
                                 android:textColor="@color/menu_red" />
+
+                            <TextView
+                                android:id="@+id/tv_qualified_val"
+                                style="@style/home_val_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/qualified" />
                         </LinearLayout>
                     </android.support.v7.widget.CardView>
 
                     <android.support.v7.widget.CardView
-                        android:layout_width="300dp"
+                        android:id="@+id/card_won"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginBottom="5dp"
                         android:layout_marginTop="10dp"
-                        android:layout_weight=".5"
-                        app:cardCornerRadius="5dp"
-                        app:cardElevation="5dp">
+                        android:layout_weight="10"
+                        android:clickable="true"
+                        android:focusable="true">
+
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_weight="10"
                             android:gravity="center"
                             android:orientation="vertical">
 
-                            <ImageView
-                                android:layout_width="@dimen/home_icon_size"
-                                android:layout_height="@dimen/home_icon_size"
-                                android:src="@drawable/archive" />
-
                             <TextView
-                                style="@style/home_menu_text"
+                                android:id="@+id/tv_won"
+                                style="@style/home_text_2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="@string/quotations"
-                                android:textColor="@color/menu_purple" />
+                                android:text="@string/won"
+                                android:textColor="@color/menu_green" />
+
+                            <TextView
+                                android:id="@+id/tv_won_val"
+                                style="@style/home_val_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/won" />
                         </LinearLayout>
+
                     </android.support.v7.widget.CardView>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="10"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
 
                     <android.support.v7.widget.CardView
-                        android:id="@+id/menu_commisions"
-                        android:layout_width="300dp"
+                        android:id="@+id/card_lost"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginStart="20dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginEnd="@dimen/dimen_menu_item_margin"
+                        android:layout_marginStart="@dimen/dimen_menu_item_margin"
                         android:layout_marginTop="10dp"
-                        android:layout_weight=".5"
-                        app:cardCornerRadius="5dp"
-                        app:cardElevation="5dp">
+                        android:layout_weight="10"
+                        android:clickable="true"
+                        android:focusable="true">
+
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_weight="10"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_lost"
+                                style="@style/home_text_2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/lost"
+                                android:textColor="@color/menu_yellow" />
+
+                            <TextView
+                                android:id="@+id/tv_lost_val"
+                                style="@style/home_val_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/lost" />
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+
+
+                </LinearLayout>
+
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/menu_commissions"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="@dimen/dimen_menu_item_margin"
+                    android:layout_marginStart="@dimen/dimen_menu_margin_start"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="10">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center_vertical"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".4"
                             android:gravity="center"
                             android:orientation="vertical">
 
@@ -227,38 +199,74 @@
                                 android:gravity="center"
                                 android:text="@string/commisions"
                                 android:textColor="@color/menu_blue" />
-                            <View
-                                android:layout_width="match_parent"
-                                android:background="@color/menu_blue"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginEnd="10dp"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginBottom="10dp"
-                                android:layout_height="1dp"/>
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:id="@+id/tv_commisions"
-                                android:text="KES 300"
-                                android:textColor="@color/menu_blue"
-                                android:gravity="center"
-                                android:layout_height="wrap_content" />
                         </LinearLayout>
-                    </android.support.v7.widget.CardView>
 
-                    <android.support.v7.widget.CardView
-                        android:layout_width="300dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_weight=".5"
-                        app:cardCornerRadius="5dp"
-                        app:cardElevation="5dp">
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="@dimen/dimen_home_separator_margin"
+                            android:layout_marginTop="@dimen/dimen_home_separator_margin"
+                            android:background="@color/separator" />
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
+                            android:layout_weight=".6"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:weightSum="1">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight=".6"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:paddingEnd="16dp">
+
+                                <TextView
+                                    style="@style/home_text"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:text="@string/available" />
+
+                                <TextView
+                                    android:id="@+id/tv_commission"
+                                    style="@style/home_val_text"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:text="KES 500" />
+                            </LinearLayout>
+                            <ImageView
+                                android:layout_width="@dimen/dimen_chevrom_right_size"
+                                android:src="@drawable/ic_chevron_right_blue_24dp"
+                                android:layout_height="@dimen/dimen_chevrom_right_size" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/menu_bonuses"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="@dimen/dimen_menu_item_margin"
+                    android:layout_marginStart="@dimen/dimen_menu_margin_start"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="10">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center_vertical"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".4"
                             android:gravity="center"
                             android:orientation="vertical">
 
@@ -274,26 +282,137 @@
                                 android:gravity="center"
                                 android:text="@string/bonuses"
                                 android:textColor="@color/menu_yellow" />
-                            <View
-                                android:layout_width="match_parent"
-                                android:background="@color/menu_yellow"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginEnd="10dp"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginBottom="10dp"
-                                android:layout_height="1dp"/>
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:id="@+id/tv_bonuses"
-                                android:text="KES 300"
-                                android:textColor="@color/menu_yellow"
-                                android:gravity="center"
-                                android:layout_height="wrap_content" />
-
                         </LinearLayout>
-                    </android.support.v7.widget.CardView>
-                </LinearLayout>
 
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="@dimen/dimen_home_separator_margin"
+                            android:layout_marginTop="@dimen/dimen_home_separator_margin"
+                            android:background="@color/separator" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".6"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:weightSum="1">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight=".6"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:paddingEnd="16dp">
+
+                                <TextView
+                                    style="@style/home_text"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:text="@string/available" />
+
+                                <TextView
+                                    android:id="@+id/tv_bonuses"
+                                    style="@style/home_val_text"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:text="KES 500" />
+                            </LinearLayout>
+                            <ImageView
+                                android:layout_width="@dimen/dimen_chevrom_right_size"
+                                android:src="@drawable/ic_chevron_right_yellow_24dp"
+                                android:layout_height="@dimen/dimen_chevrom_right_size" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/menu_loyalty"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginEnd="@dimen/dimen_menu_item_margin"
+                    android:layout_marginStart="@dimen/dimen_menu_margin_start"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="10">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center_vertical"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".4"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="@dimen/home_icon_size"
+                                android:layout_height="@dimen/home_icon_size"
+                                android:src="@drawable/archive" />
+
+                            <TextView
+                                style="@style/home_menu_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/loyalty_points"
+                                android:textColor="@color/menu_purple" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="@dimen/dimen_home_separator_margin"
+                            android:layout_marginTop="@dimen/dimen_home_separator_margin"
+                            android:background="@color/separator" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".6"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:weightSum="1">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight=".6"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:paddingEnd="16dp">
+
+                                <TextView
+                                    style="@style/home_text"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:text="@string/available" />
+
+                                <TextView
+                                    android:id="@+id/tv_loyalty"
+                                    style="@style/home_val_text"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:text="KES 500" />
+                            </LinearLayout>
+                            <ImageView
+                                android:layout_width="@dimen/dimen_chevrom_right_size"
+                                android:src="@drawable/ic_chevron_right_purple_24dp"
+                                android:layout_height="@dimen/dimen_chevrom_right_size" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
             </LinearLayout>
         </LinearLayout>
     </android.support.design.widget.CoordinatorLayout>

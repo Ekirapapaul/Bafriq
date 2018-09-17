@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mesozi.app.buidafrique.Models.Customer;
+import com.mesozi.app.buidafrique.Models.Customer_Table;
 import com.mesozi.app.buidafrique.R;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,10 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ItemVi
 
     public CustomerAdapter(Context context, List<Customer> customers) {
         this.context = context;
-        this.customers = customers;
+        this.customers = SQLite.select()
+                .from(Customer.class)
+                .where(Customer_Table.email.notEq("false"))
+                .queryList();;
     }
 
     @NonNull
@@ -37,9 +42,8 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ItemVi
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         Customer customer = customers.get(position);
         if (position == (customers.size() - 1)) holder.separator.setVisibility(View.GONE);
-        holder.name.setText(((customer.getPartner_name().isEmpty() || customer.getPartner_name().equals("false")) ? "N/A" : customer.getPartner_name()));
-        holder.contact.setText(((customer.getPartner_address_email().isEmpty() || customer.getPartner_name().equals("false")) ? "N/A" : customer.getPartner_address_email()));
-        holder.mobile.setText(((customer.getMobile().isEmpty() || customer.getPartner_name().equals("false")) ? "N/A" : customer.getMobile()));
+        holder.name.setText(customer.getName());
+        holder.contact.setText(customer.getEmail());
     }
 
     @Override

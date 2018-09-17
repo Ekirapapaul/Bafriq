@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
@@ -27,6 +28,16 @@ public class SalesOrderDetails extends AppCompatActivity {
     }
 
     private void registerViews() {
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        
         TextView salesNo = findViewById(R.id.tv_sales_no);
         TextView reference = findViewById(R.id.tv_reference);
         TextView state = findViewById(R.id.tv_state);

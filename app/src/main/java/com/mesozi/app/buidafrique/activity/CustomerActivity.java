@@ -1,13 +1,19 @@
 package com.mesozi.app.buidafrique.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,13 +24,17 @@ import com.android.volley.error.AuthFailureError;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
 import com.google.gson.Gson;
+import com.mesozi.app.buidafrique.Models.AbstractSalesOrder;
 import com.mesozi.app.buidafrique.Models.Customer;
+import com.mesozi.app.buidafrique.Models.Customer_Table;
 import com.mesozi.app.buidafrique.R;
+import com.mesozi.app.buidafrique.Utils.RecyclerItemClickListener;
 import com.mesozi.app.buidafrique.Utils.RequestBuilder;
 import com.mesozi.app.buidafrique.Utils.SessionManager;
 import com.mesozi.app.buidafrique.Utils.UrlsConfig;
 import com.mesozi.app.buidafrique.Utils.VolleySingleton;
 import com.mesozi.app.buidafrique.adapters.CustomerAdapter;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,11 +60,24 @@ public class CustomerActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
+        customers = SQLite.select()
+                .from(Customer.class)
+                .where(Customer_Table.email.notEq("false"))
+                .queryList();;
         registerViews();
 
     }
 
+
     private void registerViews() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
         progressDialog.setTitle("Fetching Customers");
@@ -64,6 +87,7 @@ public class CustomerActivity extends AppCompatActivity {
         searchView = findViewById(R.id.search_view);
         searchView.setFocusable(true);// searchView is null
         searchView.setFocusableInTouchMode(true);
+
 
         placeholder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,17 +100,49 @@ public class CustomerActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
-
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getBaseContext(), new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Customer customer = customers.get(position);
+                Intent intent = new Intent(getBaseContext(), CustomerDetails.class);
+                intent.putExtra("parcel_data", customer);
+                startActivity(intent);
+            }
+        }));
         fetchCustomers();
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getBaseContext(), AddCustomer.class));
+            }
+        });
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.add_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.edit:
+                startActivity(new Intent(getBaseContext(), AddCustomer.class));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     private void fetchCustomers() {
         progressDialog.show();
         final SessionManager sessionManager = new SessionManager(getBaseContext());
         Log.d("session", sessionManager.getCookie());
         try {
-            JSONObject jsonObject = RequestBuilder.readLeads();
+            JSONObject jsonObject = RequestBuilder.customersObject();
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlsConfig.URL_DATASET, jsonObject, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
@@ -138,16 +194,11 @@ public class CustomerActivity extends AppCompatActivity {
         Gson gson = new Gson();
         Log.d("array size", String.valueOf(jsonArray.length()));
         for (int i = 0; i < jsonArray.length(); i++) {
-            Log.d("Processing ", "" + i);
             try {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                if ((jsonObject.get("partner_id") instanceof Boolean && !jsonObject.getBoolean("partner_id")) || jsonObject.get("partner_id").toString().equals("false")) {
-                    Log.d("Gotten boolean", "gotten " + i);
-                    jsonObject.remove("partner_id");
-                }
                 try {
                     Customer customer = gson.fromJson(jsonObject.toString(), Customer.class);
-                    customers.add(customer);
+                    customer.save();
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.d("Failed at", String.format(" with %s", jsonObject.toString()));
@@ -159,6 +210,10 @@ public class CustomerActivity extends AppCompatActivity {
         }
         if (progressDialog != null) progressDialog.dismiss();
         adapter = new CustomerAdapter(getBaseContext(), customers);
+        customers = SQLite.select()
+                .from(Customer.class)
+                .where(Customer_Table.email.notEq("false"))
+                .queryList();;
         recyclerView.setAdapter(adapter);
     }
 }

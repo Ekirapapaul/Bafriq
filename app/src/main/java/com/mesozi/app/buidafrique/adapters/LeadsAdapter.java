@@ -2,6 +2,7 @@ package com.mesozi.app.buidafrique.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -46,18 +47,31 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
         if (lead.getStage_id().length >=2) {
             String stage = lead.getStage_id()[1].substring(0, 1).toUpperCase() + lead.getStage_id()[1].substring(1);
             holder.state.setText(stage);
+//            if (stage.equals("WON Opportunity")){
+//                holder.state.setText(R.string.won);
+//                holder.state.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_radio_button_checked_green_24dp, 0, 0, 0);
+//            }else if(stage.equals("Negotiation")){
+//                holder.state.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_radio_button_checked_red_24dp, 0, 0, 0);
+//            }else if(stage.equals("Qualification")) {
+//                holder.state.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_radio_button_checked_blue_24dp, 0, 0, 0);
+//            }else if(stage.equals("New")) {
+//                holder.state.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_radio_button_checked_purple_24dp, 0, 0, 0);
+//            }else{
+//                holder.state.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_radio_button_checked_black_24dp, 0, 0, 0);
+//            }
             if (stage.equals("WON Opportunity")){
                 holder.state.setText(R.string.won);
-                holder.state.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_radio_button_checked_green_24dp, 0, 0, 0);
+                holder.state.setBackgroundColor(ContextCompat.getColor(context, R.color.menu_green));
             }else if(stage.equals("Negotiation")){
-                holder.state.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_radio_button_checked_red_24dp, 0, 0, 0);
+                holder.state.setBackgroundColor(ContextCompat.getColor(context, R.color.menu_red));
             }else if(stage.equals("Qualification")) {
-                holder.state.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_radio_button_checked_blue_24dp, 0, 0, 0);
+                holder.state.setBackgroundColor(ContextCompat.getColor(context, R.color.menu_blue));
             }else if(stage.equals("New")) {
-                holder.state.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_radio_button_checked_purple_24dp, 0, 0, 0);
+                holder.state.setBackgroundColor(ContextCompat.getColor(context, R.color.menu_purple));
             }else{
-                holder.state.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_radio_button_checked_black_24dp, 0, 0, 0);
+                holder.state.setBackgroundColor(ContextCompat.getColor(context, R.color.menu_orange));
             }
+
 
         }
 

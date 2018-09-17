@@ -4,53 +4,67 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+
 
         <LinearLayout
-            android:id="@+id/linear"
+            android:id="@+id/linear_parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:orientation="vertical"
-            android:paddingTop="20dp">
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="30dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingBottom="30dp"
-                android:weightSum="1">
+                android:background="@color/colorPrimary"
+                android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight=".5"
-                    android:src="@drawable/group_icon" />
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/colorPrimary"
+                    app:elevation="4dp"
+                    app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    app:title="Customers"
+                    app:titleTextColor="@color/white" />
+
+                <LinearLayout
+                    android:id="@+id/linear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:orientation="vertical"
+                    android:paddingBottom="15dp"
+                    android:paddingTop="16dp">
+
+                </LinearLayout>
+
             </LinearLayout>
-        </LinearLayout>
 
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@+id/linear_parent"
             android:orientation="vertical"
             android:paddingTop="20dp"
             android:weightSum="30">
 
             <android.support.v7.widget.RecyclerView
-                android:paddingTop="20dp"
-                android:paddingBottom="10dp"
                 android:id="@+id/recycler"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:paddingBottom="10dp"
+                android:paddingTop="20dp" />
 
         </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -88,4 +102,12 @@
                 android:textSize="17sp" />
         </FrameLayout>
     </android.support.v7.widget.CardView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_add_white_24dp" />
 </android.support.design.widget.CoordinatorLayout>

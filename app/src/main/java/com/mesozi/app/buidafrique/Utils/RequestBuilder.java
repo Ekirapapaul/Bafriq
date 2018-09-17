@@ -21,7 +21,7 @@ public class RequestBuilder {
         jsonObject.put("method", METHOD_CALL);
 
         JSONObject params = new JSONObject();
-        params.put("db", "buildafrique_dev");
+        params.put("db", "buildafrique_dev_new");
         params.put("login", username);
         params.put("password", pasword);
 
@@ -120,6 +120,76 @@ public class RequestBuilder {
         return new JSONObject(request);
     }
 
+    public static JSONObject customersObject() throws JSONException {
+        String request = "\n" +
+                "\n" +
+                "{\n" +
+                "  \"jsonrpc\":\"2.0\",\n" +
+                "  \"method\":\"call\",\n" +
+                "  \"params\":{\n" +
+                "    \"model\": \"res.partner\",\n" +
+                "    \"method\":\"search_read\",\n" +
+                "      \"args\":[[[\"active\", \"=\", true],[\"customer\", \"=\", true]]],\n" +
+                "    \"kwargs\":\n" +
+                "      {\n" +
+                "      \t\"fields\":[\"company\",\"customer\",\"display_name\",\"partner_id\",\"id\",\"name\",\"email\",\"phone\",\"street\",\"city\",\"zip\"],\n" +
+                "        \"offset\":0,\n" +
+                "        \"limit\":100,\n" +
+                "        \"order\":\"id\"\n" +
+                "      }\n" +
+                "  },\n" +
+                "  \"id\":123\n" +
+                "}";
+        return new JSONObject(request);
+    }
+
+    public static JSONObject productsObject() throws JSONException {
+        String request = "\n" +
+                "{\n" +
+                "  \"jsonrpc\":\"2.0\",\n" +
+                "  \"method\":\"call\",\n" +
+                "  \"params\":{\n" +
+                "    \"model\": \"product.product\",\n" +
+                "    \"method\":\"search_read\",\n" +
+                "      \"args\":[[[\"active\", \"=\", true]]],\n" +
+                "    \"kwargs\":\n" +
+                "      {\n" +
+                "      \t\"fields\":[\"display_name\",\"id\",\"name\"],\n" +
+                "        \"offset\":0,\n" +
+                "        \"limit\":100,\n" +
+                "        \"order\":\"id\"\n" +
+                "      }\n" +
+                "  },\n" +
+                "  \"id\":123\n" +
+                "}";
+
+        return new JSONObject(request);
+    }
+
+    public static JSONObject inboxObject() throws JSONException {
+        String request = "\n" +
+                "\n" +
+                "{\n" +
+                "  \"jsonrpc\":\"2.0\",\n" +
+                "  \"method\":\"call\",\n" +
+                "  \"params\":{\n" +
+                "    \"model\": \"mail.message\",\n" +
+                "    \"method\":\"search_read\",\n" +
+                "      \"args\":[[]],\n" +
+                "    \"kwargs\":\n" +
+                "      {\n" +
+                "      \t\"fields\":[\"company\",\"customer\",\"display_name\",\"message\",\"id\",\"name\",\"email\",\"email_from\",\"reply_to\",\"attachment_ids\",\"subject\",\"date\",\"starred\",\"body\"],\n" +
+                "        \"offset\":0,\n" +
+                "        \"limit\":100,\n" +
+                "        \"order\":\"id\"\n" +
+                "      }\n" +
+                "  },\n" +
+                "  \"id\":123\n" +
+                "}";
+
+        return new JSONObject(request);
+    }
+
     public static JSONObject createLeads(String displayName, String name, String email, String addressName, String emailFrom) throws JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("jsonrpc", JSON_VERS);
@@ -151,22 +221,19 @@ public class RequestBuilder {
 
     public static JSONObject readLeads() throws JSONException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("jsonrpc", JSON_VERS);
-        jsonObject.put("method", METHOD_CALL);
-        JSONObject params = new JSONObject();
-        params.put("model", "crm.lead");
-        params.put("method", "search_read");
+        String request = "{\n" +
+                "  \"jsonrpc\":\"2.0\",\n" +
+                "  \"method\":\"call\",\n" +
+                "  \"params\": {\n" +
+                "    \"model\":\"crm.lead\",\n" +
+                "    \"method\":\"search_read\",\n" +
+                "    \"args\":[],\n" +
+                "    \"kwargs\" : {}\n" +
+                "  },\n" +
+                "  \"id\":1969558901\n" +
+                "}";
 
-        JSONArray args = new JSONArray();
-        params.put("args", args);
-
-        JSONObject kwargs = new JSONObject();
-        params.put("kwargs", kwargs);
-
-        jsonObject.put("params", params);
-        jsonObject.put(ID, LOGIN_ID);
-
-        return jsonObject;
+        return new JSONObject(request);
     }
 
 }

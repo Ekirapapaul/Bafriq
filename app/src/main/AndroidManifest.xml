@@ -28,6 +28,22 @@
         <activity android:name=".activity.SalesOrderDetails" />
         <activity android:name=".activity.LeadDetailsActivity" />
         <activity android:name=".activity.Compose" />
+        <activity android:name=".activity.CommissionsDetails" />
+        <activity android:name=".activity.BonusesDetails" />
+        <activity android:name=".activity.PointsDetails" />
+        <activity android:name=".activity.LeadsItemActivity" />
+        <activity android:name=".activity.ProductsActivity" />
+        <activity android:name=".activity.CustomerDetails" />
+        <activity android:name=".activity.Inbox" />
+        <activity android:name=".activity.InboxActivity" />
+        <activity android:name=".activity.AddCustomer" />
+        <activity android:name=".activity.ResourcesActivity" />
+        <activity android:name=".activity.Resources.HowItWorks" />
+        <activity android:name=".activity.Resources.Marketing" />
+        <activity android:name=".activity.Resources.NewsLetter" />
+        <activity android:name=".activity.Resources.Connect" />
+        <activity android:name=".activity.Resources.About" />
+        <activity android:name=".activity.ArchivesActivity" />
     </application>
 
 </manifest>

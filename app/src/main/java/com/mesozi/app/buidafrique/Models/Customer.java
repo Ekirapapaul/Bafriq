@@ -19,29 +19,37 @@ public class Customer extends BaseModel implements Parcelable {
 
     public Customer() {
     }
-    @PrimaryKey(autoincrement = true)
+    @PrimaryKey
+    @Column
     private int id;
-    @Column
-    private String partner_name;
-
-    private String[] partner_id = {};
 
     @Column
-    private String partner_address_name;
+    private String city;
 
     @Column
-    private String partner_address_email;
+    private String name;
 
     @Column
-    private String mobile;
+    private String zip;
+
+    @Column
+    private String phone ;
+
+    @Column
+    private String street;
+
+    @Column
+    private String email;
+
 
     protected Customer(Parcel in) {
         id = in.readInt();
-        partner_name = in.readString();
-        partner_id = in.createStringArray();
-        partner_address_name = in.readString();
-        partner_address_email = in.readString();
-        mobile = in.readString();
+        city = in.readString();
+        name = in.readString();
+        zip = in.readString();
+        phone = in.readString();
+        street = in.readString();
+        email = in.readString();
     }
 
     public static final Creator<Customer> CREATOR = new Creator<Customer>() {
@@ -64,44 +72,52 @@ public class Customer extends BaseModel implements Parcelable {
         this.id = id;
     }
 
-    public String getPartner_name() {
-        return partner_name;
+    public String getCity() {
+        return city;
     }
 
-    public void setPartner_name(String partner_name) {
-        this.partner_name = partner_name;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public String[] getPartner_id() {
-        return partner_id;
+    public String getName() {
+        return name;
     }
 
-    public void setPartner_id(String[] partner_id) {
-        this.partner_id = partner_id;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getPartner_address_name() {
-        return partner_address_name;
+    public String getZip() {
+        return zip;
     }
 
-    public void setPartner_address_name(String partner_address_name) {
-        this.partner_address_name = partner_address_name;
+    public void setZip(String zip) {
+        this.zip = zip;
     }
 
-    public String getPartner_address_email() {
-        return partner_address_email;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setPartner_address_email(String partner_address_email) {
-        this.partner_address_email = partner_address_email;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public String getMobile() {
-        return mobile;
+    public String getStreet() {
+        return street;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
@@ -111,13 +127,12 @@ public class Customer extends BaseModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-
         parcel.writeInt(id);
-        parcel.writeString(partner_name);
-        parcel.writeStringArray(partner_id);
-        parcel.writeString(partner_address_name);
-        parcel.writeString(partner_address_email);
-        parcel.writeString(mobile);
+        parcel.writeString(city);
+        parcel.writeString(name);
+        parcel.writeString(zip);
+        parcel.writeString(phone);
+        parcel.writeString(street);
+        parcel.writeString(email);
     }
-
 }

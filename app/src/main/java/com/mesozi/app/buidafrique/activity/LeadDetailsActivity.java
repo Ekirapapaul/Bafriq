@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 
 import com.mesozi.app.buidafrique.Models.AbstractSalesOrder;
@@ -26,6 +28,15 @@ public class LeadDetailsActivity extends AppCompatActivity {
     }
 
     private void registerViews() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         TextView name = findViewById(R.id.tv_lead_name);
         TextView description = findViewById(R.id.tv_description);
         TextView state = findViewById(R.id.tv_state);

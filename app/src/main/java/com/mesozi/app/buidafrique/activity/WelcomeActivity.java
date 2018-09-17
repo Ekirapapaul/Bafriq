@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
@@ -17,12 +18,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Scroller;
 import android.widget.TextView;
 
 import com.mesozi.app.buidafrique.R;
 import com.mesozi.app.buidafrique.Utils.SessionManager;
+
+import java.lang.reflect.Field;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class WelcomeActivity extends AppCompatActivity implements View.OnClickListener {
     static {
@@ -34,6 +41,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
     private LinearLayout dotsLayout;
     private TextView[] dots;
     private int[] layouts;
+    private Timer timer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,9 +62,9 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
 
         layouts = new int[]{
                 R.layout.fragment_welcome,
-                R.layout.fragment_welcome,
-                R.layout.fragment_welcome,
-                R.layout.fragment_welcome};
+                R.layout.fragment_welcome_2,
+                R.layout.fragment_welcome_3,
+                R.layout.fragment_welcome_4};
         addBottomDots(0);
 
         myViewPagerAdapter = new MyViewPagerAdapter();
@@ -64,6 +72,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
 
         registerViews();
+        setupAutoPager();
     }
 
     private void registerViews() {
@@ -140,6 +149,11 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
                 startActivity(new Intent(getBaseContext(), SignUp.class));
                 break;
             case R.id.btn_invite:
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.invite_message));
+                sendIntent.setType("text/plain");
+                startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.share_via)));
                 break;
         }
     }
@@ -179,5 +193,37 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
             View view = (View) object;
             container.removeView(view);
         }
+    }
+
+    private int currentPage = 0;
+    private void setupAutoPager()
+    {
+        final Handler handler = new Handler();
+
+        final Runnable update = new Runnable() {
+            public void run()
+            {
+
+                viewPager.setCurrentItem(currentPage, true);
+                if(currentPage == myViewPagerAdapter.getCount())
+                {
+                    currentPage = 0;
+                }
+                else
+                {
+                    ++currentPage ;
+                }
+            }
+        };
+
+
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                handler.post(update);
+            }
+        }, 1000, 3000);
     }
 }

@@ -9,23 +9,38 @@
             android:id="@+id/nav_inbox"
             android:icon="@drawable/ic_inbox_black_24dp"
             android:title="@string/inbox" />
+        <item
+            android:id="@+id/nav_archive"
+            android:icon="@drawable/ic_archive_black_24dp"
+            android:title="@string/archive" />
+    </group>
+    <group
+        android:id="@+id/sub1"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_customers"
+            android:icon="@drawable/ic_people_black_24dp"
+            android:title="@string/customers" />
 
+        <item
+            android:id="@+id/nav_leads"
+            android:icon="@drawable/ic_lead_black_24dp"
+            android:title="@string/leads" />
+    </group>
+    <group android:checkableBehavior="single">
         <item
             android:id="@+id/navigation_subheader"
             android:title="@string/opportunities">
             <menu>
                 <item
-                    android:id="@+id/nav_won"
-                    android:icon="@drawable/ic_business_center_black_24dp"
-                    android:title="@string/won" />
-                <item
                     android:id="@+id/nav_qualified"
                     android:icon="@drawable/ic_card_membership_black_24dp"
                     android:title="@string/qualified" />
                 <item
-                    android:id="@+id/nav_negotiation"
-                    android:icon="@drawable/ic_forum_black_24dp"
-                    android:title="@string/progress" />
+                    android:id="@+id/nav_won"
+                    android:icon="@drawable/ic_business_center_black_24dp"
+                    android:title="@string/won" />
+
                 <item
                     android:id="@+id/nav_lost"
                     android:icon="@drawable/ic_info_outline_black_24dp"
@@ -34,11 +49,19 @@
         </item>
     </group>
     <group
+        android:id="@+id/group_sales_orders"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_sales"
+            android:icon="@drawable/ic_people_black_24dp"
+            android:title="@string/sales_orders" />
+    </group>
+    <group
         android:id="@+id/group_products"
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_products"
             android:icon="@drawable/ic_view_list_black_24dp"
-            android:title="@string/products"/>
+            android:title="@string/resources" />
     </group>
 </menu>

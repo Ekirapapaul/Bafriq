@@ -22,7 +22,7 @@ public class BuildAfrique extends Application {
         super.onCreate();
         FlowManager.init(FlowConfig.builder(this)
                 .addDatabaseConfig(DatabaseConfig.builder(AppDatabase.class)
-                        .databaseName("AppDatabase")
+                        .databaseName("buildAfrique")
                         .build())
                 .build());
         FlowManager.init(new FlowConfig.Builder(this).build());

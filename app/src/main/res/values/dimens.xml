@@ -22,4 +22,9 @@
     <dimen name="dimen_signup_drawable_size">18dp</dimen>
     <dimen name="dimen_signup_drawable_padding_start">10dp</dimen>
     <dimen name="dimen_order_line_text_padding">2dp</dimen>
+    <dimen name="dimen_menu_item_margin">5dp</dimen>
+    <dimen name="dimen_menu_margin_start">5dp</dimen>
+    <dimen name="dimen_home_separator_margin">25dp</dimen>
+    <dimen name="dimen_dot_padding_bottom">30dp</dimen>
+    <dimen name="dimen_chevrom_right_size">40dp</dimen>
 </resources>

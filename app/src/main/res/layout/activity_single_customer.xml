@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/colorPrimary"
+            app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
+            app:title="Customer Details"
+            app:titleTextColor="@color/white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <com.mesozi.app.buidafrique.widgets.RoundedImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:scaleType="center"
+                android:src="@mipmap/ic_user" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:padding="16dp"
+                android:textSize="17sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_mail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="16dp"
+            android:drawableStart="@drawable/ic_email_black_24dp"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="16dp"
+            android:drawableStart="@drawable/ic_phone_iphone_black_24dp"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_add_lead"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="20dp"
+        android:background="@drawable/button_primary"
+        android:text="@string/add_nw_lead"
+        android:textColor="@color/white" />
+</android.support.design.widget.CoordinatorLayout>

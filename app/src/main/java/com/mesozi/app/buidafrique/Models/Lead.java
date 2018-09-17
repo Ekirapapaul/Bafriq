@@ -3,11 +3,26 @@ package com.mesozi.app.buidafrique.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.mesozi.app.buidafrique.Utils.AppDatabase;
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+
 import java.util.ArrayList;
 import java.util.List;
 
 //Leads object model
-public class Lead  implements Parcelable{
+@Table(database = AppDatabase.class, name = "lead")
+public class Lead extends BaseModel implements  Parcelable{
+
+    public Lead() {
+    }
+
+    @Column
+    @PrimaryKey(autoincrement = true)
+    private long id;
+
     private boolean furnished;
     private String[] write_uid;
     private String[] categ_ids;
@@ -95,6 +110,14 @@ public class Lead  implements Parcelable{
             return new Lead[size];
         }
     };
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public boolean isFurnished() {
         return furnished;

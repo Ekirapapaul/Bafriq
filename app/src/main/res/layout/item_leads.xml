@@ -106,6 +106,8 @@
                 android:id="@+id/tv_state"
                 android:layout_width="match_parent"
                 android:drawablePadding="5dp"
+                android:gravity="center"
+                android:textColor="@color/white"
                 android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>

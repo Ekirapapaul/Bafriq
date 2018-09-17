@@ -35,7 +35,8 @@
     <string name="partner_name">Partner Name</string>
     <string name="name_of_contact">Name of contacct</string>
     <string name="mobile">Mobile</string>
-    <string name="tag_line"><![CDATA[Affiliate marketing & Online Referral Program]]></string>
+    <string name="tag_line"><![CDATA[Affiliate Marketing & Online Referral Program\n
+ for Real Estate & Development Solutions]]></string>
     <string name="compose">Compose</string>
     <string name="log_out">Log Out</string>
     <string name="yes">Yes</string>
@@ -46,11 +47,28 @@
     <string name="progress">Progress</string>
     <string name="lost">Lost</string>
     <string name="qualified">Qualified</string>
-    <string name="commisions">Commisions</string>
+    <string name="commisions">Commissions</string>
     <string name="bonuses">Bonuses</string>
     <string name="subject">Subject</string>
     <string name="message">Message</string>
     <string name="to">To</string>
     <string name="save_draft">Save as Draft</string>
     <string name="discard">Discard</string>
+    <string name="loyalty_points">Loyalty Points</string>
+    <string name="available">Available</string>
+    <string name="archive">Archive</string>
+    <string name="total_paid">Total Paid</string>
+    <string name="dummy_total_paid">Ksh 100</string>
+    <string name="share_via">Share Via...</string>
+    <string name="invite_message">Hello! “You have got to try “Buildafrique™ Partner Network”, the first Affiliate Marketing Program and Online Referral Mobile App. for real estate &amp; development solutions in Kenya.\n\n
+        Download App. and Register to start making business referral to earn 10% commission on your first successful referral, and continue to earn more commissions, bonuses and loyalty points’ rewards with every other successful referrall.
+    </string>
+    <string name="dashboard">Dashboard</string>
+    <string name="resources">Resourcees</string>
+    <string name="edit">Edit</string>
+    <string name="add_customer">Add Customer</string>
+    <string name="full_name">Full Name</string>
+    <string name="save">Save</string>
+    <string name="add_nw_lead">Add Nw Lead</string>
+    <string name="how_it_works">How it works</string>
 </resources>
