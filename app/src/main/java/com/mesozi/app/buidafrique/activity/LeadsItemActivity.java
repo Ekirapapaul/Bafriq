@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -54,8 +55,15 @@ public class LeadsItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_leads);
         Bundle b = getIntent().getBundleExtra("filter");
         filter = b.getString("filter");
-        TextView title = findViewById(R.id.tv_title);
-        title.setText((filter.contains("WON") ? filter : String.format("%s Opportunity", filter)));
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        toolbar.setTitle((filter.contains("WON") ? filter : String.format("%s Opportunity", filter)));
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
         progressDialog.setTitle("Fetching Leads");

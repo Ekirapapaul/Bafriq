@@ -31,6 +31,22 @@ public class RequestBuilder {
 
     }
 
+    public static JSONObject createMessge(String subject, String message) throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("jsonrpc", JSON_VERS);
+        jsonObject.put("method", METHOD_CALL);
+
+        JSONObject params = new JSONObject();
+        params.put("db", "buildafrique_dev_new");
+        params.put("subject", subject);
+        params.put("message", message);
+
+        jsonObject.put("params", params);
+        jsonObject.put(ID, LOGIN_ID);
+        return jsonObject;
+
+    }
+
     public static JSONObject fetchMessagesRequest() throws JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("jsonrpc", JSON_VERS);
