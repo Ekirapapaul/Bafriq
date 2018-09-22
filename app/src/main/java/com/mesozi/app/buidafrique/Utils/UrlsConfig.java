@@ -9,5 +9,6 @@ public class UrlsConfig {
 
     public static final String URL_LOGIN = BASE_IP + "session/authenticate";
     public static final String URL_CREATE_MESSAGE = AFFILIATE_IP + "messaging/new_message";
+    public static final String URL_CREATE_AFFILIATE = AFFILIATE_IP + "affiliates/registration";
     public static final String URL_DATASET = BASE_IP + "dataset/call_kw";
 }

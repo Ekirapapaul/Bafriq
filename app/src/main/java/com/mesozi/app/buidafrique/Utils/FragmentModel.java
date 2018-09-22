@@ -10,6 +10,7 @@ public class FragmentModel {
     public interface FragStateChangeListener {
 
         void nextFrag(int number);
+        void nextFrag(String name, String email, String number, String password);
     }
 
     private static FragmentModel mInstance;
@@ -31,6 +32,11 @@ public class FragmentModel {
     public void addNewFrag(int number) {
         if (mListener != null) {
             mListener.nextFrag(number);
+        }
+    }
+    public void addNewFrag(String name, String email, String number, String password) {
+        if (mListener != null) {
+            mListener.nextFrag(name, email, number, password);
         }
     }
 }

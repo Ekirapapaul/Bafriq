@@ -37,7 +37,7 @@ public class CreateAcountFrag extends Fragment {
             @Override
             public void onClick(View view) {
                 if (check())
-                    FragmentModel.getInstance().addNewFrag(POSITION + 1);
+                    FragmentModel.getInstance().addNewFrag(name.getText().toString(), email.getText().toString(), phone.getText().toString(), password.getText().toString());
             }
         });
 

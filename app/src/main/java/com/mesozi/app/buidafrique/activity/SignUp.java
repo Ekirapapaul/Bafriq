@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import com.mesozi.app.buidafrique.Fragments.CreateAcountFrag;
@@ -21,6 +22,7 @@ import java.util.Objects;
 public class SignUp extends AppCompatActivity implements FragmentModel.FragStateChangeListener {
     private FragmentTransaction transaction;
     private int position = 0;
+    String name, email, number, password;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,6 +71,18 @@ public class SignUp extends AppCompatActivity implements FragmentModel.FragState
     }
 
     @Override
+    public void nextFrag(String name, String email, String number, String password) {
+        this.name = name;
+        this.email = email;
+        this.number = number;
+        this.password = password;
+
+        transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame, new SignUpFrag(), "SignUp").commit();
+        transaction.addToBackStack(null);
+    }
+
+    @Override
     public void onBackPressed() {
         if (position > 0) {
             getSupportFragmentManager().popBackStack();
@@ -77,5 +91,21 @@ public class SignUp extends AppCompatActivity implements FragmentModel.FragState
             super.onBackPressed();
         }
 
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }

@@ -31,7 +31,7 @@ public class RequestBuilder {
 
     }
 
-    public static JSONObject registerAffiliateJson(String name, String email, String referral_code, String occupation, String phone, String city) throws JSONException {
+    public static JSONObject registerAffiliateJson(String name, String email, String referral_code,String phone,String password, String occupation,  String location) throws JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("jsonrpc", JSON_VERS);
         jsonObject.put("method", METHOD_CALL);
@@ -43,7 +43,7 @@ public class RequestBuilder {
         values.put("referral_code", referral_code);
         values.put("occupation", occupation);
         values.put("phone", phone);
-        values.put("city", city);
+        values.put("city", location);
         params.put("values", values);
 
         jsonObject.put("params", params);
