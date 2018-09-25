@@ -44,6 +44,7 @@
         <activity android:name=".activity.Resources.Connect" />
         <activity android:name=".activity.Resources.About" />
         <activity android:name=".activity.ArchivesActivity" />
+        <activity android:name=".activity.AddLead" />
     </application>
 
 </manifest>

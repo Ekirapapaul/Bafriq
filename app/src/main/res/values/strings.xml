@@ -71,4 +71,8 @@
     <string name="save">Save</string>
     <string name="add_nw_lead">Add Nw Lead</string>
     <string name="how_it_works">How it works</string>
+    <string name="add_lead">Add Lead</string>
+    <string name="lead_details">Lead Details</string>
+    <string name="customer_details">Customer Detals</string>
+    <string name="customer_name">Customer Name</string>
 </resources>

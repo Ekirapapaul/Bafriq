@@ -92,7 +92,7 @@ public class LeadsActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Add lead
+                startActivity(new Intent(getBaseContext(), AddLead.class));
             }
         });
     }
@@ -108,7 +108,7 @@ public class LeadsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.edit:
-                //Add lead
+                startActivity(new Intent(getBaseContext(), AddLead.class));
                 break;
         }
         return super.onOptionsItemSelected(item);
