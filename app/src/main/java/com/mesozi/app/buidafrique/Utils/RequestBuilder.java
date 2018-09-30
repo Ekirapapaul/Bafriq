@@ -204,9 +204,7 @@ public class RequestBuilder {
     }
 
     public static JSONObject inboxObject() throws JSONException {
-        String request = "\n" +
-                "\n" +
-                "{\n" +
+        String request = "{\n" +
                 "  \"jsonrpc\":\"2.0\",\n" +
                 "  \"method\":\"call\",\n" +
                 "  \"params\":{\n" +

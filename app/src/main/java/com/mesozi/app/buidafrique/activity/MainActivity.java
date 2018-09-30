@@ -19,15 +19,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mesozi.app.buidafrique.Models.EmailMessage;
 import com.mesozi.app.buidafrique.Models.Lead;
 import com.mesozi.app.buidafrique.Models.SalesOrder;
 import com.mesozi.app.buidafrique.R;
 import com.mesozi.app.buidafrique.Utils.SessionManager;
+import com.raizlabs.android.dbflow.sql.language.Method;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -113,15 +116,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         long inbox = 0;
+        List<EmailMessage> messages = SQLite.select().from(EmailMessage.class).queryList();
         long leads = 0;
         //A very unclean way to do this
         try{
-            inbox = new Select().from(EmailMessage.class).count();
+            inbox =  new Select(Method.count()).from(EmailMessage.class).count();
         }catch (SQLiteException e){
             e.printStackTrace();
         }
         try{
-            leads = new Select().from(Lead.class).count();
+            leads = new Select(Method.count()).from(Lead.class).count();
         }catch (SQLiteException e){
             e.printStackTrace();
         }

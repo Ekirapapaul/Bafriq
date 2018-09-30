@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.error.AuthFailureError;
@@ -158,6 +159,12 @@ public class InboxActivity extends AppCompatActivity {
                     headers.put("Cookie", sessionManager.getCookie());
                     return headers;
                 }
+
+                @Override
+                protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+                    Log.d("response", response.toString());
+                    return super.parseNetworkResponse(response);
+                }
             };
             VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(jsonObjectRequest);
         } catch (JSONException e) {
@@ -184,6 +191,7 @@ public class InboxActivity extends AppCompatActivity {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 EmailMessage emailMessage = gson.fromJson(jsonObject.toString(), EmailMessage.class);
                 emails.add(emailMessage);
+                emailMessage.save();
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -59,6 +60,15 @@ public class LeadsActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.setTitle("Fetching Leads");
         progressDialog.setMessage("Please Wait...");
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         placeholder = findViewById(R.id.tv_search_placeholder);
         searchView = findViewById(R.id.search_view);
