@@ -1,5 +1,8 @@
 package com.mesozi.app.buidafrique.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.mesozi.app.buidafrique.Utils.AppDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
@@ -11,7 +14,10 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
  */
 
 @Table(database = AppDatabase.class, name = "email_message")
-public class EmailMessage extends BaseModel {
+public class EmailMessage extends BaseModel implements Parcelable {
+
+    public EmailMessage() {
+    }
 
     @Column
     @PrimaryKey
@@ -41,6 +47,30 @@ public class EmailMessage extends BaseModel {
     @Column
     private String name;
 
+
+    protected EmailMessage(Parcel in) {
+        id = in.readString();
+        display_name = in.readString();
+        email_from = in.readString();
+        date = in.readString();
+        reply_to = in.readString();
+        starred = in.readByte() != 0;
+        subject = in.readString();
+        body = in.readString();
+        name = in.readString();
+    }
+
+    public static final Creator<EmailMessage> CREATOR = new Creator<EmailMessage>() {
+        @Override
+        public EmailMessage createFromParcel(Parcel in) {
+            return new EmailMessage(in);
+        }
+
+        @Override
+        public EmailMessage[] newArray(int size) {
+            return new EmailMessage[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -112,5 +142,23 @@ public class EmailMessage extends BaseModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
+        parcel.writeString(display_name);
+        parcel.writeString(email_from);
+        parcel.writeString(date);
+        parcel.writeString(reply_to);
+        parcel.writeByte((byte) (starred ? 1 : 0));
+        parcel.writeString(subject);
+        parcel.writeString(body);
+        parcel.writeString(name);
     }
 }

@@ -54,6 +54,9 @@ public class EmailAdapter extends RecyclerView.Adapter<EmailAdapter.EmailHolder>
 
     }
 
+    public EmailMessage getEmail(int position){
+        return  emails.get(position);
+    }
     @Override
     public int getItemCount() {
         return emails.size();

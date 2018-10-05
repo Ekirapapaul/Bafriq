@@ -52,6 +52,7 @@ public class InboxActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private SearchView searchView;
     private TextView placeholder;
+    private EmailAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -92,7 +93,10 @@ public class InboxActivity extends AppCompatActivity {
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getBaseContext(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-
+                EmailMessage message = adapter.getEmail(position);
+                Intent intent = new Intent(getBaseContext(), InboxItemActivity.class);
+                intent.putExtra("parcel_data", message);
+                startActivity(intent);
             }
         }));
 
@@ -199,7 +203,8 @@ public class InboxActivity extends AppCompatActivity {
 
         }
         if (progressDialog != null) progressDialog.dismiss();
-        recyclerView.setAdapter(new EmailAdapter(getBaseContext(), emails));
+        adapter = new EmailAdapter(getBaseContext(), emails);
+        recyclerView.setAdapter(adapter);
         Log.d("emails size", String.valueOf(emails.size()));
     }
 }
