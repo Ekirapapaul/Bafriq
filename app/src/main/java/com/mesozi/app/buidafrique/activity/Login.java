@@ -17,6 +17,8 @@ import com.android.volley.Response;
 import com.android.volley.error.AuthFailureError;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
+import com.google.gson.Gson;
+import com.mesozi.app.buidafrique.Models.Account;
 import com.mesozi.app.buidafrique.Models.ProductCategory;
 import com.mesozi.app.buidafrique.R;
 import com.mesozi.app.buidafrique.Utils.DatabaseInit;
@@ -24,6 +26,7 @@ import com.mesozi.app.buidafrique.Utils.RequestBuilder;
 import com.mesozi.app.buidafrique.Utils.SessionManager;
 import com.mesozi.app.buidafrique.Utils.UrlsConfig;
 import com.mesozi.app.buidafrique.Utils.VolleySingleton;
+import com.raizlabs.android.dbflow.sql.language.Delete;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -104,10 +107,13 @@ public class Login extends AppCompatActivity {
                                 etEmail.setError(getString(R.string.error_wrong_combinations));
                                 progressDialog.cancel();
                             } else {
+                                Delete.table(Account.class);
+                                Gson gson = new Gson();
+                                Account account = gson.fromJson(results.toString(), Account.class);
+                                account.save();
                                 sessionManager.setLoggedIn(true);
                                 String sessionId = results.getString("session_id");
                                 sessionManager.setKeyBearerToken(sessionId);
-                                Toast.makeText(Login.this, "Login Successfull", Toast.LENGTH_SHORT).show();
                                 finishActivity();
                             }
                         } catch (JSONException e) {
