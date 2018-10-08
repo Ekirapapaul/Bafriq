@@ -13,6 +13,7 @@ public class RequestBuilder {
     private static final String JSON_VERS = "2.0";
     private static final String METHOD_CALL = "call";
     private static final int LOGIN_ID = 1969558901;
+    private static final String DB = "buildafrique_dev_new";
     private static final String ID = "id";
 
     public static JSONObject LoginRequest(String username, String pasword) throws JSONException {
@@ -58,7 +59,7 @@ public class RequestBuilder {
         jsonObject.put("method", METHOD_CALL);
 
         JSONObject params = new JSONObject();
-        params.put("db", "buildafrique_dev_new");
+        //params.put("db", DB);
         params.put("subject", subject);
         params.put("message", message);
 
@@ -224,6 +225,7 @@ public class RequestBuilder {
 
         return new JSONObject(request);
     }
+
 
     public static JSONObject createLeads(String displayName, String name, String email, String addressName, String emailFrom) throws JSONException {
         JSONObject jsonObject = new JSONObject();
