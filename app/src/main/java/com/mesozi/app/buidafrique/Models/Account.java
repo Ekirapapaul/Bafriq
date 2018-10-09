@@ -15,6 +15,9 @@ public class Account extends BaseModel {
     private String username;
 
     @Column
+    private String password;
+
+    @Column
     private String session_id;
 
     @Column
@@ -57,5 +60,13 @@ public class Account extends BaseModel {
 
     public void setCompany_id(String company_id) {
         this.company_id = company_id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

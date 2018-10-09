@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.error.AuthFailureError;
@@ -70,12 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         registerViews();
         Account account = SQLite.select().from(Account.class).querySingle();
         if(account != null) {
-            try {
-                getDashboard(account.getUid());
-            } catch (JSONException e) {
-                e.printStackTrace();
-                error();
-            }
+            submitLogin(account.getUsername(), account.getPassword());
         }else {
             error();
         }
@@ -335,6 +331,54 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void error() {
         if (progressDialog != null) progressDialog.dismiss();
         Toast.makeText(this, "Can not find a connection right now", Toast.LENGTH_SHORT).show();
+    }
+
+    private void submitLogin(final String username, final String password) {
+        progressDialog.show();
+        final SessionManager sessionManager = new SessionManager(getBaseContext());
+        try {
+            JSONObject jsonObject = RequestBuilder.LoginRequest(username, password);
+            Log.d("Json ", jsonObject.toString());
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlsConfig.URL_LOGIN, jsonObject, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.d("response", response.toString());
+                    Account account = SQLite.select().from(Account.class).querySingle();
+                    try {
+                        getDashboard(account.getUid());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        error();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                    error();
+                }
+            }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<>();
+                    return headers;
+                }
+
+                @Override
+                protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+                    Log.i("response", response.headers.toString());
+                    Map<String, String> responseHeaders = response.headers;
+                    String cookie = responseHeaders.get("Set-Cookie");
+                    sessionManager.setCookie(cookie);
+                    Log.i("cookies", cookie);
+                    return super.parseNetworkResponse(response);
+                }
+            };
+            VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(jsonObjectRequest);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

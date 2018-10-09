@@ -114,6 +114,7 @@ public class Login extends AppCompatActivity {
                                 }
                                 Gson gson = new Gson();
                                 Account account = gson.fromJson(results.toString(), Account.class);
+                                account.setPassword(password);
                                 account.save();
                                 sessionManager.setLoggedIn(true);
                                 String sessionId = results.getString("session_id");

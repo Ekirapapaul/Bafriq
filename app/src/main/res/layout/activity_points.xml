@@ -18,7 +18,7 @@
             app:elevation="4dp"
             app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title="@string/commisions"
+            app:title="@string/loyalty_points"
             app:titleTextColor="@color/white" />
         <TextView
             android:layout_width="match_parent"
