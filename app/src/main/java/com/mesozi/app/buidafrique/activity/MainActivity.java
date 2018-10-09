@@ -1,5 +1,6 @@
 package com.mesozi.app.buidafrique.activity;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteException;
@@ -13,6 +14,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,17 +23,35 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.error.AuthFailureError;
+import com.android.volley.error.VolleyError;
+import com.android.volley.request.JsonObjectRequest;
+import com.google.gson.Gson;
+import com.mesozi.app.buidafrique.Models.Account;
+import com.mesozi.app.buidafrique.Models.Bonus;
+import com.mesozi.app.buidafrique.Models.Commission;
 import com.mesozi.app.buidafrique.Models.EmailMessage;
 import com.mesozi.app.buidafrique.Models.Lead;
+import com.mesozi.app.buidafrique.Models.Loyalty;
 import com.mesozi.app.buidafrique.Models.SalesOrder;
 import com.mesozi.app.buidafrique.R;
+import com.mesozi.app.buidafrique.Utils.RequestBuilder;
 import com.mesozi.app.buidafrique.Utils.SessionManager;
+import com.mesozi.app.buidafrique.Utils.UrlsConfig;
+import com.mesozi.app.buidafrique.Utils.VolleySingleton;
 import com.raizlabs.android.dbflow.sql.language.Method;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Home activity class.
@@ -39,15 +59,37 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private DrawerLayout drawerLayout;
     private TextView qualified, won, lost;
+    ProgressDialog progressDialog;
+    TextView tvCommission, tvBonus, tvLoyalty;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         registerViews();
+        Account account = SQLite.select().from(Account.class).querySingle();
+        if(account != null) {
+            try {
+                getDashboard(account.getUid());
+            } catch (JSONException e) {
+                e.printStackTrace();
+                error();
+            }
+        }else {
+            error();
+        }
     }
 
     private void registerViews() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
+        progressDialog.setTitle("Fetching User details");
+        progressDialog.setMessage("Please Wait...");
+
+        tvBonus = findViewById(R.id.tv_bonuses);
+        tvCommission = findViewById(R.id.tv_commission);
+        tvLoyalty = findViewById(R.id.tv_loyalty);
+
         qualified = findViewById(R.id.tv_qualified_val);
         won = findViewById(R.id.tv_won_val);
         lost = findViewById(R.id.tv_lost_val);
@@ -119,14 +161,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         List<EmailMessage> messages = SQLite.select().from(EmailMessage.class).queryList();
         long leads = 0;
         //A very unclean way to do this
-        try{
-            inbox =  new Select(Method.count()).from(EmailMessage.class).count();
-        }catch (SQLiteException e){
+        try {
+            inbox = new Select(Method.count()).from(EmailMessage.class).count();
+        } catch (SQLiteException e) {
             e.printStackTrace();
         }
-        try{
+        try {
             leads = new Select(Method.count()).from(Lead.class).count();
-        }catch (SQLiteException e){
+        } catch (SQLiteException e) {
             e.printStackTrace();
         }
         Menu menu = navigationView.getMenu();
@@ -211,6 +253,72 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.home_menu, menu);
         return true;
+    }
+
+    private void getDashboard(String uid) throws JSONException {
+        JSONObject jsonObject = RequestBuilder.getDashboard();
+        final SessionManager sessionManager = new SessionManager(getBaseContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlsConfig.getDashboardUrl(uid), jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("response", response.toString());
+                try {
+                    if (response.has("result") && response.getJSONObject("result").has("bonus")) {
+                        JSONObject result = response.getJSONObject("result");
+                        Gson gson = new Gson();
+                        Commission commission = gson.fromJson(result.getJSONObject("commission").toString(), Commission.class);
+                        Bonus bonus = gson.fromJson(result.getJSONObject("bonus").toString(), Bonus.class);
+                        Loyalty loyalty = gson.fromJson(result.getJSONObject("loyalty").toString(), Loyalty.class);
+                        commission.save();
+                        bonus.save();
+                        loyalty.save();
+                        populate();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    error();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                error();
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Cookie", sessionManager.getCookie());
+                return headers;
+            }
+        };
+        VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(jsonObjectRequest);
+    }
+
+    private void populate() {
+        Bonus bonus = SQLite.select().from(Bonus.class).querySingle();
+        if (bonus != null) {
+            tvBonus.setText(String.format(Locale.getDefault(), "KES %d", bonus.getAvailable()));
+        }
+        Commission commission = SQLite.select().from(Commission.class).querySingle();
+        if (commission != null) {
+            tvCommission.setText(String.format(Locale.getDefault(), "KES %d",commission.getAvailable()));
+        }
+        Loyalty loyalty = SQLite.select().from(Loyalty.class).querySingle();
+        if (loyalty != null) {
+            tvLoyalty.setText(String.format(Locale.getDefault(), "KES %d", loyalty.getAvailable()));
+        }
+        finishFetching();
+    }
+
+    private void finishFetching() {
+        if (progressDialog != null) progressDialog.dismiss();
+    }
+
+    private void error() {
+        if (progressDialog != null) progressDialog.dismiss();
+        Toast.makeText(this, "Can not find a connection right now", Toast.LENGTH_SHORT).show();
     }
 
 }

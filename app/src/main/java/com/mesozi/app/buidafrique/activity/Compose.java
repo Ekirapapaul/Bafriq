@@ -67,6 +67,8 @@ public class Compose extends AppCompatActivity {
         message = findViewById(R.id.et_message);
         subject = findViewById(R.id.et_subject);
 
+
+
         findViewById(R.id.btn_send).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,8 +81,9 @@ public class Compose extends AppCompatActivity {
 
     private void sendMessage() {
         try {
+            String sub = ((subject.getText().toString().isEmpty()) ? " " : subject.getText().toString());
 
-            JSONObject jsonObject = RequestBuilder.createMessge("", message.getText().toString());
+            JSONObject jsonObject = RequestBuilder.createMessge(sub, message.getText().toString());
             final SessionManager sessionManager = new SessionManager(getBaseContext());
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlsConfig.URL_CREATE_MESSAGE, jsonObject, new Response.Listener<JSONObject>() {
                 @Override
@@ -119,6 +122,7 @@ public class Compose extends AppCompatActivity {
 
     private boolean check() {
         if (message.getText().toString().isEmpty()) {
+            message.requestFocus();
             message.setError(getString(R.string.error_required));
             return false;
         }
@@ -136,6 +140,7 @@ public class Compose extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.send:
+                if (check()) sendMessage();
                 break;
             case R.id.discard:
                 break;

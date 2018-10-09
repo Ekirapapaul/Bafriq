@@ -107,7 +107,11 @@ public class Login extends AppCompatActivity {
                                 etEmail.setError(getString(R.string.error_wrong_combinations));
                                 progressDialog.cancel();
                             } else {
-                                Delete.table(Account.class);
+                                try {
+                                    Delete.table(Account.class);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                                 Gson gson = new Gson();
                                 Account account = gson.fromJson(results.toString(), Account.class);
                                 account.save();
