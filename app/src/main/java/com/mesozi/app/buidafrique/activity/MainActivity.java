@@ -41,6 +41,7 @@ import com.mesozi.app.buidafrique.Utils.RequestBuilder;
 import com.mesozi.app.buidafrique.Utils.SessionManager;
 import com.mesozi.app.buidafrique.Utils.UrlsConfig;
 import com.mesozi.app.buidafrique.Utils.VolleySingleton;
+import com.raizlabs.android.dbflow.sql.language.Delete;
 import com.raizlabs.android.dbflow.sql.language.Method;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.sql.language.Select;
@@ -265,6 +266,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 try {
                     if (response.has("result") && response.getJSONObject("result").has("bonus")) {
                         JSONObject result = response.getJSONObject("result");
+                        try {
+                            Delete.table(Commission.class);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            Delete.table(Loyalty.class);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            Delete.table(Bonus.class);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         Gson gson = new Gson();
                         Commission commission = gson.fromJson(result.getJSONObject("commission").toString(), Commission.class);
                         Bonus bonus = gson.fromJson(result.getJSONObject("bonus").toString(), Bonus.class);

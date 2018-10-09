@@ -19,13 +19,13 @@ public class Bonus extends BaseModel implements Parcelable {
     private long id;
 
     @Column
-    private int available;
+    private int available = 0;
 
     @Column
-    private int expected;
+    private int expected = 0 ;
 
     @Column
-    private int paid;
+    private int paid = 0;
 
     public Bonus() {
     }

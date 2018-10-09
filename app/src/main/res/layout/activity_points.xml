@@ -58,8 +58,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".4"
+                    android:id="@+id/tv_total"
                     android:gravity="center"
-                    android:text="100" />
+                    android:text="0" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
@@ -94,8 +95,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".4"
+                    android:id="@+id/tv_available"
                     android:gravity="center"
-                    android:text="50" />
+                    android:text="0" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
@@ -106,6 +108,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/brn_redeem"
         android:layout_gravity="bottom"
         android:layout_margin="10dp"
         android:background="@drawable/button_primary"
