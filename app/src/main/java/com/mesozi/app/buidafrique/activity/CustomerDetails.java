@@ -32,11 +32,13 @@ public class CustomerDetails extends AppCompatActivity {
 
         TextView name = findViewById(R.id.tv_name);
         TextView mail = findViewById(R.id.tv_mail);
+        TextView mobile = findViewById(R.id.tv_mobile);
         TextView phone = findViewById(R.id.tv_phone);
 
         if (customer != null) {
             name.setText(customer.getName());
             mail.setText(customer.getEmail());
+            mobile.setText((customer.getMobile() != null && !customer.getMobile().equals("false")) ? customer.getMobile().replaceAll(",", "\n").trim() : "N/A");
             phone.setText((customer.getPhone() != null && !customer.getPhone().equals("false")) ? customer.getPhone().replaceAll(",", "\n").trim() : "N/A");
         }
 

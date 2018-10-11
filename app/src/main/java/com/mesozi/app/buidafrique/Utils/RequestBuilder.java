@@ -182,7 +182,7 @@ public class RequestBuilder {
                 "      \"args\":[[[\"active\", \"=\", true],[\"customer\", \"=\", true]]],\n" +
                 "    \"kwargs\":\n" +
                 "      {\n" +
-                "      \t\"fields\":[\"company\",\"customer\",\"display_name\",\"partner_id\",\"id\",\"name\",\"email\",\"phone\",\"street\",\"city\",\"zip\"],\n" +
+                "      \t\"fields\":[\"company\",\"customer\",\"display_name\",\"partner_id\",\"id\",\"name\",\"email\",\"phone\",\"street\",\"city\",\"zip\",\"mobile\"],\n" +
                 "        \"offset\":0,\n" +
                 "        \"limit\":100,\n" +
                 "        \"order\":\"id\"\n" +

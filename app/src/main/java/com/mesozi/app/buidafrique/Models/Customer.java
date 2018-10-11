@@ -41,6 +41,9 @@ public class Customer extends BaseModel implements Parcelable {
     @Column
     private String email;
 
+    @Column
+    private String mobile;
+
 
     protected Customer(Parcel in) {
         id = in.readInt();
@@ -50,6 +53,7 @@ public class Customer extends BaseModel implements Parcelable {
         phone = in.readString();
         street = in.readString();
         email = in.readString();
+        mobile = in.readString();
     }
 
     public static final Creator<Customer> CREATOR = new Creator<Customer>() {
@@ -134,5 +138,14 @@ public class Customer extends BaseModel implements Parcelable {
         parcel.writeString(phone);
         parcel.writeString(street);
         parcel.writeString(email);
+        parcel.writeString(mobile);
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 }

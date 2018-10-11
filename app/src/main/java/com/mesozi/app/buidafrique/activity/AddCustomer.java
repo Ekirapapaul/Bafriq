@@ -30,5 +30,11 @@ public class AddCustomer extends AppCompatActivity {
                 finish();
             }
         });
+        findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 }
