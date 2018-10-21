@@ -56,7 +56,7 @@ public class ResourcesActivity extends AppCompatActivity {
                         startActivity(new Intent(getBaseContext(), ProductsActivity.class));
                         break;
                     case 2:
-                        startActivity(new Intent(getBaseContext(), Marketing.class));
+                        startActivity(new Intent(getBaseContext(), MarketingMaterials.class));
                         break;
                     case 3:
                         Intent vidIntent = new Intent(Intent.ACTION_VIEW);
@@ -83,7 +83,7 @@ public class ResourcesActivity extends AppCompatActivity {
 
     private void setResources() {
         List<String> resources = new ArrayList<>();
-        resources.add("How t Works");
+        resources.add("How it Works");
         resources.add("Products");
         resources.add("Marketing Materials");
         resources.add("Monthly Newsletters");

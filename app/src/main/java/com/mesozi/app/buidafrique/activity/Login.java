@@ -171,6 +171,7 @@ public class Login extends AppCompatActivity {
     private void error() {
         if (progressDialog != null) progressDialog.dismiss();
         Toast.makeText(this, "Can not find a connection right now", Toast.LENGTH_SHORT).show();
+        finishActivity();
     }
 
 

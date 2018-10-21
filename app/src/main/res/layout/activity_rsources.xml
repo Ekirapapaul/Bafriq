@@ -31,6 +31,7 @@
         <TextView
             android:id="@+id/tv_about"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             android:padding="15dp"
             android:text="@string/resources" />
@@ -38,6 +39,7 @@
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:id="@+id/recycler"
+            android:paddingTop="10dp"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp" />
     </LinearLayout>

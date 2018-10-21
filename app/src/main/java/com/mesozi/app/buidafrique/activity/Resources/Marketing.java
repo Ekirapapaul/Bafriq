@@ -10,8 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.mesozi.app.buidafrique.Models.ChildResource;
 import com.mesozi.app.buidafrique.R;
 import com.mesozi.app.buidafrique.Utils.RecyclerItemClickListener;
+import com.mesozi.app.buidafrique.adapters.ChildResourceAdapter;
 import com.mesozi.app.buidafrique.adapters.ResourceAdapter;
 
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ import java.util.List;
  */
 public class Marketing extends AppCompatActivity {
 
-    private ResourceAdapter adapter;
+    private ChildResourceAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,11 +61,11 @@ public class Marketing extends AppCompatActivity {
     }
 
     private void setResources() {
-        List<String> resources = new ArrayList<>();
-        resources.add("Company Website");
-        resources.add("Bronchure");
+        List<ChildResource> resources = new ArrayList<>();
+        resources.add(new ChildResource("Company Website", R.drawable.ic_public_black_24dp));
+        resources.add(new ChildResource("Bronchure", R.drawable.ic_folder_open_black_24dp));
 
-        adapter = new ResourceAdapter(getBaseContext(), resources);
+        adapter = new ChildResourceAdapter(getBaseContext(), resources);
 
     }
 }

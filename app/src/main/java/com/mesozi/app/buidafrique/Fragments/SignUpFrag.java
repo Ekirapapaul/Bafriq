@@ -98,14 +98,15 @@ public class SignUpFrag extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
                 if (response.has("id")) {
-                    Toast.makeText(getContext(), "Affiliate successfully registered", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(getContext(), MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                    if (progressDialog != null) progressDialog.dismiss();
-
-                    sessionManager.setLoggedIn(true);
-                    startActivity(intent);
+                    Toast.makeText(getContext(), "Affiliate successfully registered. We will get back to you on tour registration", Toast.LENGTH_LONG).show();
+//                    Intent intent = new Intent(getContext(), MainActivity.class);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//
+//                    if (progressDialog != null) progressDialog.dismiss();
+//
+//                    sessionManager.setLoggedIn(true);
+//                    startActivity(intent);
+                    Objects.requireNonNull(getActivity()).finish();
                 } else {
                     error();
                 }

@@ -1,6 +1,8 @@
 package com.mesozi.app.buidafrique.activity;
 
 import android.app.ProgressDialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -44,11 +46,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by ekirapa on 7/9/18 .
  */
-public class CustomerActivity extends AppCompatActivity {
+public class CustomerActivity extends AppCompatActivity implements CustomerAdapter.CustomerAdapterListener {
     private List<Customer> customers = new ArrayList<>();
     CustomerAdapter adapter;
     private ProgressDialog progressDialog;
@@ -87,6 +90,27 @@ public class CustomerActivity extends AppCompatActivity {
         searchView = findViewById(R.id.search_view);
         searchView.setFocusable(true);// searchView is null
         searchView.setFocusableInTouchMode(true);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+
+        searchView.setSearchableInfo(Objects.requireNonNull(searchManager)
+                .getSearchableInfo(getComponentName()));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // filter recycler view when query submitted
+
+                adapter.getFilter().filter(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                // filter recycler view when text is changed
+                adapter.getFilter().filter(query);
+                return false;
+            }
+        });
+
 
 
         placeholder.setOnClickListener(new View.OnClickListener() {
@@ -215,5 +239,10 @@ public class CustomerActivity extends AppCompatActivity {
                 .where(Customer_Table.email.notEq("false"))
                 .queryList();;
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onContactSelected(Customer customer) {
+
     }
 }

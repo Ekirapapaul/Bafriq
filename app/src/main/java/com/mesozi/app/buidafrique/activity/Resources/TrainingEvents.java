@@ -10,8 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.mesozi.app.buidafrique.Models.ChildResource;
 import com.mesozi.app.buidafrique.R;
 import com.mesozi.app.buidafrique.Utils.RecyclerItemClickListener;
+import com.mesozi.app.buidafrique.adapters.ChildResourceAdapter;
 import com.mesozi.app.buidafrique.adapters.ResourceAdapter;
 
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ import java.util.List;
  */
 public class TrainingEvents extends AppCompatActivity {
 
-    private ResourceAdapter adapter;
+    private ChildResourceAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,10 +59,10 @@ public class TrainingEvents extends AppCompatActivity {
     }
 
     private void setResources() {
-        List<String> resources = new ArrayList<>();
-        resources.add("Training Eents");
+        List<ChildResource> resources = new ArrayList<>();
+        resources.add(new ChildResource("Training Eents", R.drawable.ic_event_black_24dp));
 
-        adapter = new ResourceAdapter(getBaseContext(), resources);
+        adapter = new ChildResourceAdapter(getBaseContext(), resources);
 
     }
 }

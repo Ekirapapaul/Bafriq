@@ -60,7 +60,7 @@ public class ProductsActivity extends AppCompatActivity {
         Bundle bundle2 = new Bundle();
         bundle2.putInt("tag",2);
         frag2.setArguments(bundle2);
-        adapter.addFragment(frag2, "QUANTITY SURVEYING");
+        adapter.addFragment(frag2, "COST ADVISORY");
 
         ProductsFrag frag3 = new ProductsFrag();
         Bundle bundle3 = new Bundle();

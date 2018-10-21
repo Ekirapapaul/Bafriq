@@ -13,6 +13,7 @@ public class UrlsConfig {
     public static final String URL_CREATE_MESSAGE = AFFILIATE_IP + "messaging/new_message";
     public static final String URL_CREATE_AFFILIATE = AFFILIATE_IP + "affiliates/registration";
     public static final String URL_DATASET = BASE_IP + "dataset/call_kw";
+    public static final String URL_PROMOTION_MESSAGES = "web/get_promo_messages/";
 
     public static String getDashboardUrl(String uid){
         return String.format(Locale.getDefault(), "%sdashboard/%s", AFFILIATE_IP, uid);

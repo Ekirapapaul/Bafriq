@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mesozi.app.buidafrique.Models.Bonus;
 import com.mesozi.app.buidafrique.Models.Loyalty;
@@ -39,10 +40,23 @@ public class PointsDetails extends AppCompatActivity {
         total = findViewById(R.id.tv_total);
         available = findViewById(R.id.tv_available);
 
-        Loyalty loyalty = SQLite.select().from(Loyalty.class).querySingle();
+        final Loyalty loyalty = SQLite.select().from(Loyalty.class).querySingle();
         if (loyalty != null) {
             available.setText(String.format(Locale.getDefault(), "%d", loyalty.getAvailable()));
             total.setText(String.format(Locale.getDefault(), "%d", loyalty.getPaid()));
         }
+
+        findViewById(R.id.btn_redeem).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(loyalty != null){
+                    if(loyalty.getAvailable() > 0){
+
+                    }else{
+                        Toast.makeText(PointsDetails.this, "You have no available points", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
     }
 }

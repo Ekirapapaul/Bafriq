@@ -35,7 +35,7 @@
                 <item
                     android:id="@+id/nav_qualified"
                     android:icon="@drawable/ic_card_membership_black_24dp"
-                    android:title="@string/qualified" />
+                    android:title="@string/in_progress" />
                 <item
                     android:id="@+id/nav_won"
                     android:icon="@drawable/ic_business_center_black_24dp"
@@ -55,6 +55,10 @@
             android:id="@+id/nav_sales"
             android:icon="@drawable/ic_people_black_24dp"
             android:title="@string/sales_orders" />
+        <item
+            android:id="@+id/nav_invite"
+            android:icon="@drawable/ic_person_add_black_24dp"
+            android:title="@string/invite_friends" />
     </group>
     <group
         android:id="@+id/group_products"

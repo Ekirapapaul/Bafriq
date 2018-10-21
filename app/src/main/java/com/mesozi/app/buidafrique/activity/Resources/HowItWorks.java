@@ -10,8 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.mesozi.app.buidafrique.Models.ChildResource;
 import com.mesozi.app.buidafrique.R;
 import com.mesozi.app.buidafrique.Utils.RecyclerItemClickListener;
+import com.mesozi.app.buidafrique.adapters.ChildResourceAdapter;
 import com.mesozi.app.buidafrique.adapters.ResourceAdapter;
 
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ import java.util.List;
  */
 public class HowItWorks extends AppCompatActivity {
 
-    private ResourceAdapter adapter;
+    private ChildResourceAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,12 +69,12 @@ public class HowItWorks extends AppCompatActivity {
     }
 
     private void setResources() {
-        List<String> resources = new ArrayList<>();
-        resources.add("Videos");
-        resources.add("Flyer");
-        resources.add("Website");
+        List<ChildResource> resources = new ArrayList<>();
+        resources.add(new ChildResource("Videos",R.drawable.ic_videocam_black_24dp));
+        resources.add(new ChildResource("Flyer", R.drawable.ic_import_contacts_black_24dp));
+        resources.add(new ChildResource("Website", R.drawable.ic_web_black_24dp));
 
-        adapter = new ResourceAdapter(getBaseContext(), resources);
+        adapter = new ChildResourceAdapter(getBaseContext(), resources);
 
     }
 }

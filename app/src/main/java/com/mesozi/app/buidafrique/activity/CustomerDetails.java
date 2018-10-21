@@ -28,7 +28,7 @@ public class CustomerDetails extends AppCompatActivity {
                 finish();
             }
         });
-        Customer customer = getIntent().getParcelableExtra("parcel_data");
+        final Customer customer = getIntent().getParcelableExtra("parcel_data");
 
         TextView name = findViewById(R.id.tv_name);
         TextView mail = findViewById(R.id.tv_mail);
@@ -45,7 +45,9 @@ public class CustomerDetails extends AppCompatActivity {
         findViewById(R.id.btn_add_lead).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    startActivity(new Intent(getBaseContext(), AddLead.class));
+                Intent intent = new Intent(getBaseContext(), AddLead.class);
+                intent.putExtra("parcel_data", customer);
+                startActivity(intent);
             }
         });
     }

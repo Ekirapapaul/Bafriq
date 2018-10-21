@@ -1,6 +1,7 @@
 package com.mesozi.app.buidafrique.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import java.util.List;
  */
 public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.ResourceHolder> {
     Context context;
+    private int[] ids = {R.drawable.ic_help_black_24dp, R.drawable.ic_view_list_black_24dp, R.drawable.ic_info_black_24dp, R.drawable.ic_announcement_black_24dp, R.drawable.ic_event_black_24dp, R.drawable.ic_web_black_24dp, R.drawable.ic_info_black_24dp};
     List<String> resources = new ArrayList<>();
 
     public ResourceAdapter(Context context, List<String> resources) {
@@ -35,6 +37,9 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.Resour
     @Override
     public void onBindViewHolder(@NonNull ResourceHolder holder, int position) {
         holder.textView.setText(resources.get(position));
+        Drawable img = context.getResources().getDrawable(ids[position]);
+        img.setBounds(0, 0, 60, 60);
+        holder.textView.setCompoundDrawables(img, null, null, null);
     }
 
     @Override

@@ -128,8 +128,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     case R.id.nav_inbox:
                         startActivity(new Intent(getBaseContext(), InboxActivity.class));
                         break;
+                    case R.id.nav_archive:
+                        startActivity(new Intent(getBaseContext(), ArchiveActivity.class));
+                        break;
                     case R.id.nav_products:
                         startActivity(new Intent(getBaseContext(), ResourcesActivity.class));
+                        break;
+                    case R.id.nav_invite:
+                        startActivity(new Intent(getBaseContext(), InviteFriends.class));
                         break;
                     case R.id.nav_customers:
                         startActivity(new Intent(getBaseContext(), CustomerActivity.class));
@@ -177,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void startLeadsFilter(String filter) {
-        Intent intent = new Intent(getBaseContext(), LeadsItemActivity.class);
+        Intent intent = new Intent(getBaseContext(), OpportunitiesActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("filter", filter);
         intent.putExtra("filter", bundle);

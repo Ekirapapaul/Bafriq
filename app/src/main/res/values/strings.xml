@@ -64,7 +64,7 @@
         Download App. and Register to start making business referral to earn 10% commission on your first successful referral, and continue to earn more commissions, bonuses and loyalty points’ rewards with every other successful referrall.
     </string>
     <string name="dashboard">Dashboard</string>
-    <string name="resources">Resourcees</string>
+    <string name="resources">Resources</string>
     <string name="edit">Edit</string>
     <string name="add_customer">Add Customer</string>
     <string name="full_name">Full Name</string>
@@ -76,4 +76,15 @@
     <string name="customer_details">Customer Detals</string>
     <string name="customer_name">Customer Name</string>
     <string name="send_message">Send Message</string>
+    <string name="share">Share</string>
+    <string name="in_progress">In Progress</string>
+    <string name="from">From</string>
+    <string name="invite_friends">Invite Friends</string>
+    <string name="send_code_to_friends">Send Code to Friends</string>
+    <string name="send_invite">Send Invite</string>
+    <string name="marketing_materials">Marketing Materials</string>
+    <string name="invite_text">Invite friends to sign up using your promo code and get a chance to earn bonus points for each sign up.</string>
+    <string name="customer_mobile">Customer Phone</string>
+    <string name="customer_email">Customer Email</string>
+    <string name="invite_via">Invite Friends Via</string>
 </resources>

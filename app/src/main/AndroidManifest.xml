@@ -21,7 +21,11 @@
         <activity android:name=".activity.Login" />
         <activity android:name=".activity.SignUp" android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.MainActivity" />
-        <activity android:name=".activity.CustomerActivity" />
+        <activity android:name=".activity.CustomerActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+        </activity>
         <activity android:name=".activity.LeadsActivity" />
         <activity android:name=".activity.ReadSalesOrderActivity" />
         <activity android:name=".activity.SalesOrderActivity" />
@@ -46,6 +50,10 @@
         <activity android:name=".activity.ArchivesActivity" />
         <activity android:name=".activity.AddLead" />
         <activity android:name=".activity.InboxItemActivity" />
+        <activity android:name=".activity.ArchiveActivity" />
+        <activity android:name=".activity.OpportunitiesActivity" />
+        <activity android:name=".activity.MarketingMaterials" />
+        <activity android:name=".activity.InviteFriends" />
     </application>
 
 </manifest>
