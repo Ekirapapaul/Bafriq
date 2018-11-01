@@ -5,11 +5,27 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.error.AuthFailureError;
+import com.android.volley.error.VolleyError;
+import com.android.volley.request.JsonObjectRequest;
 import com.mesozi.app.buidafrique.R;
+import com.mesozi.app.buidafrique.Utils.RequestBuilder;
+import com.mesozi.app.buidafrique.Utils.SessionManager;
+import com.mesozi.app.buidafrique.Utils.UrlsConfig;
+import com.mesozi.app.buidafrique.Utils.VolleySingleton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by ekirapa on 9/13/18 .
@@ -50,7 +66,14 @@ public class AddCustomer extends AppCompatActivity {
         findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (check()) {
+                    try {
+                        JSONObject jsonObject = RequestBuilder.createCustomer(name.getText().toString(), name.getText().toString(), email.getText().toString(), "", "");
+                        createCustomer(jsonObject);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         });
     }
@@ -72,8 +95,38 @@ public class AddCustomer extends AppCompatActivity {
         return true;
     }
 
-    private void createCustomer() {
+    private void createCustomer(JSONObject jsonObject) {
         progressDialog.show();
+        final SessionManager sessionManager = new SessionManager(getBaseContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlsConfig.URL_DATASET, jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("response", response.toString());
+                if (response.has("error")) {
+                    Toast.makeText(AddCustomer.this, "A partner already exists.", Toast.LENGTH_LONG).show();
+                } else if (response.has("result")) {
+                    finishCreate();
+                } else {
+                    error();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                error();
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Cookie", sessionManager.getCookie());
+                return headers;
+            }
+        };
+        jsonObjectRequest.setShouldCache(false);
+        VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(jsonObjectRequest);
     }
 
     public void finishCreate() {

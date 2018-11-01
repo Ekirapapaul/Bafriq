@@ -117,6 +117,9 @@ public class Customer extends BaseModel implements Parcelable {
     }
 
     public String getEmail() {
+        if(email.equals("false")){
+            return "N/A";
+        }
         return email;
     }
 

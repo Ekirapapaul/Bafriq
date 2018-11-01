@@ -188,7 +188,7 @@ public class LeadsActivity extends AppCompatActivity {
                     jsonObject.remove("partner_id");
                 } else if (jsonObject.get("company_id") instanceof Boolean) {
                     jsonObject.remove("company_id");
-                } else if ((jsonObject.get("country_id") instanceof Boolean && !jsonObject.getBoolean("country_id")) || jsonObject.get("country_id").toString().equals("false")) {
+                } else if (jsonObject.get("country_id") instanceof Boolean) {
                     Log.d("Gotten boolean", "gotten " + i);
                     jsonObject.remove("country_id");
                 } else if (jsonObject.get("child_ids") instanceof Boolean) {

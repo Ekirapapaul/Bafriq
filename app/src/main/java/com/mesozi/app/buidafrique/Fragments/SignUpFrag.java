@@ -41,9 +41,10 @@ import java.util.Objects;
  */
 public class SignUpFrag extends Fragment {
     private View v;
-    private EditText location, occupation;
+    private EditText location, occupation, refferal;
     private ProgressDialog progressDialog;
     private String name, email, phone, password;
+    private String referralCode = "";
 
 
     @Nullable
@@ -69,12 +70,18 @@ public class SignUpFrag extends Fragment {
             @Override
             public void onClick(View view) {
                 if (check()) {
-                    submitLogin("admin", "admin");
+                    referralCode = refferal.getText().toString();
+                    try {
+                        createAffiliate();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
         location = v.findViewById(R.id.et_location);
         occupation = v.findViewById(R.id.et_occupation);
+        refferal = v.findViewById(R.id.et_refferal_code);
     }
 
     private boolean check() {
@@ -92,18 +99,21 @@ public class SignUpFrag extends Fragment {
 
     private void createAffiliate() throws JSONException {
         final SessionManager sessionManager = new SessionManager(getContext());
-        JSONObject jsonObject = RequestBuilder.registerAffiliateJson(name, email,"", phone, password, location.getText().toString(), occupation.getText().toString());
+        JSONObject jsonObject = RequestBuilder.registerAffiliateJson(name, email, referralCode, phone, password, location.getText().toString(), occupation.getText().toString());
         Log.d("json", jsonObject.toString());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlsConfig.URL_CREATE_AFFILIATE, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                if (response.has("id")) {
+                Log.d("Response", response.toString());
+                if (response.has("error")) {
+                    error();
+                } else if (response.has("id")) {
                     Toast.makeText(getContext(), "Affiliate successfully registered. We will get back to you on tour registration", Toast.LENGTH_LONG).show();
-//                    Intent intent = new Intent(getContext(), MainActivity.class);
-//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//
-//                    if (progressDialog != null) progressDialog.dismiss();
-//
+                    Intent intent = new Intent(getContext(), MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                    if (progressDialog != null) progressDialog.dismiss();
+
 //                    sessionManager.setLoggedIn(true);
 //                    startActivity(intent);
                     Objects.requireNonNull(getActivity()).finish();
@@ -147,6 +157,8 @@ public class SignUpFrag extends Fragment {
 
                                 String sessionId = results.getString("session_id");
                                 sessionManager.setKeyBearerToken(sessionId);
+                                if (refferal.getText().toString().isEmpty())
+                                    referralCode = refferal.getText().toString();
                                 createAffiliate();
                             }
                         } catch (JSONException e) {

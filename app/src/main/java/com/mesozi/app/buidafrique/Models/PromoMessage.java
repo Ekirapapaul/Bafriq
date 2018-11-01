@@ -1,12 +1,15 @@
 package com.mesozi.app.buidafrique.Models;
 
+import com.mesozi.app.buidafrique.Utils.AppDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
 /**
  * Created by ekirapa on 10/17/18 .
  */
+@Table(database = AppDatabase.class, name = "promomessage")
 public class PromoMessage extends BaseModel {
     public PromoMessage() {
     }

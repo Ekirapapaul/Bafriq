@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,11 +19,13 @@ import com.android.volley.Response;
 import com.android.volley.error.AuthFailureError;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
+import com.mesozi.app.buidafrique.Models.Account;
 import com.mesozi.app.buidafrique.R;
 import com.mesozi.app.buidafrique.Utils.RequestBuilder;
 import com.mesozi.app.buidafrique.Utils.SessionManager;
 import com.mesozi.app.buidafrique.Utils.UrlsConfig;
 import com.mesozi.app.buidafrique.Utils.VolleySingleton;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -65,56 +68,63 @@ public class Compose extends AppCompatActivity {
         subject = findViewById(R.id.et_subject);
 
 
-
         findViewById(R.id.btn_send).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (check()) sendMessage();
+                if (check()) {
+                    String sub = ((subject.getText().toString().isEmpty()) ? " " : subject.getText().toString());
+                    Account account = SQLite.select().from(Account.class).querySingle();
+                    if (account != null) {
+                        try {
+                            JSONObject jsonObject = RequestBuilder.createMessge(sub, message.getText().toString(), account.getUsername(), account.getUsername());
+                            sendMessage(jsonObject);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            error();
+                        }
+
+                    } else {
+                        error();
+                    }
+                }
             }
         });
 
 
     }
 
-    private void sendMessage() {
-        try {
-            String sub = ((subject.getText().toString().isEmpty()) ? " " : subject.getText().toString());
-
-            JSONObject jsonObject = RequestBuilder.createMessge(sub, message.getText().toString());
-            final SessionManager sessionManager = new SessionManager(getBaseContext());
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlsConfig.URL_CREATE_MESSAGE, jsonObject, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        if (response.has("result") && response.getJSONObject("result").has("success")) {
-                            finishSending();
-                        } else {
-                            error();
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        error();
-                    }
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    error.printStackTrace();
+    private void sendMessage(JSONObject jsonObject) {
+        progressDialog.show();
+        Log.d("json", jsonObject.toString());
+        final SessionManager sessionManager = new SessionManager(getBaseContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlsConfig.URL_DATASET, jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("response", response.toString());
+                if (response.has("error")) {
                     error();
+                } else if (response.has("result")) {
+                    finishSending();
                 }
-            }) {
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String, String> headers = new HashMap<>();
-                    headers.put("Cookie", sessionManager.getCookie());
-                    return headers;
-                }
-            };
-            jsonObjectRequest.setShouldCache(false);
-            VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(jsonObjectRequest);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                error();
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                headers.put("Cookie", sessionManager.getCookie());
+                return headers;
+            }
+        };
+        jsonObjectRequest.setShouldCache(false);
+        VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(jsonObjectRequest);
+
     }
 
     private boolean check() {
@@ -137,7 +147,22 @@ public class Compose extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.send:
-                if (check()) sendMessage();
+                if (check()) {
+                    String sub = ((subject.getText().toString().isEmpty()) ? " " : subject.getText().toString());
+                    Account account = SQLite.select().from(Account.class).querySingle();
+                    if (account != null) {
+                        try {
+                            JSONObject jsonObject = RequestBuilder.createMessge(sub, message.getText().toString(), account.getUsername(), account.getUsername());
+                            sendMessage(jsonObject);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            error();
+                        }
+
+                    } else {
+                        error();
+                    }
+                }
                 break;
             case R.id.discard:
                 break;
@@ -149,6 +174,8 @@ public class Compose extends AppCompatActivity {
 
     public void finishSending() {
         if (progressDialog != null) progressDialog.dismiss();
+        Toast.makeText(this, "Message Sent Successfully", Toast.LENGTH_LONG).show();
+        finish();
     }
 
     private void error() {

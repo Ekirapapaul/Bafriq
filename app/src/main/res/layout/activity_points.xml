@@ -108,7 +108,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/brn_redeem"
+        android:id="@+id/btn_redeem"
         android:layout_gravity="bottom"
         android:layout_margin="10dp"
         android:background="@drawable/button_primary"

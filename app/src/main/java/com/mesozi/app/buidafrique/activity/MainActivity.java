@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         registerViews();
         Account account = SQLite.select().from(Account.class).querySingle();
         if(account != null) {
+            Log.d("account", account.getUsername()+ account.getPassword());
             submitLogin(account.getUsername(), account.getPassword());
         }else {
             error();

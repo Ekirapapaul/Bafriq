@@ -72,6 +72,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="15dp"
+                    android:id="@+id/tv_cust_details"
                     android:text="@string/customer_details" />
 
                 <android.support.design.widget.TextInputLayout

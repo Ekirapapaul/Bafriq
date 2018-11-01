@@ -1,5 +1,6 @@
 package com.mesozi.app.buidafrique.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -49,10 +50,12 @@ public class PointsDetails extends AppCompatActivity {
         findViewById(R.id.btn_redeem).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(loyalty != null){
-                    if(loyalty.getAvailable() > 0){
-
-                    }else{
+                if (loyalty != null) {
+                    if (loyalty.getAvailable() > 0) {
+                        Intent intent = new Intent(getBaseContext(), RedeemLoyalty.class);
+                        intent.putExtra("parcel_data", loyalty);
+                        startActivity(intent);
+                    } else {
                         Toast.makeText(PointsDetails.this, "You have no available points", Toast.LENGTH_LONG).show();
                     }
                 }

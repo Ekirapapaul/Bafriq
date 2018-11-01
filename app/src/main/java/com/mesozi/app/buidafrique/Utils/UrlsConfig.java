@@ -13,9 +13,22 @@ public class UrlsConfig {
     public static final String URL_CREATE_MESSAGE = AFFILIATE_IP + "messaging/new_message";
     public static final String URL_CREATE_AFFILIATE = AFFILIATE_IP + "affiliates/registration";
     public static final String URL_DATASET = BASE_IP + "dataset/call_kw";
-    public static final String URL_PROMOTION_MESSAGES = "web/get_promo_messages/";
+    public static final String URL_PROMOTION_MESSAGES = BASE_IP +  "get_promo_messages/";
+    public static final String URL_GET_SHARE_MESSAGE = BASE_IP + "get_share_message";
 
     public static String getDashboardUrl(String uid){
         return String.format(Locale.getDefault(), "%sdashboard/%s", AFFILIATE_IP, uid);
+    }
+
+    public static String getRedeemCommissionUrl(int id){
+        return String.format(Locale.getDefault(),"%sredeem/commission/%d", AFFILIATE_IP, id);
+    }
+
+    public static String getRedeemBonusUrl(int id){
+        return String.format(Locale.getDefault(),"%sredeem/bonus/%d", AFFILIATE_IP, id);
+    }
+
+    public static String getRedeemLoyaltyUrl(int id){
+        return String.format(Locale.getDefault(),"%sredeem/loyalty/%d", AFFILIATE_IP, id);
     }
 }

@@ -55,6 +55,10 @@
             android:id="@+id/nav_sales"
             android:icon="@drawable/ic_people_black_24dp"
             android:title="@string/sales_orders" />
+    </group>
+    <group
+        android:id="@+id/group_invite"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_invite"
             android:icon="@drawable/ic_person_add_black_24dp"

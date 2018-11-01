@@ -35,8 +35,7 @@
     <string name="partner_name">Partner Name</string>
     <string name="name_of_contact">Name of contacct</string>
     <string name="mobile">Mobile</string>
-    <string name="tag_line"><![CDATA[Affiliate Marketing & Online Referral Program\n
- for Real Estate & Development Solutions]]></string>
+    <string name="tag_line"><![CDATA[Mobile Referral and Loyalty Program\n for Real Estate & Development Solutions]]></string>
     <string name="compose">Compose</string>
     <string name="log_out">Log Out</string>
     <string name="yes">Yes</string>
@@ -46,7 +45,7 @@
     <string name="negotiation">Negotiation</string>
     <string name="progress">Progress</string>
     <string name="lost">Lost</string>
-    <string name="qualified">Qualified</string>
+    <string name="qualified">In Progress</string>
     <string name="commisions">Commissions</string>
     <string name="bonuses">Bonuses</string>
     <string name="subject">Subject</string>
@@ -87,4 +86,13 @@
     <string name="customer_mobile">Customer Phone</string>
     <string name="customer_email">Customer Email</string>
     <string name="invite_via">Invite Friends Via</string>
+    <string name="select_customer">Select Customer</string>
+    <string name="refferal_code">Invite Promo Code (Optional)</string>
+    <string name="redeem_commisions">Redeem Commission</string>
+    <string name="mpesa">MPESA</string>
+    <string name="bank">BANK</string>
+    <string name="paypal">PAYPAL</string>
+    <string name="convert">Convert to loyalty points</string>
+    <string name="redeem_loyalty">Redeem Loyalty</string>
+    <string name="redeem_bonus">Redeem Bonus</string>
 </resources>

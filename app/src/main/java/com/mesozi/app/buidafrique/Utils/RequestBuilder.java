@@ -53,18 +53,32 @@ public class RequestBuilder {
         return jsonObject;
     }
 
-    public static JSONObject createMessge(String subject, String message) throws JSONException {
+    public static JSONObject createMessge(String subject, String message, String email_from, String name) throws JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("jsonrpc", JSON_VERS);
         jsonObject.put("method", METHOD_CALL);
 
         JSONObject params = new JSONObject();
-        //params.put("db", DB);
-        params.put("subject", subject);
-        params.put("message", message);
+        params.put("model", "mail.message");
+        params.put("method", "create");
+
+        JSONArray args = new JSONArray();
+        JSONObject arg = new JSONObject();
+        arg.put("write_uid", 1);
+        arg.put("subject", subject);
+        arg.put("name", name);
+        arg.put("partner_address_email", email_from);
+        arg.put("partner_address_name", name);
+        arg.put("email_from", email_from);
+        args.put(arg);
+        params.put("args", args);
+
+        JSONObject kwargs = new JSONObject();
+        params.put("kwargs", kwargs);
 
         jsonObject.put("params", params);
-        jsonObject.put(ID, LOGIN_ID);
+        jsonObject.put(ID, 123);
+
         return jsonObject;
 
     }
@@ -239,7 +253,7 @@ public class RequestBuilder {
     }
 
 
-    public static JSONObject createLeads(String displayName, String name, String email, String addressName, String emailFrom) throws JSONException {
+    public static JSONObject createLeads(String displayName, String name,String description, String email, String addressName, String emailFrom) throws JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("jsonrpc", JSON_VERS);
         jsonObject.put("method", METHOD_CALL);
@@ -252,6 +266,7 @@ public class RequestBuilder {
         JSONObject arg = new JSONObject();
         arg.put("write_uid", 1);
         arg.put("display_name", displayName);
+        arg.put("description", description);
         arg.put("name", name);
         arg.put("partner_address_email", email);
         arg.put("partner_address_name", addressName);
@@ -266,6 +281,47 @@ public class RequestBuilder {
         jsonObject.put(ID, 123);
 
         return jsonObject;
+    }
+
+    public static JSONObject createCustomer(String displayName, String name, String email, String addressName, String emailFrom) throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("jsonrpc", JSON_VERS);
+        jsonObject.put("method", METHOD_CALL);
+
+        JSONObject params = new JSONObject();
+        params.put("model", "res.partner");
+        params.put("method", "create");
+
+        JSONArray args = new JSONArray();
+        JSONObject arg = new JSONObject();
+        arg.put("write_uid", 1);
+        arg.put("display_name", displayName);
+        arg.put("name", name);
+        arg.put("partner_address_email", email);
+        arg.put("partner_address_name", addressName);
+        args.put(arg);
+        params.put("args", args);
+
+        JSONObject kwargs = new JSONObject();
+        params.put("kwargs", kwargs);
+
+        jsonObject.put("params", params);
+        jsonObject.put(ID, 123);
+
+        return jsonObject;
+    }
+
+    public static JSONObject getShareMessage() throws JSONException {
+        String request = "{\n" +
+                "  \"jsonrpc\":\"2.0\",\n" +
+                "  \"method\":\"call\",\n" +
+                "  \"params\":\n" +
+                "  {\n" +
+                "  },\n" +
+                "  \"id\":1969558901\n" +
+                "}";
+
+        return new JSONObject(request);
     }
 
     public static JSONObject readLeads() throws JSONException {
@@ -284,5 +340,54 @@ public class RequestBuilder {
 
         return new JSONObject(request);
     }
+
+
+    public static JSONObject redeemCommission(int amount, String payment_method) throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("jsonrpc", JSON_VERS);
+        jsonObject.put("method", METHOD_CALL);
+
+        JSONObject params = new JSONObject();
+        //params.put("db", DB);
+        params.put("amount", amount);
+        params.put("payment_method", payment_method);
+
+        jsonObject.put("params", params);
+        jsonObject.put(ID, 123);
+        return jsonObject;
+
+    }
+    public static JSONObject redeemLoyalty(int amount, String payment_method) throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("jsonrpc", JSON_VERS);
+        jsonObject.put("method", METHOD_CALL);
+
+        JSONObject params = new JSONObject();
+        //params.put("db", DB);
+        params.put("amount", amount);
+        params.put("payment_method", payment_method);
+
+        jsonObject.put("params", params);
+        jsonObject.put(ID, 123);
+        return jsonObject;
+
+    }
+    public static JSONObject redeemBonus() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("jsonrpc", JSON_VERS);
+        jsonObject.put("method", METHOD_CALL);
+
+        JSONObject params = new JSONObject();
+        //params.put("db", DB);
+//        params.put("amount", amount);
+//        params.put("payment_method", payment_method);
+
+        jsonObject.put("params", params);
+        jsonObject.put(ID, 123);
+        return jsonObject;
+
+    }
+
+
 
 }

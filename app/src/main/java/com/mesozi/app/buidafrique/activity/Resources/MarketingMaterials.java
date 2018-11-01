@@ -1,4 +1,4 @@
-package com.mesozi.app.buidafrique.activity;
+package com.mesozi.app.buidafrique.activity.Resources;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -40,14 +40,14 @@ public class MarketingMaterials extends AppCompatActivity implements View.OnClic
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_share1:
-                share("“Buildafrique™ Partner Network”, Kenya\n" +
-                        "Mobile Referral and Loyalty Program for real estate &amp; development\n" +
-                        "solutions.\n Learn more here https://buildafrique.com/");
+                share("“Do you intend to venture into real eastate investment or development  project?\n" +
+                        "Build Afrique Consulting Group  is your prefered partner for inclusive \"End-to-end \" Real Estate and Development Solutions.\n" +
+                        "Learn more here https://buildafrique.com/");
                 break;
             case R.id.btn_share2:
-                share("“Buildafrique™ Partner Network”, Kenya\n" +
-                        "Mobile Referral and Loyalty Program for real estate &amp; development\n" +
-                        "solutions.\n https://www.buildafrique.com/wp-content/uploads/2015/09/2016-GROUP-BROCHURE.pdf");
+                share("“Do you intend to venture into real eastate investment or development  project?\n" +
+                        "Build Afrique Consulting Group  is your prefered partner for inclusive \"End-to-end \" Real Estate and Development Solutions.\n" +
+                        "Learn more on the organization's bronchure https://www.buildafrique.com/wp-content/uploads/2015/09/2016-GROUP-BROCHURE.pdf");
                 break;
             case R.id.btn_view1:
                 Intent vidIntent = new Intent(Intent.ACTION_VIEW);

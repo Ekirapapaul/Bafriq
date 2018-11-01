@@ -1,5 +1,6 @@
 package com.mesozi.app.buidafrique.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import java.util.Locale;
  */
 public class BonusesDetails extends AppCompatActivity {
     TextView total, expected, available;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,13 +37,13 @@ public class BonusesDetails extends AppCompatActivity {
         setViews();
     }
 
-    private void setViews(){
+    private void setViews() {
         total = findViewById(R.id.tv_total);
-        expected  = findViewById(R.id.tv_expected);
+        expected = findViewById(R.id.tv_expected);
         available = findViewById(R.id.tv_available);
 
         final Bonus bonus = SQLite.select().from(Bonus.class).querySingle();
-        if(bonus != null){
+        if (bonus != null) {
             available.setText(String.format(Locale.getDefault(), "KES %d", bonus.getAvailable()));
             expected.setText(String.format(Locale.getDefault(), "KES %d", bonus.getExpected()));
             total.setText(String.format(Locale.getDefault(), "KES %d", bonus.getPaid()));
@@ -49,10 +51,12 @@ public class BonusesDetails extends AppCompatActivity {
         findViewById(R.id.btn_redeem).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(bonus != null){
-                    if(bonus.getAvailable() > 0){
-
-                    }else{
+                if (bonus != null) {
+                    if (bonus.getAvailable() > 0) {
+                        Intent intent = new Intent(getBaseContext(), RedeemBonus.class);
+                        intent.putExtra("parcel_data", bonus);
+                        startActivity(intent);
+                    } else {
                         Toast.makeText(BonusesDetails.this, "You have no available bonus points", Toast.LENGTH_LONG).show();
                     }
                 }

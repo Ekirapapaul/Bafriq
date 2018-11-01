@@ -54,7 +54,7 @@ public class Lead extends BaseModel implements  Parcelable{
     private String partner_address_name;
     private String contact_name;
     private String[] partner_id = {"false"};
-    private String[] country_id;
+    private transient String[] country_id;
     private String description = "";
     private String[] stage_id = {};
     private String planned_revenue;

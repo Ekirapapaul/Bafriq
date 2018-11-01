@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,10 +25,16 @@ import android.widget.LinearLayout;
 import android.widget.Scroller;
 import android.widget.TextView;
 
+import com.mesozi.app.buidafrique.Models.PromoMessage;
+import com.mesozi.app.buidafrique.Models.ShareMessage;
 import com.mesozi.app.buidafrique.R;
+import com.mesozi.app.buidafrique.Utils.CommonUtils;
 import com.mesozi.app.buidafrique.Utils.SessionManager;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.lang.reflect.Field;
+import java.util.List;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -149,8 +156,11 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
                 startActivity(new Intent(getBaseContext(), SignUp.class));
                 break;
             case R.id.btn_invite:
+                ShareMessage shareMessage = SQLite.select().from(ShareMessage.class).querySingle();
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
+                String mesage = ((shareMessage != null) ? shareMessage.getMessage() : getString(R.string.invite_message));
+                mesage = String.valueOf(CommonUtils.fromHtml(mesage));
                 sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.invite_message));
                 sendIntent.setType("text/plain");
                 startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.share_via)));
@@ -163,6 +173,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
      */
     public class MyViewPagerAdapter extends PagerAdapter {
         private LayoutInflater layoutInflater;
+        List<PromoMessage> messages = SQLite.select().from(PromoMessage.class).queryList();
 
         public MyViewPagerAdapter() {
         }
@@ -172,6 +183,11 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
             layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             View view = layoutInflater != null ? layoutInflater.inflate(layouts[position], container, false) : null;
+            TextView textView = Objects.requireNonNull(view).findViewById(R.id.tv_title);
+            if (position < messages.size()) {
+                Log.d("message", messages.get(position).getMessage());
+                textView.setText(CommonUtils.fromHtml(messages.get(position).getMessage()));
+            }
             container.addView(view);
 
             return view;
@@ -196,22 +212,18 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private int currentPage = 0;
-    private void setupAutoPager()
-    {
+
+    private void setupAutoPager() {
         final Handler handler = new Handler();
 
         final Runnable update = new Runnable() {
-            public void run()
-            {
+            public void run() {
 
                 viewPager.setCurrentItem(currentPage, true);
-                if(currentPage == myViewPagerAdapter.getCount())
-                {
+                if (currentPage == myViewPagerAdapter.getCount()) {
                     currentPage = 0;
-                }
-                else
-                {
-                    ++currentPage ;
+                } else {
+                    ++currentPage;
                 }
             }
         };
@@ -225,5 +237,9 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
                 handler.post(update);
             }
         }, 1000, 3000);
+    }
+
+    private void getMessages() {
+
     }
 }

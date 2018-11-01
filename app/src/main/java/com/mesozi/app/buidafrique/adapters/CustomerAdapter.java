@@ -3,6 +3,7 @@ package com.mesozi.app.buidafrique.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ItemVi
                 .from(Customer.class)
                 .where(Customer_Table.email.notEq("false"))
                 .queryList();
-        customersListFiltered = customers;
+        this.customersListFiltered = customers;
     }
 
     @NonNull
@@ -73,8 +74,9 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ItemVi
 
                         // name match condition. this might differ depending on your requirement
                         // here we are looking for name or phone number match
-                        if (customer.getName().toLowerCase().contains(charString.toLowerCase()) || customer.getEmail().contains(charSequence)) {
+                        if (customer.getName().contains(charSequence)) {
                             filteredList.add(customer);
+                            Log.d("Filtered", charString + " gotten " + customer.getName());
                         }
                     }
 

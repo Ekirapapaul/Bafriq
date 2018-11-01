@@ -15,7 +15,7 @@ import com.mesozi.app.buidafrique.Utils.RecyclerItemClickListener;
 import com.mesozi.app.buidafrique.activity.Resources.About;
 import com.mesozi.app.buidafrique.activity.Resources.Connect;
 import com.mesozi.app.buidafrique.activity.Resources.HowItWorks;
-import com.mesozi.app.buidafrique.activity.Resources.Marketing;
+import com.mesozi.app.buidafrique.activity.Resources.MarketingMaterials;
 import com.mesozi.app.buidafrique.adapters.ResourceAdapter;
 
 import java.util.ArrayList;

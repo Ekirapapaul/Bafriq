@@ -34,4 +34,6 @@ public class CommonUtils {
         }
         return result;
     }
+
+    public static String TO_EMAIL = "partner@buildafrique.com";
 }
