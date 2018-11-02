@@ -28,7 +28,7 @@ public class UrlsConfig {
         return String.format(Locale.getDefault(),"%sredeem/bonus/%d", AFFILIATE_IP, id);
     }
 
-    public static String getRedeemLoyaltyUrl(int id){
-        return String.format(Locale.getDefault(),"%sredeem/loyalty/%d", AFFILIATE_IP, id);
+    public static String getRedeemLoyaltyUrl(int id, int amount){
+        return String.format(Locale.getDefault(),"%sredeem/loyalty/%d/%d", BASE_IP, id, amount);
     }
 }

@@ -51,7 +51,7 @@ public class PointsDetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (loyalty != null) {
-                    if (loyalty.getAvailable() > 0) {
+                    if (loyalty.getAvailable() == 0) {
                         Intent intent = new Intent(getBaseContext(), RedeemLoyalty.class);
                         intent.putExtra("parcel_data", loyalty);
                         startActivity(intent);

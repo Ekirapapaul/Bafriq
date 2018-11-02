@@ -95,4 +95,11 @@
     <string name="convert">Convert to loyalty points</string>
     <string name="redeem_loyalty">Redeem Loyalty</string>
     <string name="redeem_bonus">Redeem Bonus</string>
+    <string name="redeem_loyalty_points">Redeem Loyalty Points</string>
+    <string name="loyalty_1"><![CDATA[Redeem <b>200</> points for : Consultancy Services for a Residential House Development]]></string>
+    <string name="loyalty_2"><![CDATA[Redeem <b>250</> points for : Feasibility Studies ]]></string>
+    <string name="loyalty_3"><![CDATA[Redeem <b>300</> points for : Consultancy Services for a Commercial Development of a limit of Kshs. 50,000,000.00 ]]></string>
+    <string name="loyalty_4"><![CDATA[Redeem <b>400</> points for : Consultancy Services for a Commercial Development of a limit of Kshs. 100,000,000.00 ]]></string>
+    <string name="loyalty_5"><![CDATA[Redeem <b>500</> points for : Consultancy Services for a Commercial Development of a limit of Kshs. 200,000,000.00  ]]></string>
+    <string name="loyalty_6"><![CDATA[Redeem <b>600</> points for : Consultancy Services for a Commercial Development of a limit between Kshs. 200,000,000.00 and Kshs. 500,000,000.00 ]]></string>
 </resources>
