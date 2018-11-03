@@ -112,13 +112,13 @@ public class RedeemBonus extends AppCompatActivity {
                         JSONObject jsonObject = null;
                         if (chosen == MPESA) {
                             String payment_method = String.format(Locale.getDefault(), "MPESA %s %s", mpesaName.getText().toString(), mpesaNum.getText().toString());
-                            jsonObject = RequestBuilder.redeemCommission(Integer.parseInt(amount.getText().toString()), payment_method);
+                            jsonObject = RequestBuilder.redeemBonus(Integer.parseInt(amount.getText().toString()), payment_method);
                         } else if (chosen == BANK) {
                             String payment_method = String.format(Locale.getDefault(), "BANK %s %s %s %s", accName.getText().toString(), accNum.getText().toString(), bankName.getText().toString(), branch.getText().toString());
-                            jsonObject = RequestBuilder.redeemCommission(Integer.parseInt(amount.getText().toString()), payment_method);
+                            jsonObject = RequestBuilder.redeemBonus(Integer.parseInt(amount.getText().toString()), payment_method);
                         } else if (chosen == PAYPAL) {
                             String payment_method = String.format(Locale.getDefault(), "PAYPAL %s", email.getText().toString());
-                            jsonObject = RequestBuilder.redeemCommission(Integer.parseInt(amount.getText().toString()), payment_method);
+                            jsonObject = RequestBuilder.redeemBonus(Integer.parseInt(amount.getText().toString()), payment_method);
                         }
 
                         Account account = SQLite.select().from(Account.class).querySingle();
@@ -139,7 +139,7 @@ public class RedeemBonus extends AppCompatActivity {
 
     private void setViews() {
         progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Redeeming Commission");
+        progressDialog.setTitle("Redeeming Bonus Points");
         progressDialog.setMessage("Please Wait");
         progressDialog.setCancelable(false);
 

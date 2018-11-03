@@ -371,15 +371,15 @@ public class RequestBuilder {
         return jsonObject;
 
     }
-    public static JSONObject redeemBonus() throws JSONException {
+    public static JSONObject redeemBonus(int amount, String payment_method) throws JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("jsonrpc", JSON_VERS);
         jsonObject.put("method", METHOD_CALL);
 
         JSONObject params = new JSONObject();
         //params.put("db", DB);
-//        params.put("amount", amount);
-//        params.put("payment_method", payment_method);
+        params.put("amount", amount);
+        params.put("payment_method", payment_method);
 
         jsonObject.put("params", params);
         jsonObject.put(ID, 123);
