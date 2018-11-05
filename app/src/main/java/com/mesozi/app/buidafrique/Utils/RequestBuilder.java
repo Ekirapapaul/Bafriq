@@ -270,6 +270,19 @@ public class RequestBuilder {
         return new JSONObject(request);
     }
 
+    public static JSONObject readMessage() throws JSONException{
+        String request = "{\n" +
+                "  \"jsonrpc\":\"2.0\",\n" +
+                "  \"method\":\"call\",\n" +
+                "  \"params\":\n" +
+                "  {\n" +
+                "  },\n" +
+                "  \"id\": 123\n" +
+                "}";
+
+        return new JSONObject(request);
+    }
+
 
     public static JSONObject createLeads(String displayName, String name,String description, String email, String addressName, String emailFrom) throws JSONException {
         JSONObject jsonObject = new JSONObject();

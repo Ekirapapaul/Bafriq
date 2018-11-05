@@ -4,12 +4,30 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.error.AuthFailureError;
+import com.android.volley.error.VolleyError;
+import com.android.volley.request.JsonObjectRequest;
 import com.mesozi.app.buidafrique.Models.EmailMessage;
 import com.mesozi.app.buidafrique.R;
 import com.mesozi.app.buidafrique.Utils.CommonUtils;
+import com.mesozi.app.buidafrique.Utils.RequestBuilder;
+import com.mesozi.app.buidafrique.Utils.SessionManager;
+import com.mesozi.app.buidafrique.Utils.UrlsConfig;
+import com.mesozi.app.buidafrique.Utils.VolleySingleton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by ekirapa on 10/5/18 .
@@ -45,16 +63,57 @@ public class InboxItemActivity extends AppCompatActivity {
         initials = findViewById(R.id.tv_initials);
 
         if (message != null) {
+
             name.setText(message.getDisplay_name());
             from.setText(String.format("From %s", message.getEmail_from()));
             toUser.setText(String.format("To %s", message.getEmail_from()));
             subject.setText(message.getDescription().equals("false") ? "No Subject" : message.getDescription());
             body.setText(CommonUtils.fromHtml(message.getBody()));
-            if(message.getEmail_from().length() > 0){
+            if (message.getEmail_from().length() > 0) {
                 char letter = message.getEmail_from().toUpperCase().charAt(0);
                 initials.setText(String.valueOf(letter));
             }
 
+            try {
+                sendRead(RequestBuilder.readMessage());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         }
+    }
+
+    private void sendRead(JSONObject jsonObject) {
+        final SessionManager sessionManager = new SessionManager(getBaseContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlsConfig.URL_DATASET, jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                if(response.has("result")){
+                    message.setTo_read(false);
+                    message.save();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Cookie", sessionManager.getCookie());
+                return headers;
+            }
+
+            @Override
+            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+                Log.d("response", response.toString());
+                return super.parseNetworkResponse(response);
+            }
+        };
+        VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(jsonObjectRequest);
     }
 }
