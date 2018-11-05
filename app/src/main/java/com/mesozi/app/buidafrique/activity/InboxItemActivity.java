@@ -74,10 +74,12 @@ public class InboxItemActivity extends AppCompatActivity {
                 initials.setText(String.valueOf(letter));
             }
 
-            try {
-                sendRead(RequestBuilder.readMessage());
-            } catch (JSONException e) {
-                e.printStackTrace();
+            if (message.isTo_read()) {
+                try {
+                    sendRead(RequestBuilder.readMessage());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
         }
@@ -89,9 +91,14 @@ public class InboxItemActivity extends AppCompatActivity {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                if(response.has("result")){
-                    message.setTo_read(false);
-                    message.save();
+                if (response.has("result")) {
+                    try {
+                        message.setTo_read(false);
+                        message.save();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                 }
 
             }
