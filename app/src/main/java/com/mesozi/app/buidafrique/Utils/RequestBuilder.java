@@ -236,14 +236,32 @@ public class RequestBuilder {
                 "  \"method\":\"call\",\n" +
                 "  \"params\":{\n" +
                 "    \"model\": \"mail.message\",\n" +
-                "    \"method\":\"search_read\",\n" +
-                "      \"args\":[[]],\n" +
+                "    \"method\":\"fetch_messages\",\n" +
+                "      \"args\":[],\n" +
                 "    \"kwargs\":\n" +
                 "      {\n" +
-                "      \t\"fields\":[\"company\",\"customer\",\"display_name\",\"message\",\"id\",\"name\",\"email\",\"email_from\",\"reply_to\",\"attachment_ids\",\"subject\",\"date\",\"starred\",\"body\"],\n" +
-                "        \"offset\":0,\n" +
-                "        \"limit\":100,\n" +
-                "        \"order\":\"id\"\n" +
+                "        \"existing_ids\":[],\n" +
+                "        \"limit\":100\n" +
+                "      }\n" +
+                "  },\n" +
+                "  \"id\":123\n" +
+                "}";
+
+        return new JSONObject(request);
+    }
+
+    public static JSONObject inboxObject(String existing_ids) throws JSONException {
+        String request = "{\n" +
+                "  \"jsonrpc\":\"2.0\",\n" +
+                "  \"method\":\"call\",\n" +
+                "  \"params\":{\n" +
+                "    \"model\": \"mail.message\",\n" +
+                "    \"method\":\"fetch_messages\",\n" +
+                "      \"args\":[],\n" +
+                "    \"kwargs\":\n" +
+                "      {\n" +
+                "        \"existing_ids\":[ " + existing_ids +  "],\n" +
+                "        \"limit\":100\n" +
                 "      }\n" +
                 "  },\n" +
                 "  \"id\":123\n" +

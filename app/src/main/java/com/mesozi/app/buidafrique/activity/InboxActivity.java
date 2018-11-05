@@ -26,6 +26,7 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.mesozi.app.buidafrique.Models.EmailMessage;
+import com.mesozi.app.buidafrique.Models.EmailMessage_Table;
 import com.mesozi.app.buidafrique.R;
 import com.mesozi.app.buidafrique.Utils.RecyclerItemClickListener;
 import com.mesozi.app.buidafrique.Utils.RequestBuilder;
@@ -33,6 +34,7 @@ import com.mesozi.app.buidafrique.Utils.SessionManager;
 import com.mesozi.app.buidafrique.Utils.UrlsConfig;
 import com.mesozi.app.buidafrique.Utils.VolleySingleton;
 import com.mesozi.app.buidafrique.adapters.EmailAdapter;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -130,8 +132,24 @@ public class InboxActivity extends AppCompatActivity {
         progressDialog.show();
         final SessionManager sessionManager = new SessionManager(getBaseContext());
         Log.d("session", sessionManager.getCookie());
+
+        StringBuilder builder = new StringBuilder();
+        List<EmailMessage> messages = SQLite.select().from(EmailMessage.class).queryList();
+        for (int i = 0; i < messages.size(); i++) {
+            builder.append(messages.get(i).getId());
+            if ((i + 1) != messages.size()) {
+                builder.append(",");
+            }
+        }
+        String existing_ids = builder.toString();
+        Log.d("Existing ids", existing_ids);
         try {
-            JSONObject jsonObject = RequestBuilder.inboxObject();
+            JSONObject jsonObject;
+            if (messages.size() == 0) {
+                jsonObject = RequestBuilder.inboxObject();
+            } else {
+                jsonObject = RequestBuilder.inboxObject(existing_ids);
+            }
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlsConfig.URL_DATASET, jsonObject, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
@@ -194,7 +212,6 @@ public class InboxActivity extends AppCompatActivity {
             try {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 EmailMessage emailMessage = gson.fromJson(jsonObject.toString(), EmailMessage.class);
-                emails.add(emailMessage);
                 emailMessage.save();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -203,6 +220,7 @@ public class InboxActivity extends AppCompatActivity {
 
         }
         if (progressDialog != null) progressDialog.dismiss();
+        emails = SQLite.select().from(EmailMessage.class).where(EmailMessage_Table.to_read.eq(true)).queryList();
         adapter = new EmailAdapter(getBaseContext(), emails);
         recyclerView.setAdapter(adapter);
         Log.d("emails size", String.valueOf(emails.size()));

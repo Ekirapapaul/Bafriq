@@ -34,6 +34,7 @@ import com.mesozi.app.buidafrique.Models.Account;
 import com.mesozi.app.buidafrique.Models.Bonus;
 import com.mesozi.app.buidafrique.Models.Commission;
 import com.mesozi.app.buidafrique.Models.EmailMessage;
+import com.mesozi.app.buidafrique.Models.EmailMessage_Table;
 import com.mesozi.app.buidafrique.Models.Lead;
 import com.mesozi.app.buidafrique.Models.Loyalty;
 import com.mesozi.app.buidafrique.Models.SalesOrder;
@@ -166,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         long leads = 0;
         //A very unclean way to do this
         try {
-            inbox = new Select(Method.count()).from(EmailMessage.class).count();
+            inbox = new Select(Method.count()).from(EmailMessage.class).where(EmailMessage_Table.to_read.eq(true)).count();
         } catch (SQLiteException e) {
             e.printStackTrace();
         }

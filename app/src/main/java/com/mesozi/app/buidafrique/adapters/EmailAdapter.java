@@ -39,16 +39,16 @@ public class EmailAdapter extends RecyclerView.Adapter<EmailAdapter.EmailHolder>
     public void onBindViewHolder(@NonNull EmailHolder holder, int position) {
         EmailMessage emailMessage = emails.get(position);
         holder.date.setText(emailMessage.getDate());
-        if(emailMessage.getSubject().equals("false") && !emailMessage.getDisplay_name().equals("false")){
-            holder.subject.setText(emailMessage.getDisplay_name());
+        if(emailMessage.getDescription().equals("false") && !emailMessage.getDisplay_name().equals("false")){
+            holder.subject.setText(CommonUtils.fromHtml(emailMessage.getDescription()));
         }else {
-            holder.subject.setText((emailMessage.getSubject().equals("false") ? "N/A" : emailMessage.getSubject()));
+            holder.subject.setText((emailMessage.getDescription().equals("false") ? "N/A" : emailMessage.getDescription()));
         }
         if(emailMessage.getEmail_from().length() > 0){
             char letter = emailMessage.getEmail_from().toUpperCase().charAt(0);
             holder.initials.setText(String.valueOf(letter));
         }
-        holder.name.setText(emailMessage.getEmail_from().substring(0,emailMessage.getEmail_from().indexOf('<')));
+        holder.name.setText(emailMessage.getEmail_from());
         holder.exerpt.setText(CommonUtils.fromHtml(emailMessage.getBody()));
         //holder.initials.setText(emailMessage.getEmail_from().charAt(0));
 
