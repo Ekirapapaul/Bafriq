@@ -33,7 +33,7 @@ public class UrlsConfig {
         return String.format(Locale.getDefault(),"%sredeem/loyalty/%d/%d", BASE_WEB_IP, id, amount);
     }
 
-    public static String postReadMessage(int message_id){
+    public static String postReadMessage(String message_id){
         return String.format(Locale.getDefault(), "%smessaging/read/%s",BASE_IP,message_id);
     }
 }

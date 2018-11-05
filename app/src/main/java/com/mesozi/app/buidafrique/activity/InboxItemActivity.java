@@ -84,8 +84,9 @@ public class InboxItemActivity extends AppCompatActivity {
     }
 
     private void sendRead(JSONObject jsonObject) {
+        String url = UrlsConfig.postReadMessage(message.getId());
         final SessionManager sessionManager = new SessionManager(getBaseContext());
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlsConfig.URL_DATASET, jsonObject, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 if(response.has("result")){
