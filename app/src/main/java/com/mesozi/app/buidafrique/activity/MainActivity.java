@@ -202,6 +202,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(getBaseContext(), Compose.class));
                 break;
             case R.id.inbox:
+                startActivity(new Intent(getBaseContext(), InboxActivity.class));
                 break;
         }
         return super.onOptionsItemSelected(item);

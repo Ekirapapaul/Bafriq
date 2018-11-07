@@ -236,7 +236,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
             public void run() {
                 handler.post(update);
             }
-        }, 1000, 3000);
+        }, 1000, 5000);
     }
 
     private void getMessages() {

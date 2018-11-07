@@ -200,7 +200,7 @@
                             <ImageView
                                 android:layout_width="@dimen/home_icon_size"
                                 android:layout_height="@dimen/home_icon_size"
-                                android:src="@drawable/network" />
+                                android:src="@drawable/comm" />
 
                             <TextView
                                 style="@style/home_menu_text"
@@ -284,7 +284,7 @@
                             <ImageView
                                 android:layout_width="@dimen/home_icon_size"
                                 android:layout_height="@dimen/home_icon_size"
-                                android:src="@drawable/ic_bonuses" />
+                                android:src="@drawable/bonus" />
 
                             <TextView
                                 style="@style/home_menu_text"
