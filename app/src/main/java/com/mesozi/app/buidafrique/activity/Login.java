@@ -74,6 +74,13 @@ public class Login extends AppCompatActivity {
         progressDialog.setTitle("Signing in...");
         progressDialog.setMessage("Please wait");
         progressDialog.setCancelable(false);
+
+        findViewById(R.id.tv_forgot_password).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getBaseContext(), AccountRecovery.class));
+            }
+        });
     }
 
     private boolean check() {

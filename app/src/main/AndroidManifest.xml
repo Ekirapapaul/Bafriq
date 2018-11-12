@@ -67,6 +67,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.RedeemLoyalty" />
         <activity android:name=".activity.ConvertCommission" />
+        <activity android:name=".activity.AccountRecovery" />
     </application>
 
 </manifest>
