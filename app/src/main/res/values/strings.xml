@@ -103,4 +103,6 @@
     <string name="loyalty_5"><![CDATA[Redeem <b>500</> points for : Consultancy Services for a Commercial Development of a limit of Kshs. 200,000,000.00  ]]></string>
     <string name="loyalty_6"><![CDATA[Redeem <b>600</> points for : Consultancy Services for a Commercial Development of a limit between Kshs. 200,000,000.00 and Kshs. 500,000,000.00 ]]></string>
     <string name="forgot_password">Forgot Password ?</string>
+    <string name="next">Next</string>
+    <string name="enter_verification">Enter Verification Code</string>
 </resources>
