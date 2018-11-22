@@ -8,8 +8,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:paddingBottom="10dp"
         android:paddingEnd="10dp"
-        android:paddingStart="10dp">
+        android:paddingStart="10dp"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:text="Enter Your Details"
+            android:textColor="@color/black" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,9 +31,9 @@
             android:paddingStart="25dp">
 
             <ImageView
-                android:layout_width="@dimen/dimen_signup_drawable_size"
+                android:layout_width="15dp"
                 android:layout_height="@dimen/dimen_signup_drawable_size"
-                android:scaleType="centerInside"
+                android:scaleType="fitXY"
                 android:src="@drawable/ic_email_24px" />
 
             <TextView
@@ -69,12 +79,12 @@
         </LinearLayout>
 
         <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/et_password"
+            android:id="@+id/et_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:layout_marginStart="20dp"
-            android:inputType="textPassword"
+            android:inputType="text"
             app:backgroundTint="@color/colorPrimary" />
 
     </LinearLayout>

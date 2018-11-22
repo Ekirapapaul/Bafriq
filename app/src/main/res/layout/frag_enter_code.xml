@@ -13,14 +13,18 @@
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <TextView
+                    android:id="@+id/tv_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="User Name"
@@ -28,10 +32,10 @@
                     android:textSize="18sp" />
 
                 <TextView
+                    android:id="@+id/tv_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="A text message with verification code was just sent to
-0722 933902"
+                    android:text="A text message with verification code was just sent to 0722 933902"
                     android:textSize="16sp" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
@@ -62,12 +66,12 @@
         </LinearLayout>
 
         <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/et_password"
+            android:id="@+id/et_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:layout_marginStart="20dp"
-            android:inputType="textPassword"
+            android:inputType="text"
             app:backgroundTint="@color/colorPrimary" />
 
     </LinearLayout>

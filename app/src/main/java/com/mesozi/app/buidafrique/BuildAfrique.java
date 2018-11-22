@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.mesozi.app.buidafrique.Utils.AppDatabase;
 import com.mesozi.app.buidafrique.Utils.PersistentCookieStore;
 import com.mesozi.app.buidafrique.Utils.SessionManager;
@@ -12,6 +13,7 @@ import com.raizlabs.android.dbflow.config.DatabaseConfig;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
+import io.fabric.sdk.android.Fabric;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
@@ -30,6 +32,7 @@ public class BuildAfrique extends Application {
     public void onCreate() {
         CookieHandler.setDefault(new CookieManager());
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         FlowManager.init(FlowConfig.builder(this)
                 .addDatabaseConfig(DatabaseConfig.builder(AppDatabase.class)
                         .databaseName("buildAfrique")

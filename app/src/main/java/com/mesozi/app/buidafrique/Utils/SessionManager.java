@@ -85,4 +85,9 @@ public class SessionManager {
     public void setSetCookie(String token) {
         pref.edit().putString(SET_COOKIE, token).apply();
     }
+
+    public void removeToken() {
+        pref.edit().remove(COOKIE).apply();
+    }
+
 }

@@ -68,6 +68,9 @@
         <activity android:name=".activity.RedeemLoyalty" />
         <activity android:name=".activity.ConvertCommission" />
         <activity android:name=".activity.AccountRecovery" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="9fc3f3c8f0eadc568c3159694da9ac05f2de4101" />
     </application>
 
 </manifest>

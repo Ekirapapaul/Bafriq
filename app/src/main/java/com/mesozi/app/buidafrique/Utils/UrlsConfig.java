@@ -12,10 +12,11 @@ public class UrlsConfig {
 
     public static final String URL_LOGIN = BASE_WEB_IP + "session/authenticate";
     public static final String URL_CREATE_MESSAGE = AFFILIATE_IP + "messaging/new_message";
-    public static final String URL_CREATE_AFFILIATE = AFFILIATE_IP + "affiliates/registration";
+    public static final String URL_CREATE_AFFILIATE = AFFILIATE_IP + "registration";
     public static final String URL_DATASET = BASE_WEB_IP + "dataset/call_kw";
     public static final String URL_PROMOTION_MESSAGES = BASE_WEB_IP +  "get_promo_messages/";
     public static final String URL_GET_SHARE_MESSAGE = BASE_WEB_IP + "get_share_message";
+    public static final String URL_RESET_PASSWORD = AFFILIATE_IP + "forgot_password";
 
     public static String getDashboardUrl(String uid){
         return String.format(Locale.getDefault(), "%sdashboard/%s", AFFILIATE_IP, uid);

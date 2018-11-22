@@ -72,9 +72,10 @@ public class SignUpFrag extends Fragment {
                 if (check()) {
                     referralCode = refferal.getText().toString();
                     try {
-                        createAffiliate();
-                    } catch (JSONException e) {
+                        submitLogin("admin","admin");
+                    } catch (Exception e) {
                         e.printStackTrace();
+                        error();
                     }
                 }
             }
@@ -116,6 +117,7 @@ public class SignUpFrag extends Fragment {
 
 //                    sessionManager.setLoggedIn(true);
 //                    startActivity(intent);
+                    sessionManager.removeToken();
                     Objects.requireNonNull(getActivity()).finish();
                 } else {
                     error();
@@ -141,6 +143,7 @@ public class SignUpFrag extends Fragment {
     private void submitLogin(final String username, final String password) {
         progressDialog.show();
         final SessionManager sessionManager = new SessionManager(getContext());
+        sessionManager.removeToken();
         try {
             JSONObject jsonObject = RequestBuilder.LoginRequest(username, password);
             Log.d("Json ", jsonObject.toString());

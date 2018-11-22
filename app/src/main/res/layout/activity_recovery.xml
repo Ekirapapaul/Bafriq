@@ -9,15 +9,18 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@android:color/transparent"
+        android:background="@color/colorPrimary"
+        app:titleTextColor="@color/white"
         app:elevation="4dp"
-        app:navigationIcon="@drawable/ic_arrow_back_green_24dp"
+        app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:title="Account Recovery" />
 
     <FrameLayout
         android:id="@+id/frame"
         android:layout_width="match_parent"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize" />
 

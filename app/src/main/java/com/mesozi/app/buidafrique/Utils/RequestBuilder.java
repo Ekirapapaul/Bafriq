@@ -418,6 +418,18 @@ public class RequestBuilder {
 
     }
 
+    public static JSONObject getCode(String email, String phone) throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("jsonrpc", JSON_VERS);
+        jsonObject.put("method", METHOD_CALL);
+
+        JSONObject params  = new JSONObject();
+        params.put("login", email);
+        params.put("phone", phone);
+        jsonObject.put("params", params);
+
+        return jsonObject;
+    }
 
 
 }
