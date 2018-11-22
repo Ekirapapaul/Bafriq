@@ -55,7 +55,7 @@ public class CommissionsDetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (commission != null) {
-                    if (commission.getAvailable() == 0) {
+                    if (commission.getAvailable() > 0) {
                         Intent intent = new Intent(getBaseContext(), RedeemCommissions.class);
                         intent.putExtra("parcel_data", commission);
                         startActivity(intent);
