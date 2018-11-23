@@ -148,6 +148,8 @@ public class RedeemCommissions extends AppCompatActivity {
         bankName = findViewById(R.id.et_bank_name);
         branch = findViewById(R.id.et_bank_branch);
         email = findViewById(R.id.et_paypal_email);
+        mpesaName = findViewById(R.id.et_mpesa_name);
+        mpesaNum = findViewById(R.id.et_mpesa_number);
     }
 
     private void change(int number) {
