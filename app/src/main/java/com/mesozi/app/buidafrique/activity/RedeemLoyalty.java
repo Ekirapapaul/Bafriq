@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -17,21 +19,28 @@ import com.android.volley.Response;
 import com.android.volley.error.AuthFailureError;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
+import com.google.gson.Gson;
 import com.mesozi.app.buidafrique.Models.Account;
 import com.mesozi.app.buidafrique.Models.Commission;
 import com.mesozi.app.buidafrique.Models.Loyalty;
+import com.mesozi.app.buidafrique.Models.RefferalOption;
 import com.mesozi.app.buidafrique.R;
 import com.mesozi.app.buidafrique.Utils.CommonUtils;
+import com.mesozi.app.buidafrique.Utils.RecyclerItemClickListener;
 import com.mesozi.app.buidafrique.Utils.RequestBuilder;
 import com.mesozi.app.buidafrique.Utils.SessionManager;
 import com.mesozi.app.buidafrique.Utils.UrlsConfig;
 import com.mesozi.app.buidafrique.Utils.VolleySingleton;
+import com.mesozi.app.buidafrique.adapters.RefferalAdapter;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -39,10 +48,13 @@ import java.util.Map;
  * Created by ekirapa on 10/29/18 .
  */
 public class RedeemLoyalty extends AppCompatActivity implements View.OnClickListener {
-    private TextView tvAmount,tvTitle;
+    private TextView tvAmount, tvTitle;
     private RelativeLayout relativeLayout;
     private ProgressDialog progressDialog;
+    RefferalAdapter adapter;
     int number = 0;
+    RecyclerView recyclerView;
+    List<RefferalOption> refferalOptions = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,7 +73,6 @@ public class RedeemLoyalty extends AppCompatActivity implements View.OnClickList
         relativeLayout = findViewById(R.id.frame);
 
         progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Redeeming Loyalty Points");
         progressDialog.setMessage("Please Wait");
         progressDialog.setCancelable(false);
 
@@ -70,13 +81,22 @@ public class RedeemLoyalty extends AppCompatActivity implements View.OnClickList
         if (loyalty != null) {
             tvAmount.setText(String.format(Locale.getDefault(), "Amount Available : %d", loyalty.getAvailable()));
         }
-
-        findViewById(R.id.card1).setOnClickListener(this);
-        findViewById(R.id.card2).setOnClickListener(this);
-        findViewById(R.id.card3).setOnClickListener(this);
-        findViewById(R.id.card4).setOnClickListener(this);
-        findViewById(R.id.card5).setOnClickListener(this);
-        findViewById(R.id.card6).setOnClickListener(this);
+        try {
+            getOptions();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            error();
+        }
+        recyclerView = findViewById(R.id.recycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getBaseContext(), new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                RefferalOption refferalOption = adapter.getOPtion(position);
+                String message = "Redeem <b>" + refferalOption.getLoyalty_amount() + " </b> points for  : " + refferalOption.getName() + " ?";
+                showDialog(message);
+            }
+        }));
 
         findViewById(R.id.tv_positive).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,31 +133,31 @@ public class RedeemLoyalty extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.card1:
-                showDialog(getString(R.string.loyalty_1));
-                break;
-            case R.id.card2:
-                number = 2;
-                showDialog(getString(R.string.loyalty_2));
-                break;
-            case R.id.card3:
-                number = 3;
-                showDialog(getString(R.string.loyalty_3));
-                break;
-            case R.id.card4:
-                number = 4;
-                showDialog(getString(R.string.loyalty_4));
-                break;
-            case R.id.card5:
-                number = 5;
-                showDialog(getString(R.string.loyalty_5));
-                break;
-            case R.id.card6:
-                number = 6;
-                showDialog(getString(R.string.loyalty_6));
-                break;
-        }
+//        switch (view.getId()) {
+//            case R.id.card1:
+//                showDialog(getString(R.string.loyalty_1));
+//                break;
+//            case R.id.card2:
+//                number = 2;
+//                showDialog(getString(R.string.loyalty_2));
+//                break;
+//            case R.id.card3:
+//                number = 3;
+//                showDialog(getString(R.string.loyalty_3));
+//                break;
+//            case R.id.card4:
+//                number = 4;
+//                showDialog(getString(R.string.loyalty_4));
+//                break;
+//            case R.id.card5:
+//                number = 5;
+//                showDialog(getString(R.string.loyalty_5));
+//                break;
+//            case R.id.card6:
+//                number = 6;
+//                showDialog(getString(R.string.loyalty_6));
+//                break;
+//        }
     }
 
     private void redeem(int number) {
@@ -192,6 +212,7 @@ public class RedeemLoyalty extends AppCompatActivity implements View.OnClickList
 
 
     private void redeemLoyalty(int amount) throws JSONException {
+        progressDialog.setTitle("Redeeming Loyalty Points");
         progressDialog.show();
         JSONObject jsonObject = RequestBuilder.redeemLoyalty();
         Account account = SQLite.select().from(Account.class).querySingle();
@@ -232,6 +253,58 @@ public class RedeemLoyalty extends AppCompatActivity implements View.OnClickList
         } else {
             error();
         }
+    }
+
+    private void getOptions() throws JSONException {
+        progressDialog.setTitle("Fetching redeeming Options");
+
+        progressDialog.show();
+        final JSONObject jsonObject = RequestBuilder.redeemLoyalty();
+        Account account = SQLite.select().from(Account.class).querySingle();
+
+        final SessionManager sessionManager = new SessionManager(getBaseContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlsConfig.URL_REDEEM_OPTIONS, jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("response", response.toString());
+                if (response.has("error")) {
+                    error();
+                } else if (response.has("result")) {
+                    try {
+                        JSONArray jsonArray = response.getJSONArray("result");
+                        Gson gson = new Gson();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                            RefferalOption option = gson.fromJson(jsonObject1.toString(), RefferalOption.class);
+                            option.save();
+                        }
+                        adapter = new RefferalAdapter(getBaseContext());
+                        recyclerView.setAdapter(adapter);
+                        if (progressDialog != null) progressDialog.dismiss();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    error();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                error();
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Cookie", sessionManager.getCookie());
+                return headers;
+            }
+        };
+        jsonObjectRequest.setShouldCache(false);
+        VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(jsonObjectRequest);
     }
 
     private void finishRedemption() {

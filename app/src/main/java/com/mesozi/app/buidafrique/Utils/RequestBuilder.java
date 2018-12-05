@@ -32,7 +32,7 @@ public class RequestBuilder {
 
     }
 
-    public static JSONObject registerAffiliateJson(String name, String email, String referral_code,String phone,String password, String occupation,  String location) throws JSONException {
+    public static JSONObject registerAffiliateJson(String name, String email, String referral_code, String phone, String password, String occupation, String location) throws JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("jsonrpc", JSON_VERS);
         jsonObject.put("method", METHOD_CALL);
@@ -95,6 +95,7 @@ public class RequestBuilder {
 
         return new JSONObject(request);
     }
+
     public static JSONObject fetchMessagesRequest() throws JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("jsonrpc", JSON_VERS);
@@ -184,25 +185,17 @@ public class RequestBuilder {
         return new JSONObject(request);
     }
 
-    public static JSONObject customersObject() throws JSONException {
-        String request = "\n" +
-                "\n" +
-                "{\n" +
+    public static JSONObject customersObject(String uid) throws JSONException {
+        String request = "{\n" +
                 "  \"jsonrpc\":\"2.0\",\n" +
                 "  \"method\":\"call\",\n" +
-                "  \"params\":{\n" +
-                "    \"model\": \"res.partner\",\n" +
+                "  \"params\": {\n" +
+                "    \"model\":\"res.partner\",\n" +
                 "    \"method\":\"search_read\",\n" +
-                "      \"args\":[[[\"active\", \"=\", true],[\"customer\", \"=\", true]]],\n" +
-                "    \"kwargs\":\n" +
-                "      {\n" +
-                "      \t\"fields\":[\"company\",\"customer\",\"display_name\",\"partner_id\",\"id\",\"name\",\"email\",\"phone\",\"street\",\"city\",\"zip\",\"mobile\"],\n" +
-                "        \"offset\":0,\n" +
-                "        \"limit\":100,\n" +
-                "        \"order\":\"id\"\n" +
-                "      }\n" +
+                "    \"args\":[[[\"user_id\",\"=\", " + uid + "]]],\n" +
+                "    \"kwargs\" : {\"fields\":[\"name\",\"phone\",\"email\"]}\n" +
                 "  },\n" +
-                "  \"id\":123\n" +
+                "  \"id\":1969558901\n" +
                 "}";
         return new JSONObject(request);
     }
@@ -260,7 +253,7 @@ public class RequestBuilder {
                 "      \"args\":[],\n" +
                 "    \"kwargs\":\n" +
                 "      {\n" +
-                "        \"existing_ids\":[ " + existing_ids +  "],\n" +
+                "        \"existing_ids\":[ " + existing_ids + "],\n" +
                 "        \"limit\":100\n" +
                 "      }\n" +
                 "  },\n" +
@@ -270,7 +263,7 @@ public class RequestBuilder {
         return new JSONObject(request);
     }
 
-    public static JSONObject readMessage() throws JSONException{
+    public static JSONObject readMessage() throws JSONException {
         String request = "{\n" +
                 "  \"jsonrpc\":\"2.0\",\n" +
                 "  \"method\":\"call\",\n" +
@@ -284,7 +277,7 @@ public class RequestBuilder {
     }
 
 
-    public static JSONObject createLeads(String displayName, String name,String description, String email, String addressName, String emailFrom) throws JSONException {
+    public static JSONObject createLeads(String displayName, String name, String description, String email, String addressName, String emailFrom) throws JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("jsonrpc", JSON_VERS);
         jsonObject.put("method", METHOD_CALL);
@@ -362,7 +355,7 @@ public class RequestBuilder {
                 "  \"method\":\"call\",\n" +
                 "  \"params\": {\n" +
                 "    \"model\":\"crm.lead\",\n" +
-                "    \"method\":\"search_read\",\n" +
+                "    \"method\":\"fetch_new_leads\",\n" +
                 "    \"args\":[],\n" +
                 "    \"kwargs\" : {}\n" +
                 "  },\n" +
@@ -388,6 +381,7 @@ public class RequestBuilder {
         return jsonObject;
 
     }
+
     public static JSONObject redeemLoyalty() throws JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("jsonrpc", JSON_VERS);
@@ -402,6 +396,7 @@ public class RequestBuilder {
         return jsonObject;
 
     }
+
     public static JSONObject redeemBonus(int amount, String payment_method) throws JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("jsonrpc", JSON_VERS);
@@ -423,7 +418,7 @@ public class RequestBuilder {
         jsonObject.put("jsonrpc", JSON_VERS);
         jsonObject.put("method", METHOD_CALL);
 
-        JSONObject params  = new JSONObject();
+        JSONObject params = new JSONObject();
         params.put("login", email);
         params.put("phone", phone);
         jsonObject.put("params", params);

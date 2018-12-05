@@ -36,6 +36,7 @@ import com.mesozi.app.buidafrique.Models.Commission;
 import com.mesozi.app.buidafrique.Models.EmailMessage;
 import com.mesozi.app.buidafrique.Models.EmailMessage_Table;
 import com.mesozi.app.buidafrique.Models.Lead;
+import com.mesozi.app.buidafrique.Models.Lead_Table;
 import com.mesozi.app.buidafrique.Models.Loyalty;
 import com.mesozi.app.buidafrique.Models.SalesOrder;
 import com.mesozi.app.buidafrique.R;
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void registerViews() {
         progressDialog = new ProgressDialog(this);
-        progressDialog.setCancelable(false);
+        progressDialog.setCancelable(true);
         progressDialog.setTitle("Fetching User details");
         progressDialog.setMessage("Please Wait...");
 
@@ -93,9 +94,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         won = findViewById(R.id.tv_won_val);
         lost = findViewById(R.id.tv_lost_val);
 
-        qualified.setText(String.valueOf(6));
-        won.setText(String.valueOf(4));
-        lost.setText(String.valueOf(3));
+        qualified.setText(String.valueOf(new Select(Method.count()).from(Lead.class).where(Lead_Table.type.eq("opportunity")).and(Lead_Table.stage_id.eq("Qualified")).count()));
+        won.setText(String.valueOf(new Select(Method.count()).from(Lead.class).where(Lead_Table.type.eq("opportunity")).and(Lead_Table.stage_id.eq("WON Opportunity")).count()));
+        lost.setText(String.valueOf(new Select(Method.count()).from(Lead.class).where(Lead_Table.type.eq("opportunity")).and(Lead_Table.stage_id.eq("LOST Opportunity")).count()));
         setDrawer();
 
         findViewById(R.id.menu_commissions).setOnClickListener(this);
@@ -165,6 +166,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         long inbox = 0;
         List<EmailMessage> messages = SQLite.select().from(EmailMessage.class).queryList();
         long leads = 0;
+        long won = 0;
+        long lost= 0;
+        long inProgress = 0;
         //A very unclean way to do this
         try {
             inbox = new Select(Method.count()).from(EmailMessage.class).where(EmailMessage_Table.to_read.eq(true)).count();
@@ -173,14 +177,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         try {
             leads = new Select(Method.count()).from(Lead.class).count();
+            won = new Select(Method.count()).from(Lead.class).where(Lead_Table.type.eq("opportunity")).and(Lead_Table.stage_id.eq("WON Opportunity")).count();
+            lost = new Select(Method.count()).from(Lead.class).where(Lead_Table.type.eq("opportunity")).and(Lead_Table.stage_id.eq("LOST Opportunity")).count();
+            inProgress = new Select(Method.count()).from(Lead.class).where(Lead_Table.type.eq("opportunity")).and(Lead_Table.stage_id.eq("Qualified")).count();
         } catch (SQLiteException e) {
             e.printStackTrace();
         }
         Menu menu = navigationView.getMenu();
         menu.findItem(R.id.nav_inbox).setTitle(String.format(Locale.getDefault(), "%s (%d)", getString(R.string.inbox), inbox));
-        menu.findItem(R.id.nav_qualified).setTitle(String.format(Locale.getDefault(), "%s (%d)", getString(R.string.qualified), leads));
-        menu.findItem(R.id.nav_won).setTitle(String.format(Locale.getDefault(), "%s (%d)", getString(R.string.won), leads));
-        menu.findItem(R.id.nav_lost).setTitle(String.format(Locale.getDefault(), "%s (%d)", getString(R.string.lost), leads));
+        menu.findItem(R.id.nav_qualified).setTitle(String.format(Locale.getDefault(), "%s (%d)", getString(R.string.qualified), inProgress));
+        menu.findItem(R.id.nav_won).setTitle(String.format(Locale.getDefault(), "%s (%d)", getString(R.string.won), won));
+        menu.findItem(R.id.nav_lost).setTitle(String.format(Locale.getDefault(), "%s (%d)", getString(R.string.lost), lost));
         //menu.findItem(R.id.nav_pkg_manage).setVisible(false);//In case you want to remove menu item
     }
 
@@ -243,7 +250,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(getBaseContext(), CommissionsDetails.class));
                 break;
             case R.id.card_lost:
-                startLeadsFilter("Lost");
+                startLeadsFilter("LOST Opportunity");
                 break;
             case R.id.card_qualified:
                 startLeadsFilter("Qualified");
@@ -328,7 +335,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         Loyalty loyalty = SQLite.select().from(Loyalty.class).querySingle();
         if (loyalty != null) {
-            tvLoyalty.setText(String.format(Locale.getDefault(), "KES %d", loyalty.getAvailable()));
+            tvLoyalty.setText(String.format(Locale.getDefault(), "%d", loyalty.getAvailable()));
         }
         finishFetching();
     }

@@ -17,6 +17,7 @@ public class UrlsConfig {
     public static final String URL_PROMOTION_MESSAGES = BASE_WEB_IP +  "get_promo_messages/";
     public static final String URL_GET_SHARE_MESSAGE = BASE_WEB_IP + "get_share_message";
     public static final String URL_RESET_PASSWORD = AFFILIATE_IP + "forgot_password";
+    public static final String URL_REDEEM_OPTIONS = BASE_IP + "loyalty/redeem/options";
 
     public static String getDashboardUrl(String uid){
         return String.format(Locale.getDefault(), "%sdashboard/%s", AFFILIATE_IP, uid);

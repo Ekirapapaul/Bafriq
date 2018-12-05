@@ -44,9 +44,8 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
         holder.title.setText(lead.getName());
         holder.summary.setText(lead.getDescription());
 
-        if (lead.getStage_id().length >=2) {
-            String stage = lead.getStage_id()[1].substring(0, 1).toUpperCase() + lead.getStage_id()[1].substring(1);
-            holder.state.setText(stage);
+            String stage = lead.getStage_id();
+            holder.state.setText(lead.getStage_id());
 //            if (stage.equals("WON Opportunity")){
 //                holder.state.setText(R.string.won);
 //                holder.state.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_radio_button_checked_green_24dp, 0, 0, 0);
@@ -73,7 +72,6 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
             }
 
 
-        }
 
         try {
             Date date = CommonUtils.parseStringToDate(lead.getCreate_date());

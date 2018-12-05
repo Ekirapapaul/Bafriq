@@ -21,6 +21,7 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.mesozi.app.buidafrique.Models.Lead;
+import com.mesozi.app.buidafrique.Models.Lead_Table;
 import com.mesozi.app.buidafrique.R;
 import com.mesozi.app.buidafrique.Utils.RecyclerItemClickListener;
 import com.mesozi.app.buidafrique.Utils.RequestBuilder;
@@ -28,6 +29,7 @@ import com.mesozi.app.buidafrique.Utils.SessionManager;
 import com.mesozi.app.buidafrique.Utils.UrlsConfig;
 import com.mesozi.app.buidafrique.Utils.VolleySingleton;
 import com.mesozi.app.buidafrique.adapters.LeadsAdapter;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -149,6 +151,8 @@ public class OpportunitiesActivity extends AppCompatActivity {
     private void error() {
         if (progressDialog != null) progressDialog.dismiss();
         Toast.makeText(this, "Can not find a connection right now", Toast.LENGTH_SHORT).show();
+        leads = SQLite.select().from(Lead.class).where(Lead_Table.stage_id.eq(filter)).and(Lead_Table.type.eq("opportunity")).queryList();
+        recyclerView.setAdapter(new LeadsAdapter(getBaseContext(), leads));
     }
 
     private void parseLeads(JSONArray jsonArray) {
@@ -158,27 +162,10 @@ public class OpportunitiesActivity extends AppCompatActivity {
             Log.d("Processing ", "" + i);
             try {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                if (jsonObject.get("partner_id") instanceof Boolean) {
-                    jsonObject.remove("partner_id");
-                } else if (jsonObject.get("company_id") instanceof Boolean) {
-                    jsonObject.remove("company_id");
-                } else if ((jsonObject.get("country_id") instanceof Boolean && !jsonObject.getBoolean("country_id")) || jsonObject.get("country_id").toString().equals("false")) {
-                    Log.d("Gotten boolean", "gotten " + i);
-                    jsonObject.remove("country_id");
-                } else if (jsonObject.get("child_ids") instanceof Boolean) {
-                    jsonObject.remove("child_ids");
-                } else if (jsonObject.get("message_follower_ids") instanceof Boolean) {
-                    jsonObject.remove("message_follower_ids");
-                } else if (jsonObject.get("stage_id") instanceof Boolean) {
-                    jsonObject.remove("stage_id");
-                } else if (jsonObject.get("property_id") instanceof Boolean) {
-                    jsonObject.remove("property_id");
-                }
                 try {
                     Lead lead = gson.fromJson(jsonObject.toString(), Lead.class);
-                    String stage = lead.getStage_id()[1].substring(0, 1).toUpperCase() + lead.getStage_id()[1].substring(1);
-                    if (stage.equals(filter))
-                        leads.add(lead);
+                    lead.save();
+
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.d("Failed at", String.format(" with %s", jsonObject.toString()));
@@ -189,6 +176,7 @@ public class OpportunitiesActivity extends AppCompatActivity {
             }
         }
         if (progressDialog != null) progressDialog.dismiss();
+        leads = SQLite.select().from(Lead.class).where(Lead_Table.stage_id.eq(filter)).and(Lead_Table.type.eq("opportunity")).queryList();
         recyclerView.setAdapter(new LeadsAdapter(getBaseContext(), leads));
         Log.d("leads size", String.valueOf(leads.size()));
     }

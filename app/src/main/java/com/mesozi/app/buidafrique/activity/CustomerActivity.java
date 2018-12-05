@@ -27,6 +27,7 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.mesozi.app.buidafrique.Models.AbstractSalesOrder;
+import com.mesozi.app.buidafrique.Models.Account;
 import com.mesozi.app.buidafrique.Models.Customer;
 import com.mesozi.app.buidafrique.Models.Customer_Table;
 import com.mesozi.app.buidafrique.R;
@@ -166,7 +167,9 @@ public class CustomerActivity extends AppCompatActivity implements CustomerAdapt
         final SessionManager sessionManager = new SessionManager(getBaseContext());
         Log.d("session", sessionManager.getCookie());
         try {
-            JSONObject jsonObject = RequestBuilder.customersObject();
+            Account account = SQLite.select().from(Account.class).querySingle();
+            JSONObject jsonObject = RequestBuilder.customersObject(Objects.requireNonNull(account).getUid());
+            Log.d("json", jsonObject.toString());
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlsConfig.URL_DATASET, jsonObject, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
@@ -233,11 +236,11 @@ public class CustomerActivity extends AppCompatActivity implements CustomerAdapt
             }
         }
         if (progressDialog != null) progressDialog.dismiss();
-        adapter = new CustomerAdapter(getBaseContext(), customers);
+
         customers = SQLite.select()
                 .from(Customer.class)
-                .where(Customer_Table.email.notEq("false"))
-                .queryList();;
+                .queryList();
+        adapter = new CustomerAdapter(getBaseContext(), customers);
         recyclerView.setAdapter(adapter);
     }
 

@@ -160,13 +160,14 @@ public class AddLead extends AppCompatActivity {
 
             }
         });
+        setCustomer(customer);
 
         findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (check()) {
                     try {
-                        JSONObject jsonObject = RequestBuilder.createLeads(etName.getText().toString(), etName.getText().toString(),etDescription.getText().toString(), customer.getEmail(), customer.getName(), customer.getEmail());
+                        JSONObject jsonObject = RequestBuilder.createLeads(etName.getText().toString(), etName.getText().toString(), etDescription.getText().toString(), customer.getEmail(), customer.getName(), customer.getEmail());
                         createLead(jsonObject);
                     } catch (JSONException e) {
                         e.printStackTrace();

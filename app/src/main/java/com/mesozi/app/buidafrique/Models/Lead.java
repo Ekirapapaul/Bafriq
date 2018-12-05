@@ -20,83 +20,55 @@ public class Lead extends BaseModel implements  Parcelable{
     }
 
     @Column
-    @PrimaryKey(autoincrement = true)
-    private long id;
-
-    private boolean furnished;
-    private String[] write_uid;
-    private String[] categ_ids;
-    private int day_close;
-    private int day_open;
-    private String[] property_id;
-    private String message_summary = "";
-    private String display_name;
-    private String opt_out;
-    private String title;
-    private String type_id;
-    private String[] company_id = {"false"};
-    private String max_bedroom;
-    private String parent_id;
-    private String min_price;
-    private String fax;
-    private String[] child_ids = {"false"};
-    private String partner_address_email;
-    private String name = "";
-    private String facing;
-    private String medium_id;
-    private String referred;
-    private String message_bounce;
-    private String email_send;
-    private String[] message_follower_ids = {"false"};
+    @PrimaryKey
+    private int id;
+    @Column
     private String create_date;
-    private String date_last_stage_update;
-    private String campaign_id;
-    private String partner_address_name;
+
+    @Column
+    private String description;
+
+    @Column
     private String contact_name;
-    private String[] partner_id = {"false"};
-    private transient String[] country_id;
-    private String description = "";
-    private String[] stage_id = {};
+
+    @Column
     private String planned_revenue;
+
+    @Column
+    private String stage_id;
+
+    @Column
+    private int user_id;
+
+    @Column
+    private String name;
+
+    @Column
+    private String partner_name;
+
+    @Column
+    private int partner_id;
+
+    @Column
     private String mobile;
 
+    @Column
+    private String type;
+
+
     protected Lead(Parcel in) {
-        furnished = in.readByte() != 0;
-        write_uid = in.createStringArray();
-        categ_ids = in.createStringArray();
-        day_close = in.readInt();
-        day_open = in.readInt();
-        property_id = in.createStringArray();
-        message_summary = in.readString();
-        display_name = in.readString();
-        opt_out = in.readString();
-        title = in.readString();
-        type_id = in.readString();
-        company_id = in.createStringArray();
-        max_bedroom = in.readString();
-        parent_id = in.readString();
-        min_price = in.readString();
-        fax = in.readString();
-        child_ids = in.createStringArray();
-        partner_address_email = in.readString();
-        name = in.readString();
-        facing = in.readString();
-        medium_id = in.readString();
-        referred = in.readString();
-        message_bounce = in.readString();
-        email_send = in.readString();
-        message_follower_ids = in.createStringArray();
+        id = in.readInt();
         create_date = in.readString();
-        date_last_stage_update = in.readString();
-        campaign_id = in.readString();
-        partner_address_name = in.readString();
-        contact_name = in.readString();
-        partner_id = in.createStringArray();
-        country_id = in.createStringArray();
         description = in.readString();
-        stage_id = in.createStringArray();
+        contact_name = in.readString();
         planned_revenue = in.readString();
+        stage_id = in.readString();
+        user_id = in.readInt();
+        name = in.readString();
+        partner_name = in.readString();
+        partner_id = in.readInt();
         mobile = in.readString();
+        type = in.readString();
     }
 
     public static final Creator<Lead> CREATOR = new Creator<Lead>() {
@@ -111,212 +83,33 @@ public class Lead extends BaseModel implements  Parcelable{
         }
     };
 
-    public long getId() {
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(create_date);
+        parcel.writeString(description);
+        parcel.writeString(contact_name);
+        parcel.writeString(planned_revenue);
+        parcel.writeString(stage_id);
+        parcel.writeInt(user_id);
+        parcel.writeString(name);
+        parcel.writeString(partner_name);
+        parcel.writeInt(partner_id);
+        parcel.writeString(mobile);
+        parcel.writeString(type);
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
-    }
-
-    public boolean isFurnished() {
-        return furnished;
-    }
-
-    public void setFurnished(boolean furnished) {
-        this.furnished = furnished;
-    }
-
-    public String[] getWrite_uid() {
-        return write_uid;
-    }
-
-    public void setWrite_uid(String[] write_uid) {
-        this.write_uid = write_uid;
-    }
-
-    public String[] getCateg_ids() {
-        return categ_ids;
-    }
-
-    public void setCateg_ids(String[] categ_ids) {
-        this.categ_ids = categ_ids;
-    }
-
-    public int getDay_close() {
-        return day_close;
-    }
-
-    public void setDay_close(int day_close) {
-        this.day_close = day_close;
-    }
-
-    public int getDay_open() {
-        return day_open;
-    }
-
-    public void setDay_open(int day_open) {
-        this.day_open = day_open;
-    }
-
-    public String[] getProperty_id() {
-        return property_id;
-    }
-
-    public void setProperty_id(String[] property_id) {
-        this.property_id = property_id;
-    }
-
-    public String getMessage_summary() {
-        return message_summary;
-    }
-
-    public void setMessage_summary(String message_summary) {
-        this.message_summary = message_summary;
-    }
-
-    public String getDisplay_name() {
-        return display_name;
-    }
-
-    public void setDisplay_name(String display_name) {
-        this.display_name = display_name;
-    }
-
-    public String getOpt_out() {
-        return opt_out;
-    }
-
-    public void setOpt_out(String opt_out) {
-        this.opt_out = opt_out;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getType_id() {
-        return type_id;
-    }
-
-    public void setType_id(String type_id) {
-        this.type_id = type_id;
-    }
-
-    public String[] getCompany_id() {
-        return company_id;
-    }
-
-    public void setCompany_id(String[] company_id) {
-        this.company_id = company_id;
-    }
-
-    public String getMax_bedroom() {
-        return max_bedroom;
-    }
-
-    public void setMax_bedroom(String max_bedroom) {
-        this.max_bedroom = max_bedroom;
-    }
-
-    public String getParent_id() {
-        return parent_id;
-    }
-
-    public void setParent_id(String parent_id) {
-        this.parent_id = parent_id;
-    }
-
-    public String getMin_price() {
-        return min_price;
-    }
-
-    public void setMin_price(String min_price) {
-        this.min_price = min_price;
-    }
-
-    public String getFax() {
-        return fax;
-    }
-
-    public void setFax(String fax) {
-        this.fax = fax;
-    }
-
-    public String[] getChild_ids() {
-        return child_ids;
-    }
-
-    public void setChild_ids(String[] child_ids) {
-        this.child_ids = child_ids;
-    }
-
-    public String getPartner_address_email() {
-        return partner_address_email;
-    }
-
-    public void setPartner_address_email(String partner_address_email) {
-        this.partner_address_email = partner_address_email;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getFacing() {
-        return facing;
-    }
-
-    public void setFacing(String facing) {
-        this.facing = facing;
-    }
-
-    public String getMedium_id() {
-        return medium_id;
-    }
-
-    public void setMedium_id(String medium_id) {
-        this.medium_id = medium_id;
-    }
-
-    public String getReferred() {
-        return referred;
-    }
-
-    public void setReferred(String referred) {
-        this.referred = referred;
-    }
-
-    public String getMessage_bounce() {
-        return message_bounce;
-    }
-
-    public void setMessage_bounce(String message_bounce) {
-        this.message_bounce = message_bounce;
-    }
-
-    public String getEmail_send() {
-        return email_send;
-    }
-
-    public void setEmail_send(String email_send) {
-        this.email_send = email_send;
-    }
-
-    public String[] getMessage_follower_ids() {
-        return message_follower_ids;
-    }
-
-    public void setMessage_follower_ids(String[] message_follower_ids) {
-        this.message_follower_ids = message_follower_ids;
     }
 
     public String getCreate_date() {
@@ -327,28 +120,12 @@ public class Lead extends BaseModel implements  Parcelable{
         this.create_date = create_date;
     }
 
-    public String getDate_last_stage_update() {
-        return date_last_stage_update;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDate_last_stage_update(String date_last_stage_update) {
-        this.date_last_stage_update = date_last_stage_update;
-    }
-
-    public String getCampaign_id() {
-        return campaign_id;
-    }
-
-    public void setCampaign_id(String campaign_id) {
-        this.campaign_id = campaign_id;
-    }
-
-    public String getPartner_address_name() {
-        return partner_address_name;
-    }
-
-    public void setPartner_address_name(String partner_address_name) {
-        this.partner_address_name = partner_address_name;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getContact_name() {
@@ -359,44 +136,52 @@ public class Lead extends BaseModel implements  Parcelable{
         this.contact_name = contact_name;
     }
 
-    public String[] getPartner_id() {
-        return partner_id;
-    }
-
-    public void setPartner_id(String[] partner_id) {
-        this.partner_id = partner_id;
-    }
-
-    public String[] getCountry_id() {
-        return country_id;
-    }
-
-    public void setCountry_id(String[] country_id) {
-        this.country_id = country_id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String[] getStage_id() {
-        return stage_id;
-    }
-
-    public void setStage_id(String[] stage_id) {
-        this.stage_id = stage_id;
-    }
-
     public String getPlanned_revenue() {
         return planned_revenue;
     }
 
     public void setPlanned_revenue(String planned_revenue) {
         this.planned_revenue = planned_revenue;
+    }
+
+    public String getStage_id() {
+        return stage_id;
+    }
+
+    public void setStage_id(String stage_id) {
+        this.stage_id = stage_id;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPartner_name() {
+        return partner_name;
+    }
+
+    public void setPartner_name(String partner_name) {
+        this.partner_name = partner_name;
+    }
+
+    public int getPartner_id() {
+        return partner_id;
+    }
+
+    public void setPartner_id(int partner_id) {
+        this.partner_id = partner_id;
     }
 
     public String getMobile() {
@@ -407,50 +192,15 @@ public class Lead extends BaseModel implements  Parcelable{
         this.mobile = mobile;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public String getType() {
+        return type;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-
-        parcel.writeByte((byte) (furnished ? 1 : 0));
-        parcel.writeStringArray(write_uid);
-        parcel.writeStringArray(categ_ids);
-        parcel.writeInt(day_close);
-        parcel.writeInt(day_open);
-        parcel.writeStringArray(property_id);
-        parcel.writeString(message_summary);
-        parcel.writeString(display_name);
-        parcel.writeString(opt_out);
-        parcel.writeString(title);
-        parcel.writeString(type_id);
-        parcel.writeStringArray(company_id);
-        parcel.writeString(max_bedroom);
-        parcel.writeString(parent_id);
-        parcel.writeString(min_price);
-        parcel.writeString(fax);
-        parcel.writeStringArray(child_ids);
-        parcel.writeString(partner_address_email);
-        parcel.writeString(name);
-        parcel.writeString(facing);
-        parcel.writeString(medium_id);
-        parcel.writeString(referred);
-        parcel.writeString(message_bounce);
-        parcel.writeString(email_send);
-        parcel.writeStringArray(message_follower_ids);
-        parcel.writeString(create_date);
-        parcel.writeString(date_last_stage_update);
-        parcel.writeString(campaign_id);
-        parcel.writeString(partner_address_name);
-        parcel.writeString(contact_name);
-        parcel.writeStringArray(partner_id);
-        parcel.writeStringArray(country_id);
-        parcel.writeString(description);
-        parcel.writeStringArray(stage_id);
-        parcel.writeString(planned_revenue);
-        parcel.writeString(mobile);
+    public void setType(String type) {
+        this.type = type;
     }
 
+    public static Creator<Lead> getCREATOR() {
+        return CREATOR;
+    }
 }

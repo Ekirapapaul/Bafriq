@@ -184,24 +184,9 @@ public class LeadsActivity extends AppCompatActivity {
             Log.d("Processing ", "" + i);
             try {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                if (jsonObject.get("partner_id") instanceof Boolean) {
-                    jsonObject.remove("partner_id");
-                } else if (jsonObject.get("company_id") instanceof Boolean) {
-                    jsonObject.remove("company_id");
-                } else if (jsonObject.get("country_id") instanceof Boolean) {
-                    Log.d("Gotten boolean", "gotten " + i);
-                    jsonObject.remove("country_id");
-                } else if (jsonObject.get("child_ids") instanceof Boolean) {
-                    jsonObject.remove("child_ids");
-                } else if (jsonObject.get("message_follower_ids") instanceof Boolean) {
-                    jsonObject.remove("message_follower_ids");
-                }else if (jsonObject.get("stage_id") instanceof Boolean) {
-                    jsonObject.remove("stage_id");
-                }else if (jsonObject.get("property_id") instanceof Boolean) {
-                    jsonObject.remove("property_id");
-                }
                 try {
                     Lead lead = gson.fromJson(jsonObject.toString(), Lead.class);
+                    lead.save();
                     leads.add(lead);
                 } catch (Exception e) {
                     e.printStackTrace();

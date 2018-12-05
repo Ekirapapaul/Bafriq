@@ -158,27 +158,10 @@ public class LeadsItemActivity extends AppCompatActivity {
             Log.d("Processing ", "" + i);
             try {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                if (jsonObject.get("partner_id") instanceof Boolean) {
-                    jsonObject.remove("partner_id");
-                } else if (jsonObject.get("company_id") instanceof Boolean) {
-                    jsonObject.remove("company_id");
-                } else if ((jsonObject.get("country_id") instanceof Boolean && !jsonObject.getBoolean("country_id")) || jsonObject.get("country_id").toString().equals("false")) {
-                    Log.d("Gotten boolean", "gotten " + i);
-                    jsonObject.remove("country_id");
-                } else if (jsonObject.get("child_ids") instanceof Boolean) {
-                    jsonObject.remove("child_ids");
-                } else if (jsonObject.get("message_follower_ids") instanceof Boolean) {
-                    jsonObject.remove("message_follower_ids");
-                } else if (jsonObject.get("stage_id") instanceof Boolean) {
-                    jsonObject.remove("stage_id");
-                } else if (jsonObject.get("property_id") instanceof Boolean) {
-                    jsonObject.remove("property_id");
-                }
                 try {
                     Lead lead = gson.fromJson(jsonObject.toString(), Lead.class);
-                    String stage = lead.getStage_id()[1].substring(0, 1).toUpperCase() + lead.getStage_id()[1].substring(1);
-                    if (stage.equals(filter))
-                        leads.add(lead);
+                    lead.save();
+                    leads.add(lead);
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.d("Failed at", String.format(" with %s", jsonObject.toString()));
@@ -190,6 +173,5 @@ public class LeadsItemActivity extends AppCompatActivity {
         }
         if (progressDialog != null) progressDialog.dismiss();
         recyclerView.setAdapter(new LeadsAdapter(getBaseContext(), leads));
-        Log.d("leads size", String.valueOf(leads.size()));
     }
 }

@@ -52,11 +52,7 @@ public class LeadDetailsActivity extends AppCompatActivity {
         if (lead != null) {
             name.setText(lead.getName());
             description.setText(((lead.getDescription().isEmpty()) ? "N/A" : lead.getDescription()));
-            String stage = "N/A";
-            if (lead.getStage_id().length >=2) {
-                stage = lead.getStage_id()[1].substring(0, 1).toUpperCase() + lead.getStage_id()[1].substring(1);
-            }
-            state.setText(stage);
+            state.setText(lead.getStage_id());
             date.setText(lead.getCreate_date());
             review.setText(lead.getPlanned_revenue());
 
