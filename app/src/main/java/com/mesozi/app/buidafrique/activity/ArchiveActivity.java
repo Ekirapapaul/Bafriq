@@ -1,6 +1,8 @@
 package com.mesozi.app.buidafrique.activity;
 
 import android.app.ProgressDialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -33,6 +35,7 @@ import com.mesozi.app.buidafrique.Utils.RequestBuilder;
 import com.mesozi.app.buidafrique.Utils.SessionManager;
 import com.mesozi.app.buidafrique.Utils.UrlsConfig;
 import com.mesozi.app.buidafrique.Utils.VolleySingleton;
+import com.mesozi.app.buidafrique.adapters.ArchiveAdapter;
 import com.mesozi.app.buidafrique.adapters.EmailAdapter;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
@@ -44,6 +47,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by ekirapa on 7/24/18 .
@@ -54,7 +58,7 @@ public class ArchiveActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private SearchView searchView;
     private TextView placeholder;
-    private EmailAdapter adapter;
+    private ArchiveAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,6 +82,26 @@ public class ArchiveActivity extends AppCompatActivity {
         searchView = findViewById(R.id.search_view);
         searchView.setFocusable(true);// searchView is null
         searchView.setFocusableInTouchMode(true);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+
+        searchView.setSearchableInfo(Objects.requireNonNull(searchManager)
+                .getSearchableInfo(getComponentName()));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // filter recycler view when query submitted
+
+                adapter.getFilter().filter(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                // filter recycler view when text is changed
+                adapter.getFilter().filter(query);
+                return false;
+            }
+        });
 
         placeholder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -221,7 +245,7 @@ public class ArchiveActivity extends AppCompatActivity {
         }
         if (progressDialog != null) progressDialog.dismiss();
         emails = SQLite.select().from(EmailMessage.class).where(EmailMessage_Table.to_read.eq(false)).queryList();
-        adapter = new EmailAdapter(getBaseContext(), emails);
+        adapter = new ArchiveAdapter(getBaseContext(), emails);
         recyclerView.setAdapter(adapter);
         Log.d("emails size", String.valueOf(emails.size()));
     }

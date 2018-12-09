@@ -5,14 +5,19 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
+import com.mesozi.app.buidafrique.Models.Customer;
 import com.mesozi.app.buidafrique.Models.Lead;
 import com.mesozi.app.buidafrique.R;
 import com.mesozi.app.buidafrique.Utils.CommonUtils;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -22,13 +27,15 @@ import java.util.List;
 /**
  * Created by ekirapa on 7/24/18 .
  */
-public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder> {
+public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>  implements Filterable {
     private Context context;
     private List<Lead> leads = new ArrayList<>();
+    private List<Lead> filteredLeads = new ArrayList<>();
 
     public LeadsAdapter(Context context, List<Lead> leads) {
         this.context = context;
-        this.leads = leads;
+        this.leads = SQLite.select().from(Lead.class).queryList();
+        this.filteredLeads = leads;
     }
 
     @NonNull
@@ -40,7 +47,7 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
 
     @Override
     public void onBindViewHolder(@NonNull LeadsHolder holder, int position) {
-        Lead lead = leads.get(position);
+        Lead lead = filteredLeads.get(position);
         holder.title.setText(lead.getName());
         holder.summary.setText(lead.getDescription());
 
@@ -89,7 +96,46 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
 
     @Override
     public int getItemCount() {
-        return leads.size();
+        return filteredLeads.size();
+    }
+
+    public Lead getLead(int position){
+        return filteredLeads.get(position);
+    }
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    filteredLeads = leads;
+                } else {
+                    List<Lead> filteredList = new ArrayList<>();
+                    for (Lead lead : leads) {
+
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name or phone number match
+                        if (lead.getName().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(lead);
+                            Log.d("Filtered", charString + " gotten " + lead.getName());
+                        }
+                    }
+
+                    filteredLeads = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = filteredLeads;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                filteredLeads = (ArrayList<Lead>) filterResults.values;notifyDataSetChanged();
+            }
+        };
     }
 
     class LeadsHolder extends RecyclerView.ViewHolder {

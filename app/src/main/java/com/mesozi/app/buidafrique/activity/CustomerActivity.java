@@ -128,7 +128,7 @@ public class CustomerActivity extends AppCompatActivity implements CustomerAdapt
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getBaseContext(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Customer customer = customers.get(position);
+                Customer customer = adapter.getCustomer(position);
                 Intent intent = new Intent(getBaseContext(), CustomerDetails.class);
                 intent.putExtra("parcel_data", customer);
                 startActivity(intent);

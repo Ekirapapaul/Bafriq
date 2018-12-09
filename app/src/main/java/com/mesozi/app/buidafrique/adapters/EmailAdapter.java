@@ -3,14 +3,20 @@ package com.mesozi.app.buidafrique.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
+import com.mesozi.app.buidafrique.Models.Customer;
 import com.mesozi.app.buidafrique.Models.EmailMessage;
+import com.mesozi.app.buidafrique.Models.EmailMessage_Table;
 import com.mesozi.app.buidafrique.R;
 import com.mesozi.app.buidafrique.Utils.CommonUtils;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,14 +24,16 @@ import java.util.List;
 /**
  * Created by ekirapa on 9/7/18 .
  */
-public class EmailAdapter extends RecyclerView.Adapter<EmailAdapter.EmailHolder> {
+public class EmailAdapter extends RecyclerView.Adapter<EmailAdapter.EmailHolder> implements Filterable {
 
     private Context context;
     private List<EmailMessage> emails = new ArrayList<>();
+    private List<EmailMessage> filteredEmail = new ArrayList<>();
 
     public EmailAdapter(Context context, List<EmailMessage> emails) {
         this.context = context;
-        this.emails = emails;
+        this.emails = SQLite.select().from(EmailMessage.class).where(EmailMessage_Table.to_read.eq(true)).queryList();
+        this.filteredEmail = emails;
     }
 
     @NonNull
@@ -37,7 +45,7 @@ public class EmailAdapter extends RecyclerView.Adapter<EmailAdapter.EmailHolder>
 
     @Override
     public void onBindViewHolder(@NonNull EmailHolder holder, int position) {
-        EmailMessage emailMessage = emails.get(position);
+        EmailMessage emailMessage = filteredEmail.get(position);
         holder.date.setText(emailMessage.getDate());
         if(emailMessage.getDescription().equals("false") && !emailMessage.getDisplay_name().equals("false")){
             holder.subject.setText(CommonUtils.fromHtml(emailMessage.getDescription()));
@@ -54,12 +62,48 @@ public class EmailAdapter extends RecyclerView.Adapter<EmailAdapter.EmailHolder>
 
     }
 
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    filteredEmail = emails;
+                } else {
+                    List<EmailMessage> filteredList = new ArrayList<>();
+                    for (EmailMessage emailMessage : emails) {
+
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name or phone number match
+                        if (emailMessage.getDescription().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(emailMessage);
+                            Log.d("Filtered", charString + " gotten " + emailMessage.getDescription());
+                        }
+                    }
+
+                    filteredEmail = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = filteredEmail;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                filteredEmail = (ArrayList<EmailMessage>) filterResults.values;notifyDataSetChanged();
+            }
+        };
+    }
+
     public EmailMessage getEmail(int position){
-        return  emails.get(position);
+        return  filteredEmail.get(position);
     }
     @Override
     public int getItemCount() {
-        return emails.size();
+        return filteredEmail.size();
     }
 
     class EmailHolder extends RecyclerView.ViewHolder {

@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import com.mesozi.app.buidafrique.Utils.AppDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ColumnIgnore;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
@@ -46,8 +47,9 @@ public class Lead extends BaseModel implements  Parcelable{
     @Column
     private String partner_name;
 
+    @ColumnIgnore
     @Column
-    private int partner_id;
+    private String partner_id;
 
     @Column
     private String mobile;
@@ -66,7 +68,7 @@ public class Lead extends BaseModel implements  Parcelable{
         user_id = in.readInt();
         name = in.readString();
         partner_name = in.readString();
-        partner_id = in.readInt();
+        partner_id = in.readString();
         mobile = in.readString();
         type = in.readString();
     }
@@ -99,7 +101,7 @@ public class Lead extends BaseModel implements  Parcelable{
         parcel.writeInt(user_id);
         parcel.writeString(name);
         parcel.writeString(partner_name);
-        parcel.writeInt(partner_id);
+        parcel.writeString(partner_id);
         parcel.writeString(mobile);
         parcel.writeString(type);
     }
@@ -176,11 +178,11 @@ public class Lead extends BaseModel implements  Parcelable{
         this.partner_name = partner_name;
     }
 
-    public int getPartner_id() {
+    public String getPartner_id() {
         return partner_id;
     }
 
-    public void setPartner_id(int partner_id) {
+    public void setPartner_id(String partner_id) {
         this.partner_id = partner_id;
     }
 

@@ -3,6 +3,7 @@ package com.mesozi.app.buidafrique.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -66,6 +67,23 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
 
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
+
+        findViewById(R.id.tv_privacy).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("https://buildafrique.com/privacy-policy/"));
+                startActivity(intent);
+            }
+        });
+        findViewById(R.id.tv_terms).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("https://buildafrique.com/terms-conditions/"));
+                startActivity(intent);
+            }
+        });
 
         layouts = new int[]{
                 R.layout.fragment_welcome,

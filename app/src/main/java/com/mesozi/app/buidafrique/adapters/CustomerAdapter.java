@@ -34,7 +34,6 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ItemVi
         this.context = context;
         this.customers = SQLite.select()
                 .from(Customer.class)
-                .where(Customer_Table.email.notEq("false"))
                 .queryList();
         this.customersListFiltered = customers;
     }
@@ -48,8 +47,8 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ItemVi
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-        Customer customer = customers.get(position);
-        if (position == (customers.size() - 1)) holder.separator.setVisibility(View.GONE);
+        Customer customer = customersListFiltered.get(position);
+        if (position == (customersListFiltered.size() - 1)) holder.separator.setVisibility(View.GONE);
         holder.name.setText(customer.getName());
         holder.contact.setText(customer.getEmail());
     }
@@ -59,6 +58,9 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ItemVi
         return customersListFiltered.size();
     }
 
+    public Customer getCustomer(int position){
+        return customersListFiltered.get(position);
+    }
     @Override
     public Filter getFilter() {
         return new Filter() {
@@ -74,7 +76,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ItemVi
 
                         // name match condition. this might differ depending on your requirement
                         // here we are looking for name or phone number match
-                        if (customer.getName().contains(charSequence)) {
+                        if (customer.getName().toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(customer);
                             Log.d("Filtered", charString + " gotten " + customer.getName());
                         }
@@ -90,8 +92,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ItemVi
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                customersListFiltered = (ArrayList<Customer>) filterResults.values;
-                notifyDataSetChanged();
+                customersListFiltered = (ArrayList<Customer>) filterResults.values;notifyDataSetChanged();
             }
         };
     }

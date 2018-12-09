@@ -1,6 +1,8 @@
 package com.mesozi.app.buidafrique.activity;
 
 import android.app.ProgressDialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -32,6 +34,7 @@ import com.mesozi.app.buidafrique.Utils.SessionManager;
 import com.mesozi.app.buidafrique.Utils.UrlsConfig;
 import com.mesozi.app.buidafrique.Utils.VolleySingleton;
 import com.mesozi.app.buidafrique.adapters.LeadsAdapter;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,6 +44,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by ekirapa on 7/24/18 .
@@ -51,6 +55,7 @@ public class LeadsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private SearchView searchView;
     private TextView placeholder;
+    LeadsAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,6 +79,26 @@ public class LeadsActivity extends AppCompatActivity {
         searchView = findViewById(R.id.search_view);
         searchView.setFocusable(true);// searchView is null
         searchView.setFocusableInTouchMode(true);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+
+        searchView.setSearchableInfo(Objects.requireNonNull(searchManager)
+                .getSearchableInfo(getComponentName()));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // filter recycler view when query submitted
+
+                adapter.getFilter().filter(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                // filter recycler view when text is changed
+                adapter.getFilter().filter(query);
+                return false;
+            }
+        });
 
         placeholder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +116,7 @@ public class LeadsActivity extends AppCompatActivity {
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getBaseContext(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Lead lead = leads.get(position);
+                Lead lead = adapter.getLead(position);
                 Intent intent = new Intent(getBaseContext(), LeadDetailsActivity.class);
                 intent.putExtra("parcel_data", lead);
                 startActivity(intent);
@@ -123,6 +148,7 @@ public class LeadsActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     private void fetchLeads() {
         progressDialog.show();
         final SessionManager sessionManager = new SessionManager(getBaseContext());
@@ -141,7 +167,7 @@ public class LeadsActivity extends AppCompatActivity {
                             e.printStackTrace();
                             error();
                         }
-                    }else if(response.has("error")){
+                    } else if (response.has("error")) {
                         error();
                     }
 
@@ -175,6 +201,8 @@ public class LeadsActivity extends AppCompatActivity {
     private void error() {
         if (progressDialog != null) progressDialog.dismiss();
         Toast.makeText(this, "Can not find a connection right now", Toast.LENGTH_SHORT).show();
+        adapter = new LeadsAdapter(getBaseContext(), leads);
+        recyclerView.setAdapter(adapter);
     }
 
     private void parseLeads(JSONArray jsonArray) {
@@ -198,7 +226,8 @@ public class LeadsActivity extends AppCompatActivity {
             }
         }
         if (progressDialog != null) progressDialog.dismiss();
-        recyclerView.setAdapter(new LeadsAdapter(getBaseContext(), leads));
+        adapter = new LeadsAdapter(getBaseContext(), leads);
+        recyclerView.setAdapter(adapter);
         Log.d("leads size", String.valueOf(leads.size()));
     }
 }
