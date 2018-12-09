@@ -13,6 +13,7 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.mesozi.app.buidafrique.Models.PromoMessage;
+import com.mesozi.app.buidafrique.Models.RefferalMessage;
 import com.mesozi.app.buidafrique.Models.ShareMessage;
 import com.mesozi.app.buidafrique.R;
 import com.mesozi.app.buidafrique.Utils.RequestBuilder;
@@ -38,6 +39,7 @@ public class SplashScreen extends AppCompatActivity {
         SessionManager sessionManager = new SessionManager(getBaseContext());
         if (!sessionManager.isLoggedIn()) {
             try {
+                getRefferalMessage();
                 getMessages();
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -56,7 +58,7 @@ public class SplashScreen extends AppCompatActivity {
                 "  \"jsonrpc\":\"2.0\",\n" +
                 "  \"method\":\"call\"\n" +
                 "}");
-        Log.d("json",jsonObject.toString());
+        Log.d("json", jsonObject.toString());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlsConfig.URL_PROMOTION_MESSAGES, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -84,7 +86,7 @@ public class SplashScreen extends AppCompatActivity {
                 error.printStackTrace();
                 moveNext();
             }
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
@@ -97,7 +99,7 @@ public class SplashScreen extends AppCompatActivity {
 
     private void getShareMessage() throws JSONException {
         JSONObject jsonObject = RequestBuilder.getShareMessage();
-        Log.d("json",jsonObject.toString());
+        Log.d("json", jsonObject.toString());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlsConfig.URL_GET_SHARE_MESSAGE, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -120,7 +122,7 @@ public class SplashScreen extends AppCompatActivity {
                 error.printStackTrace();
                 moveNext();
             }
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
@@ -129,6 +131,53 @@ public class SplashScreen extends AppCompatActivity {
             }
         };
         VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(jsonObjectRequest);
+    }
+
+    private void getRefferalMessage() throws JSONException {
+        JSONObject jsonObject = RequestBuilder.getShareMessage();
+        Log.d("json", jsonObject.toString());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlsConfig.URL_GET_REFFERAL_MESSAGE, jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("response", response.toString());
+                if (response.has("result")) {
+                    try {
+                        parseRefferalMessages(response.getJSONArray("result"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+        VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(jsonObjectRequest);
+    }
+
+    private void parseRefferalMessages(JSONArray jsonArray) {
+        Gson gson = new Gson();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            try {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                RefferalMessage refferalMessage = gson.fromJson(jsonObject.toString(), RefferalMessage.class);
+                refferalMessage.save();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     private void parseMessages(JSONArray jsonArray) {

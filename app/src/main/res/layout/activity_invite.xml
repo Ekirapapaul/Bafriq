@@ -50,6 +50,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/tv_mesage"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="15dp"
                     android:gravity="center"
@@ -105,7 +106,8 @@
                     android:gravity="center"
                     android:paddingBottom="15dp"
                     android:paddingTop="15dp"
-                    android:text="ABCDEFGHIJK"
+                    android:text="CODE"
+                    android:id="@+id/tv_code"
                     android:textColor="@color/black"
                     android:textSize="17sp"
                     android:textStyle="bold" />

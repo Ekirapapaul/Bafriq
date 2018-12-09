@@ -27,6 +27,9 @@ public class Account extends BaseModel {
     @Column
     private String company_id;
 
+    @Column
+    private String referral_code;
+
     public Account() {
     }
 
@@ -68,5 +71,13 @@ public class Account extends BaseModel {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getReferral_code() {
+        return referral_code;
+    }
+
+    public void setReferral_code(String referral_code) {
+        this.referral_code = referral_code;
     }
 }

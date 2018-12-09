@@ -347,6 +347,18 @@ public class RequestBuilder {
 
         return new JSONObject(request);
     }
+    public static JSONObject getRefferalMessage() throws JSONException {
+        String request = "{\n" +
+                "  \"jsonrpc\":\"2.0\",\n" +
+                "  \"method\":\"call\",\n" +
+                "  \"params\":\n" +
+                "  {\n" +
+                "  },\n" +
+                "  \"id\":1969558901\n" +
+                "}";
+
+        return new JSONObject(request);
+    }
 
     public static JSONObject readLeads() throws JSONException {
         JSONObject jsonObject = new JSONObject();
