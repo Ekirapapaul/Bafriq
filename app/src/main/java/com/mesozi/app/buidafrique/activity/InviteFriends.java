@@ -39,6 +39,10 @@ public class InviteFriends extends AppCompatActivity {
         if (account != null) {
             code.setText(account.getReferral_code());
         }
+        final RefferalMessage refferalMessage = SQLite.select().from(RefferalMessage.class).querySingle();
+        if (refferalMessage != null) {
+            textView.setText(CommonUtils.fromHtml(refferalMessage.getMessage().replace("{promo_code}", Objects.requireNonNull(account).getReferral_code())));
+        }
 
         findViewById(R.id.btn_invite).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,10 +50,9 @@ public class InviteFriends extends AppCompatActivity {
                 String message = "“Buildafrique™ Partner Network”, Kenya\n" +
                         "Mobile Referral and Loyalty Program for real estate &amp; development\n" +
                         "solutions.\n use my code FGG543 to sign up today";
-                RefferalMessage refferalMessage = SQLite.select().from(RefferalMessage.class).querySingle();
                 if (refferalMessage != null) {
                     textView.setText(CommonUtils.fromHtml(refferalMessage.getMessage()));
-                    message = refferalMessage + "Use my referral code " + Objects.requireNonNull(account).getReferral_code() + " to sign up";
+                    message = refferalMessage.getMessage().replace("{promo_code}", Objects.requireNonNull(account).getReferral_code());
                 }
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
