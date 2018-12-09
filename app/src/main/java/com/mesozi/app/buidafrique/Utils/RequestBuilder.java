@@ -426,5 +426,17 @@ public class RequestBuilder {
         return jsonObject;
     }
 
+    public static JSONObject changePassword(String code, String password) throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("jsonrpc", JSON_VERS);
+        jsonObject.put("method", METHOD_CALL);
+
+        JSONObject params = new JSONObject();
+        params.put("login", code);
+        params.put("phone", password);
+        jsonObject.put("params", params);
+
+        return jsonObject;
+    }
 
 }

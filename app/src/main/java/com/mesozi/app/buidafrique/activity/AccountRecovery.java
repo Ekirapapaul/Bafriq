@@ -54,16 +54,11 @@ public class AccountRecovery extends AppCompatActivity implements FragmentModel.
                 transaction.addToBackStack(null);
                 break;
             case 1:
-                transaction.replace(R.id.frame, new CodeFrag(), "Enter Code").commit();
+                transaction.replace(R.id.frame, new ChangePasswordFrag(), "Change Password").commit();
                 transaction.addToBackStack(null);
                 break;
             case 2:
-                transaction.replace(R.id.frame, new ChangePasswordFrag(), "Change Password").commit();
-                transaction.addToBackStack(null);
-
-                break;
-            case 3:
-                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                Intent intent = new Intent(getBaseContext(), Login.class);
                 startActivity(intent);
                 break;
         }

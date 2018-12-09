@@ -43,6 +43,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by ekirapa on 10/29/18 .
@@ -94,6 +95,7 @@ public class RedeemLoyalty extends AppCompatActivity implements View.OnClickList
             public void onItemClick(View view, int position) {
                 RefferalOption refferalOption = adapter.getOPtion(position);
                 String message = "Redeem <b>" + refferalOption.getLoyalty_amount() + " </b> points for  : " + refferalOption.getName() + " ?";
+                number = refferalOption.getLoyalty_amount();
                 showDialog(message);
             }
         }));
@@ -102,15 +104,12 @@ public class RedeemLoyalty extends AppCompatActivity implements View.OnClickList
             @Override
             public void onClick(View view) {
                 redeem(number);
-//                if (check()) {
-//                    try {
-//                        buyAirtime(String.format("254%s", phone.getText().toString()), amount.getText().toString());
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                } else {
-//                    closeDialog();
-//                }
+                if (check()) {
+                    redeem(number);
+
+                } else {
+                    closeDialog();
+                }
             }
         });
 
@@ -120,6 +119,15 @@ public class RedeemLoyalty extends AppCompatActivity implements View.OnClickList
                 closeDialog();
             }
         });
+    }
+
+    private boolean check() {
+        Loyalty loyalty = SQLite.select().from(Loyalty.class).querySingle();
+        if (Objects.requireNonNull(loyalty).getAvailable() < number) {
+            Toast.makeText(getBaseContext(), "Available amount can not be less than amount to redeem", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 
     private void showDialog(String title) {

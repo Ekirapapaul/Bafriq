@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +67,7 @@ public class EnterNumberFrag extends Fragment {
         etEmail = v.findViewById(R.id.et_email);
 
         progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setTitle("Sending Detailsr");
+        progressDialog.setTitle("Sending Details");
         progressDialog.setMessage("Please Wait");
         progressDialog.setCancelable(false);
     }
@@ -85,10 +86,12 @@ public class EnterNumberFrag extends Fragment {
     }
 
     private void getCode(JSONObject jsonObject) {
+        Log.d("json", jsonObject.toString());
         progressDialog.show();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlsConfig.URL_RESET_PASSWORD, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                Log.d("response", response.toString());
                 try {
                     if (response.has("result") && response.getJSONObject("result").has("error")) {
                         error(response.getJSONObject("result").getString("error"));

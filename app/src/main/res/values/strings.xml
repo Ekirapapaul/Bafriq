@@ -106,4 +106,5 @@
     <string name="next">Next</string>
     <string name="enter_verification">Enter Verification Code</string>
     <string name="confirm_password">Confirm Pasword</string>
+    <string name="enter_code">Enter Code</string>
 </resources>
