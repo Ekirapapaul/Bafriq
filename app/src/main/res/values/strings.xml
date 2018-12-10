@@ -109,4 +109,6 @@
     <string name="enter_code">Enter Code</string>
     <string name="terms_of_use">Terms of Use</string>
     <string name="privacy">Privacy</string>
+    <string name="profile">Profile</string>
+    <string name="edit_profile">Edit Profile</string>
 </resources>

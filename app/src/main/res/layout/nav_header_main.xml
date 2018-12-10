@@ -11,6 +11,7 @@
     <com.mesozi.app.buidafrique.widgets.RoundedImageView
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:id="@+id/img_profile"
         android:scaleType="center"
         android:src="@mipmap/ic_user" />
 

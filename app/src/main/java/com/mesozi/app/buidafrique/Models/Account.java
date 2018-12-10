@@ -30,6 +30,9 @@ public class Account extends BaseModel {
     @Column
     private String referral_code;
 
+    @Column
+    private String email;
+
     public Account() {
     }
 
@@ -79,5 +82,13 @@ public class Account extends BaseModel {
 
     public void setReferral_code(String referral_code) {
         this.referral_code = referral_code;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

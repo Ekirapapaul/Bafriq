@@ -65,17 +65,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView qualified, won, lost;
     ProgressDialog progressDialog;
     TextView tvCommission, tvBonus, tvLoyalty;
+    Account account;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        account = SQLite.select().from(Account.class).querySingle();
         registerViews();
-        Account account = SQLite.select().from(Account.class).querySingle();
-        if(account != null) {
-            Log.d("account", account.getUsername()+ account.getPassword());
+        if (account != null) {
+            Log.d("account", account.getUsername() + account.getPassword());
             submitLogin(account.getUsername(), account.getPassword());
-        }else {
+        } else {
             error();
         }
     }
@@ -120,6 +122,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
         NavigationView navigationView = findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.tv_email);
+        headerView.findViewById(R.id.img_profile).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+                startActivity(new Intent(getBaseContext(), ProfileActivity.class));
+            }
+        });
+        navUsername.setText(account.getUsername());
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -167,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         List<EmailMessage> messages = SQLite.select().from(EmailMessage.class).queryList();
         long leads = 0;
         long won = 0;
-        long lost= 0;
+        long lost = 0;
         long inProgress = 0;
         //A very unclean way to do this
         try {
@@ -331,7 +343,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         Commission commission = SQLite.select().from(Commission.class).querySingle();
         if (commission != null) {
-            tvCommission.setText(String.format(Locale.getDefault(), "KES %d",commission.getAvailable()));
+            tvCommission.setText(String.format(Locale.getDefault(), "KES %d", commission.getAvailable()));
         }
         Loyalty loyalty = SQLite.select().from(Loyalty.class).querySingle();
         if (loyalty != null) {
