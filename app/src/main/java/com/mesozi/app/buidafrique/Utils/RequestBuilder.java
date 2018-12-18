@@ -308,7 +308,7 @@ public class RequestBuilder {
         return jsonObject;
     }
 
-    public static JSONObject createCustomer(String displayName, String name, String email, String addressName, String emailFrom) throws JSONException {
+    public static JSONObject createCustomer(String displayName, String name, String email, String addressName, String mobile, String user_id) throws JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("jsonrpc", JSON_VERS);
         jsonObject.put("method", METHOD_CALL);
@@ -321,9 +321,12 @@ public class RequestBuilder {
         JSONObject arg = new JSONObject();
         arg.put("write_uid", 1);
         arg.put("display_name", displayName);
+        arg.put("email", email);
         arg.put("name", name);
-        arg.put("partner_address_email", email);
-        arg.put("partner_address_name", addressName);
+        arg.put("mobile", mobile);
+        arg.put("user_id", Integer.valueOf(user_id));
+//        arg.put("partner_address_email", email);
+//        arg.put("partner_address_name", addressName);
         args.put(arg);
         params.put("args", args);
 

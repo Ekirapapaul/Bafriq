@@ -15,11 +15,13 @@ import com.android.volley.Response;
 import com.android.volley.error.AuthFailureError;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
+import com.mesozi.app.buidafrique.Models.Account;
 import com.mesozi.app.buidafrique.R;
 import com.mesozi.app.buidafrique.Utils.RequestBuilder;
 import com.mesozi.app.buidafrique.Utils.SessionManager;
 import com.mesozi.app.buidafrique.Utils.UrlsConfig;
 import com.mesozi.app.buidafrique.Utils.VolleySingleton;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -68,7 +70,8 @@ public class AddCustomer extends AppCompatActivity {
             public void onClick(View view) {
                 if (check()) {
                     try {
-                        JSONObject jsonObject = RequestBuilder.createCustomer(name.getText().toString(), name.getText().toString(), email.getText().toString(), "", "");
+                        Account account = SQLite.select().from(Account.class).querySingle();
+                        JSONObject jsonObject = RequestBuilder.createCustomer(name.getText().toString(), name.getText().toString(), email.getText().toString(), "", mobile.getText().toString(), account.getUid());
                         createCustomer(jsonObject);
                     } catch (JSONException e) {
                         e.printStackTrace();

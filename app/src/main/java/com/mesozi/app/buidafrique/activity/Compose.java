@@ -97,7 +97,7 @@ public class Compose extends AppCompatActivity {
         progressDialog.show();
         Log.d("json", jsonObject.toString());
         final SessionManager sessionManager = new SessionManager(getBaseContext());
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlsConfig.URL_DATASET, jsonObject, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlsConfig.URL_CREATE_MESSAGE, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.d("response", response.toString());
