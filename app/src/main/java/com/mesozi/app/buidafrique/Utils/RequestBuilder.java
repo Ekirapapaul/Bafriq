@@ -44,6 +44,7 @@ public class RequestBuilder {
         values.put("referral_code", referral_code);
         values.put("occupation", occupation);
         values.put("phone", phone);
+        values.put("password", password);
         values.put("city", location);
         params.put("values", values);
 
