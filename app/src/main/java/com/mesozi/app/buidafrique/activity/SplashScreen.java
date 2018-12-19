@@ -20,6 +20,7 @@ import com.mesozi.app.buidafrique.Utils.RequestBuilder;
 import com.mesozi.app.buidafrique.Utils.SessionManager;
 import com.mesozi.app.buidafrique.Utils.UrlsConfig;
 import com.mesozi.app.buidafrique.Utils.VolleySingleton;
+import com.raizlabs.android.dbflow.sql.language.Delete;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -167,6 +168,7 @@ public class SplashScreen extends AppCompatActivity {
     }
 
     private void parseRefferalMessages(JSONArray jsonArray) {
+        Delete.table(RefferalMessage.class);
         Gson gson = new Gson();
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
@@ -195,6 +197,7 @@ public class SplashScreen extends AppCompatActivity {
     }
 
     private void parseShareMessages(JSONArray jsonArray) {
+        Delete.table(ShareMessage.class);
         Gson gson = new Gson();
         for (int i = 0; i < jsonArray.length(); i++) {
             try {

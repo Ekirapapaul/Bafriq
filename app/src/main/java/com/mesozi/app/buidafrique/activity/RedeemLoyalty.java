@@ -56,6 +56,7 @@ public class RedeemLoyalty extends AppCompatActivity implements View.OnClickList
     int number = 0;
     RecyclerView recyclerView;
     List<RefferalOption> refferalOptions = new ArrayList<>();
+    RefferalOption refferalOption ;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,7 +96,7 @@ public class RedeemLoyalty extends AppCompatActivity implements View.OnClickList
             public void onItemClick(View view, int position) {
                 RefferalOption refferalOption = adapter.getOPtion(position);
                 String message = "Redeem <b>" + refferalOption.getLoyalty_amount() + " </b> points for  : " + refferalOption.getName() + " ?";
-                number = refferalOption.getLoyalty_amount();
+                number = refferalOption.getProduct_id();
                 showDialog(message);
             }
         }));
@@ -103,9 +104,13 @@ public class RedeemLoyalty extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.tv_positive).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                redeem(number);
                 if (check()) {
-                    redeem(number);
+                    try {
+                        redeemLoyalty(number);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        error();
+                    }
 
                 } else {
                     closeDialog();
@@ -219,26 +224,30 @@ public class RedeemLoyalty extends AppCompatActivity implements View.OnClickList
     }
 
 
-    private void redeemLoyalty(int amount) throws JSONException {
+    private void redeemLoyalty(int optionId) throws JSONException {
         progressDialog.setTitle("Redeeming Loyalty Points");
         progressDialog.show();
         JSONObject jsonObject = RequestBuilder.redeemLoyalty();
         Account account = SQLite.select().from(Account.class).querySingle();
         if (account != null) {
-            String url = UrlsConfig.getRedeemLoyaltyUrl(Integer.parseInt(account.getUid()), amount);
-
-
+            String url = UrlsConfig.getRedeemLoyaltyUrl(optionId, Integer.parseInt(account.getUid()));
+            Log.d("url", url);
+            Log.d("json", jsonObject.toString());
             final SessionManager sessionManager = new SessionManager(getBaseContext());
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     Log.d("response", response.toString());
-                    if (response.has("error")) {
-                        error();
-                    } else if (response.has("result")) {
-                        finishRedemption();
-                    } else {
-                        error();
+                    try {
+                        if (response.has("error") || response.getJSONObject("result").has("error")) {
+                            error( response.getJSONObject("result").getString("error"));
+                        } else if (response.has("result")) {
+                            finishRedemption();
+                        } else {
+                            error();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
 
                 }
@@ -317,13 +326,22 @@ public class RedeemLoyalty extends AppCompatActivity implements View.OnClickList
 
     private void finishRedemption() {
         if (progressDialog != null) progressDialog.dismiss();
-        Toast.makeText(this, "Commission Redeemed successfully!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Commission Redeemed successfully!", Toast.LENGTH_LONG).show();
+        finish();
+    }
+    private void finishRedemption(String error) {
+        if (progressDialog != null) progressDialog.dismiss();
+        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
         finish();
     }
 
     private void error() {
         if (progressDialog != null) progressDialog.dismiss();
-        Toast.makeText(this, "Can not find a connection right now", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Can not find a connection right now", Toast.LENGTH_LONG).show();
+    }
+    private void error(String error) {
+        if (progressDialog != null) progressDialog.dismiss();
+        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
     }
 
 }

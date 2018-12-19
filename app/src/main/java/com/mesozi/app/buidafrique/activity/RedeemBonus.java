@@ -54,6 +54,7 @@ public class RedeemBonus extends AppCompatActivity {
         setContentView(R.layout.activity_redeem_commission);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setTitle("Redeem Bonuses");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -149,6 +150,8 @@ public class RedeemBonus extends AppCompatActivity {
         bankName = findViewById(R.id.et_bank_name);
         branch = findViewById(R.id.et_bank_branch);
         email = findViewById(R.id.et_paypal_email);
+        mpesaName = findViewById(R.id.et_mpesa_name);
+        mpesaNum = findViewById(R.id.et_mpesa_number);
     }
 
     private void change(int number) {

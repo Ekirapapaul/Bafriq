@@ -27,6 +27,9 @@ public class Loyalty extends BaseModel implements Parcelable {
     @Column
     private int paid;
 
+    @Column
+    private int redeemed;
+
     public Loyalty() {
     }
 
@@ -35,6 +38,7 @@ public class Loyalty extends BaseModel implements Parcelable {
         available = in.readInt();
         expected = in.readInt();
         paid = in.readInt();
+        redeemed = in.readInt();
     }
 
     public static final Creator<Loyalty> CREATOR = new Creator<Loyalty>() {
@@ -81,6 +85,14 @@ public class Loyalty extends BaseModel implements Parcelable {
         this.paid = paid;
     }
 
+    public int getRedeemed() {
+        return redeemed;
+    }
+
+    public void setRedeemed(int redeemed) {
+        this.redeemed = redeemed;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -92,5 +104,6 @@ public class Loyalty extends BaseModel implements Parcelable {
         parcel.writeInt(available);
         parcel.writeInt(expected);
         parcel.writeInt(paid);
+        parcel.writeInt(redeemed);
     }
 }

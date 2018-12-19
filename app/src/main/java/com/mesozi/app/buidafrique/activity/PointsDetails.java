@@ -44,7 +44,7 @@ public class PointsDetails extends AppCompatActivity {
         final Loyalty loyalty = SQLite.select().from(Loyalty.class).querySingle();
         if (loyalty != null) {
             available.setText(String.format(Locale.getDefault(), "%d", loyalty.getAvailable()));
-            total.setText(String.format(Locale.getDefault(), "%d", loyalty.getPaid()));
+            total.setText(String.format(Locale.getDefault(), "%d", loyalty.getRedeemed()));
         }
 
         findViewById(R.id.btn_redeem).setOnClickListener(new View.OnClickListener() {

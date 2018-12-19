@@ -232,6 +232,8 @@ public class RedeemCommissions extends AppCompatActivity {
     private void redeem(JSONObject jsonObject, String url) {
         progressDialog.show();
         final SessionManager sessionManager = new SessionManager(getBaseContext());
+        Log.d("url", url);
+        Log.d("Commission json", jsonObject.toString());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

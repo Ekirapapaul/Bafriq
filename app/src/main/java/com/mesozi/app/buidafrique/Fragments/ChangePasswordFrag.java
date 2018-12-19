@@ -100,7 +100,7 @@ public class ChangePasswordFrag extends Fragment {
             public void onResponse(JSONObject response) {
                 Log.d("response", response.toString());
                 try {
-                    if (response.has("result") && response.getJSONObject("result").has("error")) {
+                    if (response.has("error") || response.getJSONObject("result").has("error")) {
                         error(response.getJSONObject("result").getString("error"));
                     } else {
                         finishSend();
@@ -132,6 +132,6 @@ public class ChangePasswordFrag extends Fragment {
 
     private void error() {
         if (progressDialog != null) progressDialog.dismiss();
-        Toast.makeText(getContext(), "Can not find a connection right now", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Can not find a connection right now", Toast.LENGTH_LONG).show();
     }
 }

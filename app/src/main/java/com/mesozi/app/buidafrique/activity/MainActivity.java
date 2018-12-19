@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         numQualified = numQualified + new Select(Method.count()).from(Lead.class).where(Lead_Table.stage_id.eq("Qualified")).and(Lead_Table.type.eq("opportunity")).count()
                 + new Select(Method.count()).from(Lead.class).where(Lead_Table.stage_id.eq("Negotiation")).and(Lead_Table.type.eq("opportunity")).count()
-                +new Select(Method.count()).from(Lead.class).where(Lead_Table.stage_id.eq("Quotation (Proposition)")).and(Lead_Table.type.eq("opportunity")).count();
+                + new Select(Method.count()).from(Lead.class).where(Lead_Table.stage_id.eq("Quotation (Proposition)")).and(Lead_Table.type.eq("opportunity")).count();
 
         qualified.setText(String.valueOf(numQualified));
         won.setText(String.valueOf(new Select(Method.count()).from(Lead.class).where(Lead_Table.type.eq("opportunity")).and(Lead_Table.stage_id.eq("WON Opportunity")).count()));
@@ -240,6 +240,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 new SessionManager(getBaseContext()).setLoggedIn(false);
+                try {
+                    Delete.table(Lead.class);
+                    Delete.table(SalesOrder.class);
+                    Delete.table(EmailMessage.class);
+                    Delete.table(Commission.class);
+                    Delete.table(Loyalty.class);
+                    Delete.table(Bonus.class);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 Intent intent = new Intent(getBaseContext(), WelcomeActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
