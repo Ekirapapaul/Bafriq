@@ -54,6 +54,21 @@ public class RequestBuilder {
         return jsonObject;
     }
 
+    public static JSONObject createMessge(String subject, String message) throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("jsonrpc", JSON_VERS);
+        jsonObject.put("method", METHOD_CALL);
+
+        JSONObject params = new JSONObject();
+        params.put("subject", subject);
+        params.put("message", message);
+
+        jsonObject.put("params", params);
+        jsonObject.put(ID, 123);
+        return jsonObject;
+
+    }
+
     public static JSONObject createMessge(String subject, String message, String email_from, String name) throws JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("jsonrpc", JSON_VERS);
@@ -351,6 +366,7 @@ public class RequestBuilder {
 
         return new JSONObject(request);
     }
+
     public static JSONObject getRefferalMessage() throws JSONException {
         String request = "{\n" +
                 "  \"jsonrpc\":\"2.0\",\n" +

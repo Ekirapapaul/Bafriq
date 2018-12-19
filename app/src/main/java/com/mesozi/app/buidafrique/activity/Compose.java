@@ -76,7 +76,7 @@ public class Compose extends AppCompatActivity {
                     Account account = SQLite.select().from(Account.class).querySingle();
                     if (account != null) {
                         try {
-                            JSONObject jsonObject = RequestBuilder.createMessge(sub, message.getText().toString(), account.getUsername(), account.getUsername());
+                            JSONObject jsonObject = RequestBuilder.createMessge(sub, message.getText().toString());
                             sendMessage(jsonObject);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -152,7 +152,7 @@ public class Compose extends AppCompatActivity {
                     Account account = SQLite.select().from(Account.class).querySingle();
                     if (account != null) {
                         try {
-                            JSONObject jsonObject = RequestBuilder.createMessge(sub, message.getText().toString(), account.getUsername(), account.getUsername());
+                            JSONObject jsonObject = RequestBuilder.createMessge(sub, message.getText().toString());
                             sendMessage(jsonObject);
                         } catch (JSONException e) {
                             e.printStackTrace();

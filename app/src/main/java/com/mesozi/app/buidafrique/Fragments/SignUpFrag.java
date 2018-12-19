@@ -100,28 +100,40 @@ public class SignUpFrag extends Fragment {
 
     private void createAffiliate() throws JSONException {
         final SessionManager sessionManager = new SessionManager(getContext());
-        JSONObject jsonObject = RequestBuilder.registerAffiliateJson(name, email, referralCode, phone, password, location.getText().toString(), occupation.getText().toString());
+        JSONObject jsonObject = RequestBuilder.registerAffiliateJson(name, email, refferal.getText().toString(), phone, password, occupation.getText().toString(), location.getText().toString());
         Log.d("json", jsonObject.toString());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlsConfig.URL_CREATE_AFFILIATE, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.d("Response", response.toString());
-                if (response.has("error")) {
-                    error();
-                } else if (response.has("id")) {
-                    Toast.makeText(getContext(), "Affiliate successfully registered. We will get back to you on tour registration", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(getContext(), MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                try {
+                    JSONObject result = response.getJSONObject("result");
+                    if (result.has("error")) {
+                        try {
+                            error(result.getString("title") + " : " + result.getString("error"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            error();
+                        }
+                    } else if (response.has("id")) {
+                        Toast.makeText(getContext(), "Affiliate successfully registered. We will get back to you on tour registration", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getContext(), MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                    if (progressDialog != null) progressDialog.dismiss();
+                        if (progressDialog != null) progressDialog.dismiss();
 
 //                    sessionManager.setLoggedIn(true);
 //                    startActivity(intent);
-                    sessionManager.removeToken();
-                    Objects.requireNonNull(getActivity()).finish();
-                } else {
+                        sessionManager.removeToken();
+                        Objects.requireNonNull(getActivity()).finish();
+                    } else {
+                        error();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                     error();
                 }
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -213,6 +225,10 @@ public class SignUpFrag extends Fragment {
 
     private void error() {
         if (progressDialog != null) progressDialog.dismiss();
-        Toast.makeText(getContext(), "Can not find a connection right now", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Can not find a connection right now", Toast.LENGTH_LONG).show();
+    }
+    private void error(String error) {
+        if (progressDialog != null) progressDialog.dismiss();
+        Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show();
     }
 }

@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ProgressDialog progressDialog;
     TextView tvCommission, tvBonus, tvLoyalty;
     Account account;
+    long numQualified = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -97,7 +98,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         won = findViewById(R.id.tv_won_val);
         lost = findViewById(R.id.tv_lost_val);
 
-        qualified.setText(String.valueOf(new Select(Method.count()).from(Lead.class).where(Lead_Table.type.eq("opportunity")).and(Lead_Table.stage_id.eq("Qualified")).count()));
+        numQualified = numQualified + new Select(Method.count()).from(Lead.class).where(Lead_Table.stage_id.eq("Qualified")).and(Lead_Table.type.eq("opportunity")).count()
+                + new Select(Method.count()).from(Lead.class).where(Lead_Table.stage_id.eq("Negotiation")).and(Lead_Table.type.eq("opportunity")).count()
+                +new Select(Method.count()).from(Lead.class).where(Lead_Table.stage_id.eq("Quotation (Proposition)")).and(Lead_Table.type.eq("opportunity")).count();
+
+        qualified.setText(String.valueOf(numQualified));
         won.setText(String.valueOf(new Select(Method.count()).from(Lead.class).where(Lead_Table.type.eq("opportunity")).and(Lead_Table.stage_id.eq("WON Opportunity")).count()));
         lost.setText(String.valueOf(new Select(Method.count()).from(Lead.class).where(Lead_Table.type.eq("opportunity")).and(Lead_Table.stage_id.eq("LOST Opportunity")).count()));
         setDrawer();
@@ -157,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         startActivity(new Intent(getBaseContext(), CustomerActivity.class));
                         break;
                     case R.id.nav_lost:
-                        startLeadsFilter("Lost");
+                        startLeadsFilter("LOST Opportunity");
                         break;
                     case R.id.nav_qualified:
                         startLeadsFilter("Qualified");
@@ -192,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             leads = new Select(Method.count()).from(Lead.class).count();
             won = new Select(Method.count()).from(Lead.class).where(Lead_Table.type.eq("opportunity")).and(Lead_Table.stage_id.eq("WON Opportunity")).count();
             lost = new Select(Method.count()).from(Lead.class).where(Lead_Table.type.eq("opportunity")).and(Lead_Table.stage_id.eq("LOST Opportunity")).count();
-            inProgress = new Select(Method.count()).from(Lead.class).where(Lead_Table.type.eq("opportunity")).and(Lead_Table.stage_id.eq("Qualified")).count();
+            inProgress = numQualified;
         } catch (SQLiteException e) {
             e.printStackTrace();
         }

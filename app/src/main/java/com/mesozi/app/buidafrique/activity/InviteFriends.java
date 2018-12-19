@@ -51,12 +51,13 @@ public class InviteFriends extends AppCompatActivity {
                         "Mobile Referral and Loyalty Program for real estate &amp; development\n" +
                         "solutions.\n use my code FGG543 to sign up today";
                 if (refferalMessage != null) {
-                    textView.setText(CommonUtils.fromHtml(refferalMessage.getMessage()));
                     message = refferalMessage.getMessage().replace("{promo_code}", Objects.requireNonNull(account).getReferral_code());
+                    textView.setText(CommonUtils.fromHtml(message));
+
                 }
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, CommonUtils.fromHtml(message));
                 sendIntent.setType("text/plain");
                 startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.invite_via)));
             }

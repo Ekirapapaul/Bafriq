@@ -27,6 +27,7 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.mesozi.app.buidafrique.Models.Lead;
+import com.mesozi.app.buidafrique.Models.Lead_Table;
 import com.mesozi.app.buidafrique.R;
 import com.mesozi.app.buidafrique.Utils.RecyclerItemClickListener;
 import com.mesozi.app.buidafrique.Utils.RequestBuilder;
@@ -201,6 +202,7 @@ public class LeadsActivity extends AppCompatActivity {
     private void error() {
         if (progressDialog != null) progressDialog.dismiss();
         Toast.makeText(this, "Can not find a connection right now", Toast.LENGTH_SHORT).show();
+        leads = SQLite.select().from(Lead.class).where(Lead_Table.type.eq("lead")).queryList();
         adapter = new LeadsAdapter(getBaseContext(), leads);
         recyclerView.setAdapter(adapter);
     }
@@ -215,7 +217,6 @@ public class LeadsActivity extends AppCompatActivity {
                 try {
                     Lead lead = gson.fromJson(jsonObject.toString(), Lead.class);
                     lead.save();
-                    leads.add(lead);
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.d("Failed at", String.format(" with %s", jsonObject.toString()));
@@ -226,6 +227,7 @@ public class LeadsActivity extends AppCompatActivity {
             }
         }
         if (progressDialog != null) progressDialog.dismiss();
+        leads = SQLite.select().from(Lead.class).where(Lead_Table.type.eq("lead")).queryList();
         adapter = new LeadsAdapter(getBaseContext(), leads);
         recyclerView.setAdapter(adapter);
         Log.d("leads size", String.valueOf(leads.size()));

@@ -176,7 +176,13 @@ public class OpportunitiesActivity extends AppCompatActivity {
             }
         }
         if (progressDialog != null) progressDialog.dismiss();
-        leads = SQLite.select().from(Lead.class).where(Lead_Table.stage_id.eq(filter)).and(Lead_Table.type.eq("opportunity")).queryList();
+        if (filter.equals("Qualified")) {
+            leads = SQLite.select().from(Lead.class).where(Lead_Table.stage_id.eq(filter)).and(Lead_Table.type.eq("opportunity")).queryList();
+            leads.addAll(SQLite.select().from(Lead.class).where(Lead_Table.stage_id.eq("Negotiation")).and(Lead_Table.type.eq("opportunity")).queryList());
+            leads.addAll(SQLite.select().from(Lead.class).where(Lead_Table.stage_id.eq("Quotation (Proposition)")).and(Lead_Table.type.eq("opportunity")).queryList());
+        } else {
+            leads = SQLite.select().from(Lead.class).where(Lead_Table.stage_id.eq(filter)).and(Lead_Table.type.eq("opportunity")).queryList();
+        }
         recyclerView.setAdapter(new LeadsAdapter(getBaseContext(), leads));
         Log.d("leads size", String.valueOf(leads.size()));
     }

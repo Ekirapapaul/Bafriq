@@ -179,7 +179,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
                 sendIntent.setAction(Intent.ACTION_SEND);
                 String mesage = ((shareMessage != null) ? shareMessage.getMessage() : getString(R.string.invite_message));
                 mesage = String.valueOf(CommonUtils.fromHtml(mesage));
-                sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.invite_message));
+                sendIntent.putExtra(Intent.EXTRA_TEXT, mesage);
                 sendIntent.setType("text/plain");
                 startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.share_via)));
                 break;

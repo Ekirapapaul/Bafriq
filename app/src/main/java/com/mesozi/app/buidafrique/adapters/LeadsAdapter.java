@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.mesozi.app.buidafrique.Models.Customer;
 import com.mesozi.app.buidafrique.Models.Lead;
+import com.mesozi.app.buidafrique.Models.Lead_Table;
 import com.mesozi.app.buidafrique.R;
 import com.mesozi.app.buidafrique.Utils.CommonUtils;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
@@ -34,7 +35,7 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
 
     public LeadsAdapter(Context context, List<Lead> leads) {
         this.context = context;
-        this.leads = SQLite.select().from(Lead.class).queryList();
+        this.leads = leads;
         this.filteredLeads = leads;
     }
 
@@ -68,11 +69,11 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.LeadsHolder>
             if (stage.equals("WON Opportunity")){
                 holder.state.setText(R.string.won);
                 holder.state.setBackgroundColor(ContextCompat.getColor(context, R.color.menu_green));
-            }else if(stage.equals("Negotiation")){
+            }else if(stage.equals("LOST Opportunity")){
                 holder.state.setBackgroundColor(ContextCompat.getColor(context, R.color.menu_red));
-            }else if(stage.equals("Qualification")) {
+            }else if(stage.equals("Quotation (Proposition)")) {
                 holder.state.setBackgroundColor(ContextCompat.getColor(context, R.color.menu_blue));
-            }else if(stage.equals("New")) {
+            }else if(stage.equals("Negotiation")) {
                 holder.state.setBackgroundColor(ContextCompat.getColor(context, R.color.menu_purple));
             }else{
                 holder.state.setBackgroundColor(ContextCompat.getColor(context, R.color.menu_orange));
