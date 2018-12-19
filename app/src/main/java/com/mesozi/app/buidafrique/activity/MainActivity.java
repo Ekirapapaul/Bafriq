@@ -56,6 +56,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Home activity class.
@@ -312,6 +313,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         commission.save();
                         bonus.save();
                         loyalty.save();
+                        finishFetching();
                         populate();
                     }
                 } catch (JSONException e) {
@@ -373,7 +375,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Log.d("response", response.toString());
                     Account account = SQLite.select().from(Account.class).querySingle();
                     try {
-                        getDashboard(account.getUid());
+                        getDashboard(Objects.requireNonNull(account).getUid());
+                        finishFetching();
                     } catch (JSONException e) {
                         e.printStackTrace();
                         error();

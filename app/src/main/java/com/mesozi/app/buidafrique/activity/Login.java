@@ -109,7 +109,7 @@ public class Login extends AppCompatActivity {
                     if (response.has("result")) {
                         try {
                             JSONObject results = response.getJSONObject("result");
-                            if (results.get("username") instanceof Boolean && !results.getBoolean("username")) {
+                            if (results.get("uid") instanceof Boolean && !results.getBoolean("uid")) {
                                 etEmail.requestFocus();
                                 etEmail.setError(getString(R.string.error_wrong_combinations));
                                 progressDialog.cancel();
