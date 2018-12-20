@@ -16,6 +16,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
+import com.hbb20.CountryCodePicker;
 import com.mesozi.app.buidafrique.R;
 import com.mesozi.app.buidafrique.Utils.FragmentModel;
 import com.mesozi.app.buidafrique.Utils.RequestBuilder;
@@ -35,6 +36,7 @@ public class EnterNumberFrag extends Fragment {
     View v;
     EditText etNumber, etEmail;
     ProgressDialog progressDialog;
+    CountryCodePicker country_code;
 
     @Nullable
     @Override
@@ -65,6 +67,7 @@ public class EnterNumberFrag extends Fragment {
 
         etNumber = v.findViewById(R.id.et_number);
         etEmail = v.findViewById(R.id.et_email);
+        country_code = v.findViewById(R.id.country_code);
 
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setTitle("Sending Details");

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.hbb20.CountryCodePicker;
 import com.mesozi.app.buidafrique.R;
 import com.mesozi.app.buidafrique.Utils.FragmentModel;
 import com.mesozi.app.buidafrique.activity.SignUp;
@@ -23,6 +24,7 @@ public class CreateAcountFrag extends Fragment {
     private View v;
     private static final int POSITION = 0;
     private EditText name, email, phone, password;
+    CountryCodePicker country_code;
 
     @Nullable
     @Override
@@ -45,6 +47,7 @@ public class CreateAcountFrag extends Fragment {
         password = v.findViewById(R.id.et_password);
         name = v.findViewById(R.id.et_name);
         phone = v.findViewById(R.id.et_phone);
+        country_code = v.findViewById(R.id.country_code);
     }
 
     private boolean check() {

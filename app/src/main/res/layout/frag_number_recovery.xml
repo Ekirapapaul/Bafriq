@@ -27,8 +27,8 @@
             android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingEnd="20dp"
-            android:paddingStart="25dp">
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp">
 
             <ImageView
                 android:layout_width="15dp"
@@ -49,8 +49,8 @@
             android:id="@+id/et_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
             android:inputType="text"
             app:backgroundTint="@color/colorPrimary" />
 
@@ -60,8 +60,8 @@
             android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingEnd="20dp"
-            android:paddingStart="25dp">
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp">
 
             <ImageView
                 android:layout_width="15dp"
@@ -78,14 +78,33 @@
                 android:text="@string/phone_number" />
         </LinearLayout>
 
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/et_number"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="20dp"
-            android:inputType="text"
-            app:backgroundTint="@color/colorPrimary" />
+            android:orientation="horizontal"
+            android:paddingEnd="16dp"
+            android:paddingTop="5dp"
+            android:paddingStart="16dp"
+            android:weightSum="1">
+
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/country_code"
+                app:ccp_countryPreference="ke"
+                app:ccp_autoDetectCountry="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/et_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_weight=".7"
+                android:inputType="text"
+                app:backgroundTint="@color/colorPrimary" />
+        </LinearLayout>
+
 
     </LinearLayout>
 
