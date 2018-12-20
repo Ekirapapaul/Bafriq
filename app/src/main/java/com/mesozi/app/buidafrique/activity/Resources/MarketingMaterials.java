@@ -40,14 +40,14 @@ public class MarketingMaterials extends AppCompatActivity implements View.OnClic
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_share1:
-                share("“Do you intend to venture into real eastate investment or development  project?\n" +
-                        "Build Afrique Consulting Group  is your prefered partner for inclusive \"End-to-end \" Real Estate and Development Solutions.\n" +
-                        "Learn more here https://buildafrique.com/");
+                share("“Do you intend to venture into real estate investment or development  project?\n\n" +
+                        "Buildafrique Consulting Group  is your prefered partner for inclusive \"End-to-End\" Real Estate and Development Solutions.\n\n" +
+                        "Learn more in the organization website below:\nhttps://buildafrique.com/");
                 break;
             case R.id.btn_share2:
-                share("“Do you intend to venture into real eastate investment or development  project?\n" +
-                        "Build Afrique Consulting Group  is your prefered partner for inclusive \"End-to-end \" Real Estate and Development Solutions.\n" +
-                        "Learn more on the organization's bronchure https://www.buildafrique.com/wp-content/uploads/2015/09/2016-GROUP-BROCHURE.pdf");
+                share("“Do you intend to venture into real estate investment or development  project?\n\n" +
+                        "Buildafrique Consulting Group  is your prefered partner for inclusive \"End-to-End\" Real Estate and Development Solutions.\n\n" +
+                        "Learn more in the organization brochure below:\nhttps://www.buildafrique.com/wp-content/uploads/2015/09/2016-GROUP-BROCHURE.pdf");
                 break;
             case R.id.btn_view1:
                 Intent vidIntent = new Intent(Intent.ACTION_VIEW);

@@ -137,6 +137,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(getBaseContext(), ProfileActivity.class));
             }
         });
+        navUsername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+                startActivity(new Intent(getBaseContext(), ProfileActivity.class));
+            }
+        });
+        headerView.findViewById(R.id.img_spinner).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+                startActivity(new Intent(getBaseContext(), ProfileActivity.class));
+            }
+        });
         navUsername.setText(account.getUsername());
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

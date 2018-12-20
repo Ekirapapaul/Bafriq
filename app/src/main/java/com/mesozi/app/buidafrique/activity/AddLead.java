@@ -19,6 +19,8 @@ import com.android.volley.error.AuthFailureError;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
 import com.mesozi.app.buidafrique.Models.Customer_Table;
+import com.mesozi.app.buidafrique.Utils.AppConstants;
+import com.mesozi.app.buidafrique.Utils.DataNotifier;
 import com.mesozi.app.buidafrique.Utils.RequestBuilder;
 import com.mesozi.app.buidafrique.Utils.SessionManager;
 import com.mesozi.app.buidafrique.Utils.UrlsConfig;
@@ -244,6 +246,7 @@ public class AddLead extends AppCompatActivity {
     public void finishSending() {
         if (progressDialog != null) progressDialog.dismiss();
         Toast.makeText(this, "Lead Created Successfully", Toast.LENGTH_LONG).show();
+        DataNotifier.getInstance().dataChanged(AppConstants.NOTIFY_LEADS);
         finish();
     }
 

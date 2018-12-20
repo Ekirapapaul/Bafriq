@@ -31,6 +31,8 @@ import com.mesozi.app.buidafrique.Models.Account;
 import com.mesozi.app.buidafrique.Models.Customer;
 import com.mesozi.app.buidafrique.Models.Customer_Table;
 import com.mesozi.app.buidafrique.R;
+import com.mesozi.app.buidafrique.Utils.AppConstants;
+import com.mesozi.app.buidafrique.Utils.DataNotifier;
 import com.mesozi.app.buidafrique.Utils.RecyclerItemClickListener;
 import com.mesozi.app.buidafrique.Utils.RequestBuilder;
 import com.mesozi.app.buidafrique.Utils.SessionManager;
@@ -52,7 +54,7 @@ import java.util.Objects;
 /**
  * Created by ekirapa on 7/9/18 .
  */
-public class CustomerActivity extends AppCompatActivity implements CustomerAdapter.CustomerAdapterListener {
+public class CustomerActivity extends AppCompatActivity implements CustomerAdapter.CustomerAdapterListener, DataNotifier.StateChangeListener {
     private List<Customer> customers = new ArrayList<>();
     CustomerAdapter adapter;
     private ProgressDialog progressDialog;
@@ -67,7 +69,8 @@ public class CustomerActivity extends AppCompatActivity implements CustomerAdapt
         customers = SQLite.select()
                 .from(Customer.class)
                 .where(Customer_Table.email.notEq("false"))
-                .queryList();;
+                .queryList();
+        ;
         registerViews();
 
     }
@@ -111,7 +114,6 @@ public class CustomerActivity extends AppCompatActivity implements CustomerAdapt
                 return false;
             }
         });
-
 
 
         placeholder.setOnClickListener(new View.OnClickListener() {
@@ -162,6 +164,7 @@ public class CustomerActivity extends AppCompatActivity implements CustomerAdapt
         }
         return super.onOptionsItemSelected(item);
     }
+
     private void fetchCustomers() {
         progressDialog.show();
         final SessionManager sessionManager = new SessionManager(getBaseContext());
@@ -247,5 +250,16 @@ public class CustomerActivity extends AppCompatActivity implements CustomerAdapt
     @Override
     public void onContactSelected(Customer customer) {
 
+    }
+
+    @Override
+    public void notifyData(int number) {
+        if(number == AppConstants.NOTIFY_CUSTOMERS) {
+            fetchCustomers();
+            if (recyclerView != null) {
+                adapter = new CustomerAdapter(getBaseContext(), customers);
+                recyclerView.setAdapter(adapter);
+            }
+        }
     }
 }

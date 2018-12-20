@@ -65,7 +65,11 @@ public class OpportunitiesActivity extends AppCompatActivity {
                 finish();
             }
         });
-        toolbar.setTitle((filter.contains("WON") ? filter : String.format("%s Opportunity", filter)));
+        if(filter.equals("Qualified")){
+            toolbar.setTitle("Opportunities in Progress");
+        }else {
+            toolbar.setTitle((filter.contains("WON") ? "Won Opportunities" : "Lost Opportunities"));
+        }
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
         progressDialog.setTitle("Fetching Leads");

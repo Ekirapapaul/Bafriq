@@ -29,6 +29,8 @@ import com.google.gson.Gson;
 import com.mesozi.app.buidafrique.Models.Lead;
 import com.mesozi.app.buidafrique.Models.Lead_Table;
 import com.mesozi.app.buidafrique.R;
+import com.mesozi.app.buidafrique.Utils.AppConstants;
+import com.mesozi.app.buidafrique.Utils.DataNotifier;
 import com.mesozi.app.buidafrique.Utils.RecyclerItemClickListener;
 import com.mesozi.app.buidafrique.Utils.RequestBuilder;
 import com.mesozi.app.buidafrique.Utils.SessionManager;
@@ -50,7 +52,7 @@ import java.util.Objects;
 /**
  * Created by ekirapa on 7/24/18 .
  */
-public class LeadsActivity extends AppCompatActivity {
+public class LeadsActivity extends AppCompatActivity implements DataNotifier.StateChangeListener {
     ProgressDialog progressDialog;
     private List<Lead> leads = new ArrayList<>();
     private RecyclerView recyclerView;
@@ -89,14 +91,14 @@ public class LeadsActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 // filter recycler view when query submitted
 
-                adapter.getFilter().filter(query);
+                (Objects.requireNonNull(adapter)).getFilter().filter(Objects.requireNonNull(query));
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String query) {
                 // filter recycler view when text is changed
-                adapter.getFilter().filter(query);
+                (Objects.requireNonNull(adapter)).getFilter().filter(Objects.requireNonNull(query));
                 return false;
             }
         });
@@ -231,5 +233,14 @@ public class LeadsActivity extends AppCompatActivity {
         adapter = new LeadsAdapter(getBaseContext(), leads);
         recyclerView.setAdapter(adapter);
         Log.d("leads size", String.valueOf(leads.size()));
+    }
+
+    @Override
+    public void notifyData(int number) {
+        if(number == AppConstants.NOTIFY_LEADS){
+            fetchLeads();
+            adapter = new LeadsAdapter(getBaseContext(), leads);
+            recyclerView.setAdapter(adapter);
+        }
     }
 }

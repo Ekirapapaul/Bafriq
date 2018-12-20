@@ -36,4 +36,18 @@ public class CommonUtils {
     }
 
     public static String TO_EMAIL = "partner@buildafrique.com";
+
+    public static String sanitizeNumber(String number) {
+        String sanitized = number;
+
+        if (number.length() == 13 && number.substring(0, Math.min(number.length(), 4)).equals("+254")) {
+            sanitized = number.substring(4);
+        } else if (number.length() == 10 && number.charAt(0) == '0') {
+            sanitized = number.substring(1);
+        }else if(number.length() == 12 && number.substring(0, Math.min(number.length(), 3)).equals("254")){
+            sanitized = number.substring(3);
+        }
+
+        return sanitized;
+    }
 }

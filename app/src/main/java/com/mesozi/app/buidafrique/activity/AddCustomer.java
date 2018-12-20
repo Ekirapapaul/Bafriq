@@ -17,6 +17,7 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
 import com.mesozi.app.buidafrique.Models.Account;
 import com.mesozi.app.buidafrique.R;
+import com.mesozi.app.buidafrique.Utils.DataNotifier;
 import com.mesozi.app.buidafrique.Utils.RequestBuilder;
 import com.mesozi.app.buidafrique.Utils.SessionManager;
 import com.mesozi.app.buidafrique.Utils.UrlsConfig;
@@ -105,12 +106,16 @@ public class AddCustomer extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 Log.d("response", response.toString());
-                if (response.has("error")) {
-                    Toast.makeText(AddCustomer.this, "A partner already exists.", Toast.LENGTH_LONG).show();
-                } else if (response.has("result")) {
-                    finishCreate();
-                } else {
-                    error();
+                try {
+                    if (response.has("error") || response.getJSONObject("result").has("error")) {
+                        Toast.makeText(AddCustomer.this, response.getJSONObject("result").getString("error"), Toast.LENGTH_LONG).show();
+                    } else if (response.has("result")) {
+                        finishCreate();
+                    } else {
+                        error();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
 
             }
@@ -134,13 +139,14 @@ public class AddCustomer extends AppCompatActivity {
 
     public void finishCreate() {
         if (progressDialog != null) progressDialog.dismiss();
-        Toast.makeText(this, "Customer Created!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Customer Created!", Toast.LENGTH_LONG).show();
+        DataNotifier.getInstance().dataChanged(1);
         finish();
     }
 
     private void error() {
         if (progressDialog != null) progressDialog.dismiss();
-        Toast.makeText(this, "Can not find a connection right now", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Can not find a connection right now", Toast.LENGTH_LONG).show();
     }
 
 }

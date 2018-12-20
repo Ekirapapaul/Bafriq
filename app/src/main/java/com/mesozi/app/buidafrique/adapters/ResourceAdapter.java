@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.ResourceHolder> {
     Context context;
-    private int[] ids = {R.drawable.ic_help_black_24dp, R.drawable.ic_view_list_black_24dp, R.drawable.ic_info_black_24dp, R.drawable.ic_announcement_black_24dp, R.drawable.ic_event_black_24dp, R.drawable.ic_web_black_24dp, R.drawable.ic_info_black_24dp};
+    private int[] ids = {R.drawable.ic_help_black_24dp, R.drawable.ic_view_list_black_24dp, R.drawable.ic_folder_open_black_24dp, R.drawable.ic_announcement_black_24dp, R.drawable.ic_event_black_24dp, R.drawable.ic_web_black_24dp, R.drawable.ic_info_black_24dp};
     List<String> resources = new ArrayList<>();
 
     public ResourceAdapter(Context context, List<String> resources) {

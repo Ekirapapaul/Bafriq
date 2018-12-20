@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="15dp"
             android:paddingTop="15dp"
-            android:text="Enter Your Details"
+            android:text="Enter Your Email and Phone Number that you added to your account to get a verification code."
             android:textColor="@color/black" />
 
         <LinearLayout

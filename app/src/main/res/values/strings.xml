@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BuildAfrique</string>
+    <string name="app_name">Buildafrique Partner Network</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="invite">Invite</string>
@@ -26,14 +26,14 @@
     <string name="sales_order_no">Sales Order No.</string>
     <string name="reference">Reference</string>
     <string name="state">State</string>
-    <string name="order_line">Order Line</string>
+    <string name="order_line">Order Lines</string>
     <string name="date_created">Date Created</string>
     <string name="lead_name">Name of lead</string>
     <string name="description">Description</string>
     <string name="planned_review">Planned review</string>
     <string name="partner">Partner</string>
     <string name="partner_name">Partner Name</string>
-    <string name="name_of_contact">Name of contacct</string>
+    <string name="name_of_contact">Name of contact</string>
     <string name="mobile">Mobile</string>
     <string name="tag_line"><![CDATA[Mobile Referral and Loyalty Program\n for Real Estate & Development Solutions]]></string>
     <string name="compose">Compose</string>
@@ -68,11 +68,11 @@
     <string name="add_customer">Add Customer</string>
     <string name="full_name">Full Name</string>
     <string name="save">Save</string>
-    <string name="add_nw_lead">Add Nw Lead</string>
+    <string name="add_nw_lead">Add New Lead</string>
     <string name="how_it_works">How it works</string>
     <string name="add_lead">Add Lead</string>
     <string name="lead_details">Lead Details</string>
-    <string name="customer_details">Customer Detals</string>
+    <string name="customer_details">Customer Details</string>
     <string name="customer_name">Customer Name</string>
     <string name="send_message">Send Message</string>
     <string name="share">Share</string>
@@ -111,4 +111,5 @@
     <string name="privacy">Privacy</string>
     <string name="profile">Profile</string>
     <string name="edit_profile">Edit Profile</string>
+    <string name="customer">Customer</string>
 </resources>

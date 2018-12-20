@@ -29,7 +29,7 @@
                     app:elevation="4dp"
                     app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                    app:title="@string/archive"
+                    app:title="Archive"
                     app:titleTextColor="@color/white" />
 
                 <LinearLayout
@@ -105,11 +105,10 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
-        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_add_white_24dp" />
+        android:src="@drawable/ic_add_message" />
 
 </android.support.design.widget.CoordinatorLayout>

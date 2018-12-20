@@ -12,6 +12,7 @@ import android.widget.EditText;
 
 import com.hbb20.CountryCodePicker;
 import com.mesozi.app.buidafrique.R;
+import com.mesozi.app.buidafrique.Utils.CommonUtils;
 import com.mesozi.app.buidafrique.Utils.FragmentModel;
 import com.mesozi.app.buidafrique.activity.SignUp;
 
@@ -38,8 +39,10 @@ public class CreateAcountFrag extends Fragment {
         v.findViewById(R.id.btn_continue).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (check())
-                    FragmentModel.getInstance().addNewFrag(name.getText().toString(), email.getText().toString(), phone.getText().toString(), password.getText().toString());
+                if (check()) {
+                    String number = country_code.getSelectedCountryCodeWithPlus() + CommonUtils.sanitizeNumber(phone.getText().toString());
+                    FragmentModel.getInstance().addNewFrag(name.getText().toString(), email.getText().toString(), number, password.getText().toString());
+                }
             }
         });
 

@@ -18,6 +18,7 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
 import com.hbb20.CountryCodePicker;
 import com.mesozi.app.buidafrique.R;
+import com.mesozi.app.buidafrique.Utils.CommonUtils;
 import com.mesozi.app.buidafrique.Utils.FragmentModel;
 import com.mesozi.app.buidafrique.Utils.RequestBuilder;
 import com.mesozi.app.buidafrique.Utils.UrlsConfig;
@@ -53,9 +54,11 @@ public class EnterNumberFrag extends Fragment {
             public void onClick(View view) {
                 if (check()) {
                     ((AccountRecovery) Objects.requireNonNull(getActivity())).setEmail(etEmail.getText().toString());
-                    ((AccountRecovery) Objects.requireNonNull(getActivity())).setPhoneNumber(etNumber.getText().toString());
+                    String number = country_code.getSelectedCountryCodeWithPlus() + CommonUtils.sanitizeNumber(etNumber.getText().toString());
+                    ((AccountRecovery) Objects.requireNonNull(getActivity())).setPhoneNumber(number);
+
                     try {
-                        getCode(RequestBuilder.getCode(etEmail.getText().toString(), etNumber.getText().toString()));
+                        getCode(RequestBuilder.getCode(etEmail.getText().toString(), number));
                     } catch (JSONException e) {
                         e.printStackTrace();
                         error();

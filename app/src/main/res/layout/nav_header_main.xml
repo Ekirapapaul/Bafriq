@@ -9,18 +9,35 @@
     android:paddingTop="30dp">
 
     <com.mesozi.app.buidafrique.widgets.RoundedImageView
+        android:id="@+id/img_profile"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:id="@+id/img_profile"
         android:scaleType="center"
         android:src="@mipmap/ic_user" />
 
-    <TextView
-        android:id="@+id/tv_email"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:fontFamily="@font/roboto_medium"
         android:layout_height="wrap_content"
-        android:text="partnernetwork@buildafrique.com"
-        android:textColor="@color/white" />
+        android:orientation="horizontal"
+        android:paddingEnd="16dp"
+        android:gravity="center_vertical"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/tv_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".9"
+            android:fontFamily="@font/roboto_medium"
+            android:text="partnernetwork@buildafrique.com"
+            android:textColor="@color/white" />
+
+        <ImageView
+            android:id="@+id/img_spinner"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_arrow_drop_down_black_24dp" />
+    </LinearLayout>
+
 
 </LinearLayout>
