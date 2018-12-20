@@ -167,7 +167,7 @@ public class AddLead extends AppCompatActivity {
             public void onClick(View view) {
                 if (check()) {
                     try {
-                        JSONObject jsonObject = RequestBuilder.createLeads(etName.getText().toString(), etName.getText().toString(), etDescription.getText().toString(), customer.getEmail(), customer.getName(), customer.getEmail());
+                        JSONObject jsonObject = RequestBuilder.createLeads(etName.getText().toString(), etName.getText().toString(), etDescription.getText().toString(), customer.getEmail(), customer.getName(), customer.getEmail(), customer.getMobile(), customer.getId());
                         createLead(jsonObject);
                     } catch (JSONException e) {
                         e.printStackTrace();

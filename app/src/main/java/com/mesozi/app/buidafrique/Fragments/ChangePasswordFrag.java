@@ -57,7 +57,9 @@ public class ChangePasswordFrag extends Fragment {
                 if (check()) {
                     ((AccountRecovery) Objects.requireNonNull(getActivity())).setPassword(password.getText().toString());
                     try {
-                        JSONObject jsonObject = RequestBuilder.changePassword(code.getText().toString(), password.getText().toString());
+                        String email = ((AccountRecovery) Objects.requireNonNull(getActivity())).getEmail();
+                        String phone = ((AccountRecovery) Objects.requireNonNull(getActivity())).getPhoneNumber();
+                        JSONObject jsonObject = RequestBuilder.changePassword(code.getText().toString(), password.getText().toString(), email,phone);
                         changePassword(jsonObject);
                     } catch (JSONException e) {
                         e.printStackTrace();

@@ -293,7 +293,7 @@ public class RequestBuilder {
     }
 
 
-    public static JSONObject createLeads(String displayName, String name, String description, String email, String addressName, String emailFrom) throws JSONException {
+    public static JSONObject createLeads(String displayName, String name, String description, String email, String customerName, String emailFrom, String mobile, int customerId) throws JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("jsonrpc", JSON_VERS);
         jsonObject.put("method", METHOD_CALL);
@@ -304,12 +304,12 @@ public class RequestBuilder {
 
         JSONArray args = new JSONArray();
         JSONObject arg = new JSONObject();
-        arg.put("write_uid", 1);
         arg.put("display_name", displayName);
         arg.put("description", description);
         arg.put("name", name);
-        arg.put("partner_address_email", email);
-        arg.put("partner_address_name", addressName);
+        arg.put("partner_id", customerId);
+        arg.put("contact_name", customerName);
+        arg.put("mobile", mobile);
         arg.put("email_from", emailFrom);
         args.put(arg);
         params.put("args", args);
@@ -458,14 +458,16 @@ public class RequestBuilder {
         return jsonObject;
     }
 
-    public static JSONObject changePassword(String code, String password) throws JSONException {
+    public static JSONObject changePassword(String code, String password, String email, String phone) throws JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("jsonrpc", JSON_VERS);
         jsonObject.put("method", METHOD_CALL);
 
         JSONObject params = new JSONObject();
-        params.put("login", code);
-        params.put("phone", password);
+        params.put("token", code);
+        params.put("new_password", password);
+        params.put("login",email);
+        params.put("phone",phone);
         jsonObject.put("params", params);
 
         return jsonObject;
