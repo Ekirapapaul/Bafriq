@@ -91,10 +91,6 @@ public class AddCustomer extends AppCompatActivity {
             mobile.requestFocus();
             mobile.setError(getString(R.string.error_required));
             return false;
-        } else if (email.getText().toString().isEmpty()) {
-            email.requestFocus();
-            email.setError(getString(R.string.error_required));
-            return false;
         }
         return true;
     }

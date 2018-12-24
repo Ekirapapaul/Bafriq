@@ -66,7 +66,7 @@ public class ProductsActivity extends AppCompatActivity {
         Bundle bundle3 = new Bundle();
         bundle3.putInt("tag",3);
         frag3.setArguments(bundle3);
-        adapter.addFragment(frag3, "LAND USE & ENVIRONMENT");
+        adapter.addFragment(frag3, "LAND-USE & ENVIRONMENT");
 
         ProductsFrag frag4 = new ProductsFrag();
         Bundle bundle4 = new Bundle();

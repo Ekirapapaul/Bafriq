@@ -209,7 +209,7 @@ public class RequestBuilder {
                 "    \"model\":\"res.partner\",\n" +
                 "    \"method\":\"search_read\",\n" +
                 "    \"args\":[[[\"user_id\",\"=\", " + uid + "]]],\n" +
-                "    \"kwargs\" : {\"fields\":[\"name\",\"phone\",\"email\"]}\n" +
+                "    \"kwargs\" : {\"fields\":[\"name\",\"phone\",\"email\",\"mobile\"]}\n" +
                 "  },\n" +
                 "  \"id\":1969558901\n" +
                 "}";

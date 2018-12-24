@@ -1,11 +1,13 @@
 package com.mesozi.app.buidafrique.Fragments;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,7 +74,7 @@ public class SignUpFrag extends Fragment {
                 if (check()) {
                     referralCode = refferal.getText().toString();
                     try {
-                        submitLogin("admin","admin");
+                        submitLogin("admin", "admin");
                     } catch (Exception e) {
                         e.printStackTrace();
                         error();
@@ -116,16 +118,8 @@ public class SignUpFrag extends Fragment {
                             error();
                         }
                     } else if (response.has("id")) {
-                        Toast.makeText(getContext(), "Affiliate successfully registered. We will get back to you on tour registration", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getContext(), MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-
                         if (progressDialog != null) progressDialog.dismiss();
-
-//                    sessionManager.setLoggedIn(true);
-//                    startActivity(intent);
-                        sessionManager.removeToken();
-                        Objects.requireNonNull(getActivity()).finish();
+                        successfulSignUp();
                     } else {
                         error();
                     }
@@ -223,10 +217,28 @@ public class SignUpFrag extends Fragment {
         startActivity(intent);
     }
 
+    private void successfulSignUp() {
+        final SessionManager sessionManager = new SessionManager(getContext());
+
+        AlertDialog alertDialog = new AlertDialog.Builder(Objects.requireNonNull(getActivity())).create();
+        alertDialog.setTitle("Account Created Successfully");
+        alertDialog.setMessage("You shall receive an SMS message to confirm your registration");
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        sessionManager.removeToken();
+                        Objects.requireNonNull(getActivity()).finish();
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
+
     private void error() {
         if (progressDialog != null) progressDialog.dismiss();
         Toast.makeText(getContext(), "Can not find a connection right now", Toast.LENGTH_LONG).show();
     }
+
     private void error(String error) {
         if (progressDialog != null) progressDialog.dismiss();
         Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show();

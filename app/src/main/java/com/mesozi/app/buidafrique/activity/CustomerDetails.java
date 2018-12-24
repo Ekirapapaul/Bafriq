@@ -38,8 +38,8 @@ public class CustomerDetails extends AppCompatActivity {
         if (customer != null) {
             name.setText(customer.getName());
             mail.setText(customer.getEmail());
-            mobile.setText((customer.getMobile() != null && !customer.getMobile().equals("false")) ? customer.getMobile().replaceAll(",", "\n").trim() : "N/A");
-            phone.setText((customer.getPhone() != null && !customer.getPhone().equals("false")) ? customer.getPhone().replaceAll(",", "\n").trim() : "N/A");
+            mobile.setText(!customer.getMobile().equals("false") ? customer.getMobile() : "N/A");
+            phone.setText((customer.getPhone() != null && !customer.getPhone().equals("false")) ? customer.getPhone() : "N/A");
         }
 
         findViewById(R.id.btn_add_lead).setOnClickListener(new View.OnClickListener() {

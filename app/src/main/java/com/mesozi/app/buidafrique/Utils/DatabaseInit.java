@@ -33,7 +33,7 @@ public class DatabaseInit {
         productCategories.add(new ProductCategory("Environmental Impact Assessment", String.format(Locale.getDefault(), "%sland-environment/environmental-management-impact-assessment/", ip), 3));
         productCategories.add(new ProductCategory("Occupation Health & Safety Management", String.format(Locale.getDefault(), "%sland-environment/occupation-health-safety-management/", ip), 3));
 
-        productCategories.add(new ProductCategory("Real Estate Investments Agency", String.format(Locale.getDefault(), "%sproperty-investments/113-2/", ip), 4));
+        productCategories.add(new ProductCategory("Real Estate Investments Solutions", String.format(Locale.getDefault(), "%sproperty-investments/113-2/", ip), 4));
         productCategories.add(new ProductCategory("Property Management & Letting Agency", String.format(Locale.getDefault(), "%sproperty-investments/property-valuation/", ip), 4));
         productCategories.add(new ProductCategory("Real Estate Valuation", String.format(Locale.getDefault(), "%sproperty-investments/property-management/", ip), 4));
         productCategories.add(new ProductCategory("Property Listings", String.format(Locale.getDefault(), "https://property-listings.buildafrique.com/"), 4));

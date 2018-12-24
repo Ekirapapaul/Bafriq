@@ -78,7 +78,7 @@ public class RedeemLoyalty extends AppCompatActivity implements View.OnClickList
         progressDialog.setMessage("Please Wait");
         progressDialog.setCancelable(false);
 
-        tvAmount.setText(String.format(Locale.getDefault(), "Amount Available : 420"));
+        tvAmount.setText(String.format(Locale.getDefault(), "Points Available : 420"));
         final Loyalty loyalty = getIntent().getParcelableExtra("parcel_data");
         if (loyalty != null) {
             tvAmount.setText(String.format(Locale.getDefault(), "Amount Available : %d", loyalty.getAvailable()));
