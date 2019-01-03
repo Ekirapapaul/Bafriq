@@ -41,4 +41,7 @@ public class UrlsConfig {
     public static String postReadMessage(String message_id){
         return String.format(Locale.getDefault(), "%smessaging/read/%s",BASE_IP,message_id);
     }
+    public static String convertToloyaltyPoints(String option){
+        return String.format(Locale.getDefault(),"%sloyalty/convert/%s", BASE_IP, option);
+    }
 }

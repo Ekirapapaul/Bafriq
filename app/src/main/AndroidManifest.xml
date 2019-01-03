@@ -69,6 +69,9 @@
         <activity android:name=".activity.ConvertCommission" />
         <activity android:name=".activity.AccountRecovery" />
         <activity android:name=".activity.ProfileActivity" />
+        <activity
+            android:name=".activity.EditProfile"
+            android:windowSoftInputMode="adjustPan" />
 
         <meta-data
             android:name="io.fabric.ApiKey"

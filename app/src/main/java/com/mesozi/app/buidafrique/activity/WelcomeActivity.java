@@ -22,6 +22,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Scroller;
 import android.widget.TextView;
@@ -32,6 +33,7 @@ import com.mesozi.app.buidafrique.R;
 import com.mesozi.app.buidafrique.Utils.CommonUtils;
 import com.mesozi.app.buidafrique.Utils.SessionManager;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
+import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -49,6 +51,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
     private LinearLayout dotsLayout;
     private TextView[] dots;
     private int[] layouts;
+    private int[] backgrounds;
     private Timer timer;
 
     @Override
@@ -65,6 +68,8 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_welcome);
 
+        ImageView imageView = findViewById(R.id.img_logo);
+        Picasso.get().load(R.drawable.icon).into(imageView);
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
 
@@ -90,6 +95,13 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
                 R.layout.fragment_welcome_2,
                 R.layout.fragment_welcome_3,
                 R.layout.fragment_welcome_4};
+
+        backgrounds = new int[]{
+                R.drawable.image8,
+                R.drawable.img2,
+                R.drawable.img3,
+                R.drawable.img4
+        };
         addBottomDots(0);
 
         myViewPagerAdapter = new MyViewPagerAdapter();
@@ -202,6 +214,11 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
 
             View view = layoutInflater != null ? layoutInflater.inflate(layouts[position], container, false) : null;
             TextView textView = Objects.requireNonNull(view).findViewById(R.id.tv_title);
+            ImageView imageView = view.findViewById(R.id.img_background);
+            Picasso.get()
+                    .load(backgrounds[position])
+                    .into(imageView);
+
             if (position < messages.size()) {
                 Log.d("message", messages.get(position).getMessage());
                 textView.setText(CommonUtils.fromHtml(messages.get(position).getMessage()));

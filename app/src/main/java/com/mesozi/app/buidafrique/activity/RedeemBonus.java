@@ -101,6 +101,9 @@ public class RedeemBonus extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getBaseContext(), ConvertCommission.class);
                 intent.putExtra("parcel_data", bonus);
+                Bundle bundle = new Bundle();
+                bundle.putString("option",  "bonus");
+                intent.putExtra("option", bundle);
                 startActivity(intent);
             }
         });

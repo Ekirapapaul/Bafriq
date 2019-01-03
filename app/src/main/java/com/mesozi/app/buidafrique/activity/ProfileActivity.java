@@ -1,8 +1,11 @@
 package com.mesozi.app.buidafrique.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 
 import com.mesozi.app.buidafrique.Models.Account;
@@ -23,6 +26,15 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void setViews() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         username = findViewById(R.id.tv_username);
         email = findViewById(R.id.tv_email);
 
@@ -31,5 +43,12 @@ public class ProfileActivity extends AppCompatActivity {
             username.setText(String.format("Username : %s", account.getUsername()));
             email.setText(String.format("Email : %s", account.getEmail()));
         }
+
+        findViewById(R.id.tv_edit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getBaseContext(), EditProfile.class));
+            }
+        });
     }
 }
