@@ -61,6 +61,7 @@ public class CustomerActivity extends AppCompatActivity implements CustomerAdapt
     private RecyclerView recyclerView;
     private SearchView searchView;
     private TextView placeholder;
+    int selectedId = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,6 +72,7 @@ public class CustomerActivity extends AppCompatActivity implements CustomerAdapt
                 .where(Customer_Table.email.notEq("false"))
                 .queryList();
         ;
+        DataNotifier.getInstance().setListener(this);
         registerViews();
 
     }
@@ -245,6 +247,14 @@ public class CustomerActivity extends AppCompatActivity implements CustomerAdapt
                 .queryList();
         adapter = new CustomerAdapter(getBaseContext(), customers);
         recyclerView.setAdapter(adapter);
+        if (selectedId > 0) {
+            Customer customer = SQLite.select().from(Customer.class).where(Customer_Table.id.eq(selectedId)).querySingle();
+            if (customer != null) {
+                Intent intent = new Intent(getBaseContext(), CustomerDetails.class);
+                intent.putExtra("parcel_data", customer);
+                startActivity(intent);
+            }
+        }
     }
 
     @Override
@@ -253,13 +263,14 @@ public class CustomerActivity extends AppCompatActivity implements CustomerAdapt
     }
 
     @Override
-    public void notifyData(int number) {
-        if(number == AppConstants.NOTIFY_CUSTOMERS) {
+    public void notifyData(int number, int id) {
+        selectedId = id;
+        if (number == AppConstants.NOTIFY_CUSTOMERS) {
             fetchCustomers();
-            if (recyclerView != null) {
-                adapter = new CustomerAdapter(getBaseContext(), customers);
-                recyclerView.setAdapter(adapter);
-            }
+//            if (recyclerView != null) {
+//                adapter = new CustomerAdapter(getBaseContext(), customers);
+//                recyclerView.setAdapter(adapter);
+//            }
         }
     }
 }

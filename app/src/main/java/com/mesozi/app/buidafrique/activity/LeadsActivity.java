@@ -59,6 +59,7 @@ public class LeadsActivity extends AppCompatActivity implements DataNotifier.Sta
     private SearchView searchView;
     private TextView placeholder;
     LeadsAdapter adapter;
+    int selectedId = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,6 +69,8 @@ public class LeadsActivity extends AppCompatActivity implements DataNotifier.Sta
         progressDialog.setCancelable(false);
         progressDialog.setTitle("Fetching Leads");
         progressDialog.setMessage("Please Wait...");
+
+        DataNotifier.getInstance().setListener(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -232,11 +235,17 @@ public class LeadsActivity extends AppCompatActivity implements DataNotifier.Sta
         leads = SQLite.select().from(Lead.class).where(Lead_Table.type.eq("lead")).queryList();
         adapter = new LeadsAdapter(getBaseContext(), leads);
         recyclerView.setAdapter(adapter);
-        Log.d("leads size", String.valueOf(leads.size()));
+        if(selectedId >0){
+            Lead lead = SQLite.select().from(Lead.class).where(Lead_Table.id.eq(selectedId)).querySingle();
+            Intent intent = new Intent(getBaseContext(), LeadDetailsActivity.class);
+            intent.putExtra("parcel_data", lead);
+            startActivity(intent);
+        }
     }
 
     @Override
-    public void notifyData(int number) {
+    public void notifyData(int number, int id) {
+        selectedId = id;
         if(number == AppConstants.NOTIFY_LEADS){
             fetchLeads();
             adapter = new LeadsAdapter(getBaseContext(), leads);

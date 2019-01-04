@@ -9,7 +9,7 @@ package com.mesozi.app.buidafrique.Utils;
 public class DataNotifier {
     public interface StateChangeListener {
 
-        void notifyData(int number);
+        void notifyData(int number, int id);
     }
 
     private static DataNotifier mInstance;
@@ -28,9 +28,9 @@ public class DataNotifier {
         mListener = listener;
     }
 
-    public void dataChanged(int number) {
+    public void dataChanged(int number, int id) {
         if (mListener != null) {
-            mListener.notifyData(number);
+            mListener.notifyData(number, id);
         }
     }
 }

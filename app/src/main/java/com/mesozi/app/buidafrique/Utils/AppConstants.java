@@ -5,5 +5,5 @@ package com.mesozi.app.buidafrique.Utils;
  */
 public class AppConstants {
     public static final int NOTIFY_CUSTOMERS = 1;
-    public static final int NOTIFY_LEADS = 1;
+    public static final int NOTIFY_LEADS = 2;
 }

@@ -101,10 +101,12 @@ public class AddCustomer extends AppCompatActivity {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlsConfig.URL_DATASET, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.d("response", response.toString());
+                Log.d("new customer response", response.toString());
                 try {
                     if (response.has("result")) {
-                        finishCreate();
+                        int id = response.getInt("result");
+                        Log.d("result", response.toString());
+                        finishCreate(id);
                     } else if (response.has("error") || response.getJSONObject("result").has("error")) {
                         Toast.makeText(AddCustomer.this, response.getJSONObject("result").getString("error"), Toast.LENGTH_LONG).show();
                     } else {
@@ -133,10 +135,10 @@ public class AddCustomer extends AppCompatActivity {
         VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(jsonObjectRequest);
     }
 
-    public void finishCreate() {
+    public void finishCreate(int id) {
         if (progressDialog != null) progressDialog.dismiss();
         Toast.makeText(this, "Customer Created successfully!", Toast.LENGTH_LONG).show();
-        DataNotifier.getInstance().dataChanged(1);
+        DataNotifier.getInstance().dataChanged(1,id);
         finish();
     }
 
