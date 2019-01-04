@@ -74,6 +74,12 @@ public class AddLead extends AppCompatActivity {
             Log.d("customer", customer.getName());
         }
         customers = SQLite.select().from(Customer.class).queryList();
+        Customer defaultCustomer = new Customer();
+        defaultCustomer.setName(" ");
+        defaultCustomer.setEmail(" ");
+        defaultCustomer.setMobile(" ");
+        defaultCustomer.setPhone(" ");
+        customers.add(0, defaultCustomer);
         if (customer != null && customers.size() > 0) {
             for (Customer customer1 : customers) {
                 if (customer1.getId() == customer.getId()) {
@@ -128,6 +134,8 @@ public class AddLead extends AppCompatActivity {
             if (customer.getEmail() != null && !customer.getEmail().isEmpty()) {
                 etEmail.setText(customer.getEmail());
             }
+        } else {
+            searchableSpinner.setSelection(0);
         }
 
         spinnerNumber = findViewById(R.id.spinner_mobile);
@@ -223,7 +231,6 @@ public class AddLead extends AppCompatActivity {
 //            spinnerNumber.setSelection(customersPhone.indexOf(customer));
 //        }
         Log.d("position", " pos " + customers.indexOf(customer));
-        customers = SQLite.select().from(Customer.class).queryList();
         this.customer = customer;
         if (customer != null && customers.size() > 0) {
             for (Customer customer1 : customers) {
@@ -248,6 +255,10 @@ public class AddLead extends AppCompatActivity {
             etName.setError(getString(R.string.error_required));
             return false;
         } else if (customer == null) {
+            textView.requestFocus();
+            textView.setError(getString(R.string.select_customer));
+            return false;
+        } else if (customer.getName().equals(" ")) {
             textView.requestFocus();
             textView.setError(getString(R.string.select_customer));
             return false;

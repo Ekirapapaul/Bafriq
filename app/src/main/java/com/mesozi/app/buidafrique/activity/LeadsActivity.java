@@ -235,19 +235,13 @@ public class LeadsActivity extends AppCompatActivity implements DataNotifier.Sta
         leads = SQLite.select().from(Lead.class).where(Lead_Table.type.eq("lead")).queryList();
         adapter = new LeadsAdapter(getBaseContext(), leads);
         recyclerView.setAdapter(adapter);
-        if(selectedId >0){
-            Lead lead = SQLite.select().from(Lead.class).where(Lead_Table.id.eq(selectedId)).querySingle();
-            Intent intent = new Intent(getBaseContext(), LeadDetailsActivity.class);
-            intent.putExtra("parcel_data", lead);
-            startActivity(intent);
-        }
     }
 
     @Override
     public void notifyData(int number, int id) {
         selectedId = id;
         if(number == AppConstants.NOTIFY_LEADS){
-            fetchLeads();
+            leads = SQLite.select().from(Lead.class).where(Lead_Table.type.eq("lead")).queryList();
             adapter = new LeadsAdapter(getBaseContext(), leads);
             recyclerView.setAdapter(adapter);
         }
