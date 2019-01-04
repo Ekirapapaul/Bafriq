@@ -112,6 +112,7 @@ public class CustomerActivity extends AppCompatActivity implements CustomerAdapt
             @Override
             public boolean onQueryTextChange(String query) {
                 // filter recycler view when text is changed
+                if(adapter != null && adapter.getFilter() != null)
                 adapter.getFilter().filter(query);
                 return false;
             }

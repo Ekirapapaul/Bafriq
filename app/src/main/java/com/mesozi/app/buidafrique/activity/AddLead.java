@@ -44,6 +44,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,10 +58,11 @@ public class AddLead extends AppCompatActivity {
     SearchableSpinner searchableSpinner, spinnerNumber, spinnerEmail;
     List<Customer> customersEmail;
     List<Customer> customersPhone;
-    List<Customer> customers;
+    List<Customer> customers = new ArrayList<>();
     TextView textView;
     private ProgressDialog progressDialog;
     int selectedId = 0;
+    int defaultPosition = -1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,6 +71,17 @@ public class AddLead extends AppCompatActivity {
 
         if (getIntent().getParcelableExtra("parcel_data") != null) {
             customer = getIntent().getParcelableExtra("parcel_data");
+            Log.d("customer", customer.getName());
+        }
+        customers = SQLite.select().from(Customer.class).queryList();
+        if (customer != null && customers.size() > 0) {
+            for (Customer customer1 : customers) {
+                if (customer1.getId() == customer.getId()) {
+                    defaultPosition = customers.indexOf(customer1);
+                    Log.d("customer pos", "" + defaultPosition);
+                }
+            }
+
         }
         setViews();
     }
@@ -97,29 +110,17 @@ public class AddLead extends AppCompatActivity {
 
         searchableSpinner = findViewById(R.id.spinner_name);
         searchableSpinner.setTitle("Select Customer");
-        customers = SQLite.select().from(Customer.class).queryList();
         CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(AddLead.this, android.R.layout.simple_spinner_item, customers);
         searchableSpinner.setAdapter(adapter);
-        searchableSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i < customers.size()) {
-                    customer = customers.get(i);
-                    setCustomer(customer);
-                }
-            }
+        if (defaultPosition >= 0) {
+            searchableSpinner.setSelection(defaultPosition);
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
+        }
         if (customer != null) {
+            Log.d("customer", customer.getName());
             if (customer.getName() != null && !customer.getName().isEmpty()) {
                 etCustName.setText(customer.getName());
                 int position = customers.indexOf(customer);
-                searchableSpinner.setSelection(position);
             }
             if (customer.getMobile() != null && !customer.getMobile().isEmpty()) {
                 etMobile.setText(customer.getMobile());
@@ -134,6 +135,26 @@ public class AddLead extends AppCompatActivity {
         customersPhone = SQLite.select().from(Customer.class).queryList();
         CustomSpinnerNumberAdapter customSpinnerNumberAdapter = new CustomSpinnerNumberAdapter(AddLead.this, android.R.layout.simple_spinner_item, customers);
         spinnerNumber.setAdapter(customSpinnerNumberAdapter);
+        Log.d("customer selection", " " + customers.indexOf(customer));
+        ;
+        if (defaultPosition >= 0) {
+            spinnerNumber.setSelection(defaultPosition);
+        }
+
+        searchableSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i < customers.size()) {
+                    customer = customers.get(i);
+                    setCustomer(customer);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         spinnerNumber.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -154,6 +175,10 @@ public class AddLead extends AppCompatActivity {
         customersEmail = SQLite.select().from(Customer.class).queryList();
         CustomSpinnerEmailAdapter customSpinnerEmailAdapter = new CustomSpinnerEmailAdapter(AddLead.this, android.R.layout.simple_spinner_item, customers);
         spinnerEmail.setAdapter(customSpinnerEmailAdapter);
+        if (defaultPosition >= 0) {
+            spinnerEmail.setSelection(defaultPosition);
+        }
+
         spinnerEmail.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -198,9 +223,22 @@ public class AddLead extends AppCompatActivity {
 //            spinnerNumber.setSelection(customersPhone.indexOf(customer));
 //        }
         Log.d("position", " pos " + customers.indexOf(customer));
-        spinnerEmail.setSelection(customers.indexOf(customer));
-        searchableSpinner.setSelection(customers.indexOf(customer));
-        spinnerNumber.setSelection(customers.indexOf(customer));
+        customers = SQLite.select().from(Customer.class).queryList();
+        this.customer = customer;
+        if (customer != null && customers.size() > 0) {
+            for (Customer customer1 : customers) {
+                if (customer1.getId() == customer.getId()) {
+                    defaultPosition = customers.indexOf(customer1);
+                    Log.d("customer pos", "" + defaultPosition);
+                }
+            }
+
+        }
+        if (defaultPosition >= 0) {
+            spinnerEmail.setSelection(defaultPosition);
+            searchableSpinner.setSelection(defaultPosition);
+            spinnerNumber.setSelection(defaultPosition);
+        }
 
     }
 
@@ -241,7 +279,7 @@ public class AddLead extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("error","error occured");
+                Log.d("error", "error occured");
                 error.printStackTrace();
                 error();
             }
@@ -345,7 +383,7 @@ public class AddLead extends AppCompatActivity {
             startActivity(intent);
 
             finish();
-        }else {
+        } else {
             finishSending(0);
         }
     }
