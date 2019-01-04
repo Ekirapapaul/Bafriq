@@ -67,7 +67,7 @@ public class InboxItemActivity extends AppCompatActivity {
             name.setText(message.getDisplay_name());
             from.setText(String.format("From %s", message.getEmail_from()));
             toUser.setText(String.format("To %s", message.getEmail_from()));
-            subject.setText(message.getDescription().equals("false") ? "No Subject" : message.getDescription());
+            subject.setText(CommonUtils.fromHtml(message.getSubject().equals("false") ? "No Subject" : message.getSubject()));
             body.setText(CommonUtils.fromHtml(message.getBody()));
             if (message.getEmail_from().length() > 0) {
                 char letter = message.getEmail_from().toUpperCase().charAt(0);

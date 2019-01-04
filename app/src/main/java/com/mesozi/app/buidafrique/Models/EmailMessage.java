@@ -39,6 +39,9 @@ public class EmailMessage extends BaseModel implements Parcelable {
     private String description;
 
     @Column
+    private String subject = "false";
+
+    @Column
     private String body;
 
     @Column
@@ -81,6 +84,7 @@ public class EmailMessage extends BaseModel implements Parcelable {
         date = in.readString();
         starred = in.readByte() != 0;
         description = in.readString();
+        subject = in.readString();
         body = in.readString();
         user_id = in.readInt();
         author_id = in.readString();
@@ -106,33 +110,6 @@ public class EmailMessage extends BaseModel implements Parcelable {
             return new EmailMessage[size];
         }
     };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(id);
-        parcel.writeString(display_name);
-        parcel.writeString(email_from);
-        parcel.writeString(date);
-        parcel.writeByte((byte) (starred ? 1 : 0));
-        parcel.writeString(description);
-        parcel.writeString(body);
-        parcel.writeInt(user_id);
-        parcel.writeString(author_id);
-        parcel.writeString(create_date);
-        parcel.writeString(record_name);
-        parcel.writeByte((byte) (to_read ? 1 : 0));
-        parcel.writeString(parent_id);
-        parcel.writeString(subtype_id);
-        parcel.writeString(write_date);
-        parcel.writeString(type);
-        parcel.writeString(model);
-        parcel.writeInt(res_id);
-    }
 
     public String getId() {
         return id;
@@ -276,5 +253,41 @@ public class EmailMessage extends BaseModel implements Parcelable {
 
     public void setRes_id(int res_id) {
         this.res_id = res_id;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
+        parcel.writeString(display_name);
+        parcel.writeString(email_from);
+        parcel.writeString(date);
+        parcel.writeByte((byte) (starred ? 1 : 0));
+        parcel.writeString(description);
+        parcel.writeString(subject);
+        parcel.writeString(body);
+        parcel.writeInt(user_id);
+        parcel.writeString(author_id);
+        parcel.writeString(create_date);
+        parcel.writeString(record_name);
+        parcel.writeByte((byte) (to_read ? 1 : 0));
+        parcel.writeString(parent_id);
+        parcel.writeString(subtype_id);
+        parcel.writeString(write_date);
+        parcel.writeString(type);
+        parcel.writeString(model);
+        parcel.writeInt(res_id);
     }
 }

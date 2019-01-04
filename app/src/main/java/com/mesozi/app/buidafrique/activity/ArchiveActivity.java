@@ -177,7 +177,7 @@ public class ArchiveActivity extends AppCompatActivity {
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlsConfig.URL_DATASET, jsonObject, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    Log.d("Response ", response.toString());
+                    Log.d("Archive Response ", response.toString());
                     if (response.has("result")) {
                         try {
                             JSONArray jsonArray = response.getJSONArray("result");
