@@ -97,10 +97,10 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
                 R.layout.fragment_welcome_4};
 
         backgrounds = new int[]{
-                R.drawable.image8,
-                R.drawable.img2,
-                R.drawable.img3,
-                R.drawable.img4
+                R.mipmap.image9,
+                R.mipmap.img2,
+                R.mipmap.img3,
+                R.mipmap.img4
         };
         addBottomDots(0);
 
