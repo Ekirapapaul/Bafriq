@@ -56,7 +56,7 @@ public class RedeemLoyalty extends AppCompatActivity implements View.OnClickList
     int number = 0;
     RecyclerView recyclerView;
     List<RefferalOption> refferalOptions = new ArrayList<>();
-    RefferalOption refferalOption ;
+    RefferalOption refferalOption;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,7 +78,7 @@ public class RedeemLoyalty extends AppCompatActivity implements View.OnClickList
         progressDialog.setMessage("Please Wait");
         progressDialog.setCancelable(false);
 
-        tvAmount.setText(String.format(Locale.getDefault(), "Points Available : 420"));
+        tvAmount.setText(String.format(Locale.getDefault(), "Points Available : 0"));
         final Loyalty loyalty = getIntent().getParcelableExtra("parcel_data");
         if (loyalty != null) {
             tvAmount.setText(String.format(Locale.getDefault(), "Amount Available : %d", loyalty.getAvailable()));
@@ -239,8 +239,10 @@ public class RedeemLoyalty extends AppCompatActivity implements View.OnClickList
                 public void onResponse(JSONObject response) {
                     Log.d("response", response.toString());
                     try {
-                        if (response.has("error") || response.getJSONObject("result").has("error")) {
-                            error( response.getJSONObject("result").getString("error"));
+                        if (response.has("error")) {
+                            error();
+                        } else if (response.getJSONObject("result").has("error")) {
+                            error(response.getJSONObject("result").getString("error"));
                         } else if (response.has("result")) {
                             finishRedemption();
                         } else {
@@ -248,6 +250,7 @@ public class RedeemLoyalty extends AppCompatActivity implements View.OnClickList
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        error();
                     }
 
                 }
@@ -329,6 +332,7 @@ public class RedeemLoyalty extends AppCompatActivity implements View.OnClickList
         Toast.makeText(this, "Commission Redeemed successfully!", Toast.LENGTH_LONG).show();
         finish();
     }
+
     private void finishRedemption(String error) {
         if (progressDialog != null) progressDialog.dismiss();
         Toast.makeText(this, error, Toast.LENGTH_LONG).show();
@@ -339,6 +343,7 @@ public class RedeemLoyalty extends AppCompatActivity implements View.OnClickList
         if (progressDialog != null) progressDialog.dismiss();
         Toast.makeText(this, "Can not find a connection right now", Toast.LENGTH_LONG).show();
     }
+
     private void error(String error) {
         if (progressDialog != null) progressDialog.dismiss();
         Toast.makeText(this, error, Toast.LENGTH_LONG).show();

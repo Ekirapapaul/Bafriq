@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:id="@+id/img_background"
         android:scaleType="centerCrop"
-        android:src="@mipmap/image8" />
+        android:src="@mipmap/image9" />
 
     <View
         android:layout_width="match_parent"

@@ -44,11 +44,14 @@ import com.mesozi.app.buidafrique.Utils.RequestBuilder;
 import com.mesozi.app.buidafrique.Utils.SessionManager;
 import com.mesozi.app.buidafrique.Utils.UrlsConfig;
 import com.mesozi.app.buidafrique.Utils.VolleySingleton;
+import com.mesozi.app.buidafrique.adapters.EmailAdapter;
+import com.mesozi.app.buidafrique.adapters.LeadsAdapter;
 import com.raizlabs.android.dbflow.sql.language.Delete;
 import com.raizlabs.android.dbflow.sql.language.Method;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -68,6 +71,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView tvCommission, tvBonus, tvLoyalty;
     Account account;
     long numQualified = 0;
+    NavigationView navigationView;
+    private boolean leadsFinished = false;
+    private boolean dashBoardFinished = false;
+    private boolean inboxFinished = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -127,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 drawerLayout.openDrawer(Gravity.START);
             }
         });
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         TextView navUsername = (TextView) headerView.findViewById(R.id.tv_email);
         headerView.findViewById(R.id.img_profile).setOnClickListener(new View.OnClickListener() {
@@ -380,11 +387,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (loyalty != null) {
             tvLoyalty.setText(String.format(Locale.getDefault(), "%d", loyalty.getAvailable()));
         }
+        dashBoardFinished = true;
         finishFetching();
     }
 
     private void finishFetching() {
-        if (progressDialog != null) progressDialog.dismiss();
+        if (dashBoardFinished && leadsFinished &&  inboxFinished)
+            if (progressDialog != null) progressDialog.dismiss();
     }
 
     private void error() {
@@ -404,6 +413,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Log.d("response", response.toString());
                     Account account = SQLite.select().from(Account.class).querySingle();
                     try {
+                        fetchLeads();
+                        fetchMessages();
                         getDashboard(Objects.requireNonNull(account).getUid());
                         finishFetching();
                     } catch (JSONException e) {
@@ -439,6 +450,171 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             e.printStackTrace();
         }
 
+    }
+
+    private void fetchLeads() {
+        final SessionManager sessionManager = new SessionManager(getBaseContext());
+        Log.d("session", sessionManager.getCookie());
+        try {
+            JSONObject jsonObject = RequestBuilder.readLeads();
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlsConfig.URL_DATASET, jsonObject, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.d("Response ", response.toString());
+                    if (response.has("result")) {
+                        try {
+                            JSONArray jsonArray = response.getJSONArray("result");
+                            parseLeads(jsonArray);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            error();
+                        }
+                    } else if (response.has("error")) {
+                        error();
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                    error();
+
+                }
+            }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Cookie", sessionManager.getCookie());
+                    return headers;
+                }
+            };
+            jsonObjectRequest.setShouldCache(false);
+            VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(jsonObjectRequest);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void parseLeads(JSONArray jsonArray) {
+        Gson gson = new Gson();
+        Log.d("array size", String.valueOf(jsonArray.length()));
+        for (int i = 0; i < jsonArray.length(); i++) {
+            Log.d("Processing ", "" + i);
+            try {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                try {
+                    Lead lead = gson.fromJson(jsonObject.toString(), Lead.class);
+                    lead.save();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.d("Failed at", String.format(" with %s", jsonObject.toString()));
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        populateLeads();
+    }
+
+    private void populateLeads() {
+        numQualified = 0;
+        numQualified = numQualified + new Select(Method.count()).from(Lead.class).where(Lead_Table.stage_id.eq("Qualified")).and(Lead_Table.type.eq("opportunity")).count()
+                + new Select(Method.count()).from(Lead.class).where(Lead_Table.stage_id.eq("Negotiation")).and(Lead_Table.type.eq("opportunity")).count()
+                + new Select(Method.count()).from(Lead.class).where(Lead_Table.stage_id.eq("Quotation (Proposition)")).and(Lead_Table.type.eq("opportunity")).count();
+
+        qualified.setText(String.valueOf(numQualified));
+        won.setText(String.valueOf(new Select(Method.count()).from(Lead.class).where(Lead_Table.type.eq("opportunity")).and(Lead_Table.stage_id.eq("WON Opportunity")).count()));
+        lost.setText(String.valueOf(new Select(Method.count()).from(Lead.class).where(Lead_Table.type.eq("opportunity")).and(Lead_Table.stage_id.eq("LOST Opportunity")).count()));
+
+        Menu menu = navigationView.getMenu();
+        menu.findItem(R.id.nav_qualified).setTitle(String.format(Locale.getDefault(), "%s (%d)", getString(R.string.qualified), numQualified));
+        menu.findItem(R.id.nav_won).setTitle(String.format(Locale.getDefault(), "%s (%d)", getString(R.string.won), Integer.valueOf(won.getText().toString())));
+        menu.findItem(R.id.nav_lost).setTitle(String.format(Locale.getDefault(), "%s (%d)", getString(R.string.lost), Integer.valueOf(lost.getText().toString())));
+        leadsFinished = true;
+        finishFetching();
+    }
+
+    private void fetchMessages() {
+        final SessionManager sessionManager = new SessionManager(getBaseContext());
+        StringBuilder builder = new StringBuilder();
+        List<EmailMessage> messages = SQLite.select().from(EmailMessage.class).queryList();
+        for (int i = 0; i < messages.size(); i++) {
+            builder.append(messages.get(i).getId());
+            if ((i + 1) != messages.size()) {
+                builder.append(",");
+            }
+        }
+        String existing_ids = builder.toString();
+        try {
+            JSONObject jsonObject;
+            if (messages.size() == 0) {
+                jsonObject = RequestBuilder.inboxObject();
+            } else {
+                jsonObject = RequestBuilder.inboxObject(existing_ids);
+            }
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlsConfig.URL_DATASET, jsonObject, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.d("Response ", response.toString());
+                    if (response.has("result")) {
+                        try {
+                            JSONArray jsonArray = response.getJSONArray("result");
+                            parseMessages(jsonArray);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            error();
+                        }
+                    } else if (response.has("error")) {
+                        error();
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                    error();
+
+                }
+            }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Cookie", sessionManager.getCookie());
+                    return headers;
+                }
+
+                @Override
+                protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+                    Log.d("response", response.toString());
+                    return super.parseNetworkResponse(response);
+                }
+            };
+            VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(jsonObjectRequest);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void parseMessages(JSONArray jsonArray) {
+        Gson gson = new Gson();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            try {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                EmailMessage emailMessage = gson.fromJson(jsonObject.toString(), EmailMessage.class);
+                emailMessage.save();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+        }
+        inboxFinished = true;
+        Menu menu = navigationView.getMenu();
+        menu.findItem(R.id.nav_inbox).setTitle(String.format(Locale.getDefault(), "%s (%d)", getString(R.string.inbox), new Select(Method.count()).from(EmailMessage.class).where(EmailMessage_Table.to_read.eq(true)).count()));
+        finishFetching();
     }
 
 }

@@ -224,6 +224,9 @@ public class InboxActivity extends AppCompatActivity {
     private void error() {
         if (progressDialog != null) progressDialog.dismiss();
         Toast.makeText(this, "Can not find a connection right now", Toast.LENGTH_SHORT).show();
+        emails = SQLite.select().from(EmailMessage.class).where(EmailMessage_Table.to_read.eq(true)).queryList();
+        adapter = new EmailAdapter(getBaseContext(), emails);
+        recyclerView.setAdapter(adapter);
     }
 
     private void parseMessages(JSONArray jsonArray) {
