@@ -18,10 +18,15 @@ import com.android.volley.Response;
 import com.android.volley.error.AuthFailureError;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
+import com.google.gson.Gson;
+import com.mesozi.app.buidafrique.Models.ConversionRate;
 import com.mesozi.app.buidafrique.R;
+import com.mesozi.app.buidafrique.Utils.RequestBuilder;
 import com.mesozi.app.buidafrique.Utils.SessionManager;
 import com.mesozi.app.buidafrique.Utils.UrlsConfig;
 import com.mesozi.app.buidafrique.Utils.VolleySingleton;
+import com.raizlabs.android.dbflow.sql.language.Delete;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,14 +40,21 @@ import java.util.Map;
 public class ConvertCommission extends AppCompatActivity {
     private EditText etAmount;
     private TextView tvPoints;
-    private final int CONVERSION_RATE = 1000;
+    private int CONVERSION_RATE = 1000;
     ProgressDialog progressDialog;
     String option = "commission";
+    private ConversionRate conversionRate;
+    TextView tvVRate;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_convert);
+        try {
+            getConversionRate();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -64,6 +76,18 @@ public class ConvertCommission extends AppCompatActivity {
 
         etAmount = findViewById(R.id.et_amount);
         tvPoints = findViewById(R.id.tv_points);
+        tvVRate = findViewById(R.id.tv_conversion_rate);
+
+        conversionRate = SQLite.select().from(ConversionRate.class).querySingle();
+        if(conversionRate != null){
+            if(option.equals("bonus")){
+                tvVRate.setText(conversionRate.getBonus_to_loyalty());
+                CONVERSION_RATE = Integer.parseInt(conversionRate.getBonus_to_loyalty());
+            }else{
+                tvVRate.setText(conversionRate.getCommission_to_loyalty());
+                CONVERSION_RATE = Integer.parseInt(conversionRate.getCommission_to_loyalty());
+            }
+        }
 
         etAmount.addTextChangedListener(new TextWatcher() {
             @Override
@@ -181,5 +205,45 @@ public class ConvertCommission extends AppCompatActivity {
     private void error(String error) {
         if (progressDialog != null) progressDialog.dismiss();
         Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+    }
+
+
+    private void getConversionRate() throws JSONException {
+        JSONObject jsonObject = RequestBuilder.getConversioRate();
+        final SessionManager sessionManager = new SessionManager(getBaseContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlsConfig.URL_GET_CONVERSION_RATES, jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("response", response.toString());
+                try {
+                    if (response.has("result")) {
+                        JSONObject result = response.getJSONObject("result");
+                        try {
+                            Delete.table(ConversionRate.class);
+                            Gson gson = new Gson();
+                            ConversionRate conversionRate = gson.fromJson(result.toString(), ConversionRate.class);
+                            conversionRate.save();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Cookie", sessionManager.getCookie());
+                return headers;
+            }
+        };
+        VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(jsonObjectRequest);
     }
 }

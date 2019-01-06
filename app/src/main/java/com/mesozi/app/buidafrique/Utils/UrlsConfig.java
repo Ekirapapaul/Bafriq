@@ -21,7 +21,7 @@ public class UrlsConfig {
     public static final String URL_REDEEM_OPTIONS = BASE_IP + "loyalty/redeem/options";
     public static final String URL_GET_REFFERAL_MESSAGE = BASE_WEB_IP + "get_referral_message";
     public static final String URL_EDIT_PROFILE = AFFILIATE_IP +  "edit_profile";
-
+    public static final String URL_GET_CONVERSION_RATES = BASE_IP + "loyalty/convert/options";
     public static String getDashboardUrl(String uid){
         return String.format(Locale.getDefault(), "%sdashboard/%s", AFFILIATE_IP, uid);
     }

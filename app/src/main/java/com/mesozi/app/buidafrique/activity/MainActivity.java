@@ -33,6 +33,7 @@ import com.google.gson.Gson;
 import com.mesozi.app.buidafrique.Models.Account;
 import com.mesozi.app.buidafrique.Models.Bonus;
 import com.mesozi.app.buidafrique.Models.Commission;
+import com.mesozi.app.buidafrique.Models.ConversionRate;
 import com.mesozi.app.buidafrique.Models.EmailMessage;
 import com.mesozi.app.buidafrique.Models.EmailMessage_Table;
 import com.mesozi.app.buidafrique.Models.Lead;
@@ -374,6 +375,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(jsonObjectRequest);
     }
 
+    private void getConversionRate() throws JSONException {
+        JSONObject jsonObject = RequestBuilder.getConversioRate();
+        final SessionManager sessionManager = new SessionManager(getBaseContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlsConfig.URL_GET_CONVERSION_RATES, jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("response", response.toString());
+                try {
+                    if (response.has("result")) {
+                        JSONObject result = response.getJSONObject("result");
+                        try {
+                            Delete.table(ConversionRate.class);
+                            Gson gson = new Gson();
+                            ConversionRate conversionRate = gson.fromJson(result.toString(), ConversionRate.class);
+                            conversionRate.save();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Cookie", sessionManager.getCookie());
+                return headers;
+            }
+        };
+        VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(jsonObjectRequest);
+    }
+
     private void populate() {
         Bonus bonus = SQLite.select().from(Bonus.class).querySingle();
         if (bonus != null) {
@@ -413,6 +453,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Log.d("response", response.toString());
                     Account account = SQLite.select().from(Account.class).querySingle();
                     try {
+                        getConversionRate();
                         fetchLeads();
                         fetchMessages();
                         getDashboard(Objects.requireNonNull(account).getUid());
