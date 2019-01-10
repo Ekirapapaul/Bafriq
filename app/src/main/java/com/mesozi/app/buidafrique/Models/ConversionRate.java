@@ -14,6 +14,8 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
  */
 @Table(database = AppDatabase.class, name = "conversionRate")
 public class ConversionRate extends BaseModel implements Parcelable {
+
+    public ConversionRate(){}
     @PrimaryKey(autoincrement = true)
     @Column
     private long id;

@@ -27,7 +27,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:paddingBottom="20dp"
+                android:paddingBottom="30dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
@@ -249,7 +249,7 @@
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="8dp"
                             android:hint="Name of the Bank"
-                            android:inputType="number" />
+                            android:inputType="text" />
 
                         <EditText
                             android:id="@+id/et_bank_branch"

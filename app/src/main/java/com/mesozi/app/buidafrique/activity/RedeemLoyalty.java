@@ -81,7 +81,7 @@ public class RedeemLoyalty extends AppCompatActivity implements View.OnClickList
         tvAmount.setText(String.format(Locale.getDefault(), "Points Available : 0"));
         final Loyalty loyalty = getIntent().getParcelableExtra("parcel_data");
         if (loyalty != null) {
-            tvAmount.setText(String.format(Locale.getDefault(), "Amount Available : %d", loyalty.getAvailable()));
+            tvAmount.setText(String.format(Locale.getDefault(), "Points Available : %d", loyalty.getAvailable()));
         }
         try {
             getOptions();
