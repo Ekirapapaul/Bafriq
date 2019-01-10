@@ -264,7 +264,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 new SessionManager(getBaseContext()).setLoggedIn(false);
                 try {
                     Delete.table(Lead.class);
-                    Delete.table(SalesOrder.class);
+//                    Delete.table(SalesOrder.class);
                     Delete.table(EmailMessage.class);
                     Delete.table(Commission.class);
                     Delete.table(Loyalty.class);
