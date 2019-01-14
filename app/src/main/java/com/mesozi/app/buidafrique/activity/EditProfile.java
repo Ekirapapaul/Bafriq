@@ -209,6 +209,7 @@ public class EditProfile extends AppCompatActivity {
                 Log.d("response", response.toString());
                 try {
                     if (response.has("error") || response.getJSONObject("result").has("error")) {
+                        if (progressDialog != null) progressDialog.dismiss();
                         Toast.makeText(EditProfile.this, response.getJSONObject("result").getString("error"), Toast.LENGTH_LONG).show();
                     } else if (response.has("result")) {
                         finishCreate();

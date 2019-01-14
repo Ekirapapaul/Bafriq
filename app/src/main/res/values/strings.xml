@@ -57,6 +57,7 @@
     <string name="available">Available</string>
     <string name="archive">Archive</string>
     <string name="total_paid">Total Paid</string>
+    <string name="total_redeemed">Redeemed/Paid</string>
     <string name="dummy_total_paid">Ksh 100</string>
     <string name="share_via">Share Via...</string>
     <string name="invite_message">Hello! “You have got to try “Buildafrique™ Partner Network”, the first Affiliate Marketing Program and Online Referral Mobile App. for real estate &amp; development solutions in Kenya.\n\n
@@ -116,4 +117,9 @@
     <string name="current_password">Current Password</string>
     <string name="new_password">New Password</string>
     <string name="change_password">Change Password</string>
+    <string name="successfull_redeem_bonus">Bonuses Redeemed Successfully</string>
+    <string name="message_successfull_bonus_redemption">You shall receive SMS notification once payment has been made.</string>
+    <string name="successfull_redeem_commission">Commissions Redeemed Successfully</string>
+    <string name="message_successfull_commission_redemption">You shall receive SMS notification once payment has been made.</string>
+    <string name="successfull_redeem_loyalty">Loyalty Points Redeemed Successfully</string>
 </resources>

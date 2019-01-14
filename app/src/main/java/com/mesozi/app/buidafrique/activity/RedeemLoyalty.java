@@ -1,8 +1,10 @@
 package com.mesozi.app.buidafrique.activity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -244,7 +246,7 @@ public class RedeemLoyalty extends AppCompatActivity implements View.OnClickList
                         } else if (response.getJSONObject("result").has("error")) {
                             error(response.getJSONObject("result").getString("error"));
                         } else if (response.has("result")) {
-                            finishRedemption();
+                            successfullDialog(getString(R.string.successfull_redeem_loyalty), getString(R.string.message_successfull_commission_redemption));
                         } else {
                             error();
                         }
@@ -331,6 +333,20 @@ public class RedeemLoyalty extends AppCompatActivity implements View.OnClickList
         if (progressDialog != null) progressDialog.dismiss();
         Toast.makeText(this, "Commission Redeemed successfully!", Toast.LENGTH_LONG).show();
         finish();
+    }
+
+    private void successfullDialog(String title, String message) {
+        if (progressDialog != null) progressDialog.dismiss();
+        AlertDialog alertDialog = new AlertDialog.Builder(Objects.requireNonNull(getBaseContext())).create();
+        alertDialog.setTitle(title);
+        alertDialog.setMessage(message);
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+        alertDialog.show();
     }
 
     private void finishRedemption(String error) {

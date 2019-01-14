@@ -48,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".4"
                     android:gravity="center"
-                    android:text="@string/total_paid" />
+                    android:text="@string/total_redeemed" />
 
                 <View
                     android:layout_width="1dp"

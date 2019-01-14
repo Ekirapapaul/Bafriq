@@ -1,9 +1,11 @@
 package com.mesozi.app.buidafrique.activity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
@@ -34,6 +36,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by ekirapa on 10/29/18 .
@@ -244,7 +247,7 @@ public class RedeemBonus extends AppCompatActivity {
                 if (response.has("error")) {
                     error();
                 } else if (response.has("result")) {
-                    finishRedemption();
+                    successfullDialog(getString(R.string.successfull_redeem_bonus), getString(R.string.message_successfull_bonus_redemption));
                 } else {
                     error();
                 }
@@ -272,6 +275,20 @@ public class RedeemBonus extends AppCompatActivity {
         if (progressDialog != null) progressDialog.dismiss();
         Toast.makeText(this, "Commission Redeemed successfully!", Toast.LENGTH_SHORT).show();
         finish();
+    }
+
+    private void successfullDialog(String title, String message) {
+        if (progressDialog != null) progressDialog.dismiss();
+        AlertDialog alertDialog = new AlertDialog.Builder(Objects.requireNonNull(getBaseContext())).create();
+        alertDialog.setTitle(title);
+        alertDialog.setMessage(message);
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+        alertDialog.show();
     }
 
     private void error() {
