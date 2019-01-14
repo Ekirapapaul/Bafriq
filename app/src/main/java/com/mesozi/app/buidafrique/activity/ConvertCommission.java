@@ -78,12 +78,17 @@ public class ConvertCommission extends AppCompatActivity {
         tvPoints = findViewById(R.id.tv_points);
         tvVRate = findViewById(R.id.tv_conversion_rate);
 
-        conversionRate = SQLite.select().from(ConversionRate.class).querySingle();
-        if(conversionRate != null){
-            if(option.equals("bonus")){
+        try {
+            conversionRate = SQLite.select().from(ConversionRate.class).querySingle();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (conversionRate != null) {
+            if (option.equals("bonus")) {
                 tvVRate.setText(conversionRate.getBonus_to_loyalty());
                 CONVERSION_RATE = Integer.parseInt(conversionRate.getBonus_to_loyalty());
-            }else{
+            } else {
                 tvVRate.setText(conversionRate.getCommission_to_loyalty());
                 CONVERSION_RATE = Integer.parseInt(conversionRate.getCommission_to_loyalty());
             }

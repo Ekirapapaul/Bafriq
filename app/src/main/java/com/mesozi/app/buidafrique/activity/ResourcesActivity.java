@@ -60,7 +60,7 @@ public class ResourcesActivity extends AppCompatActivity {
                         break;
                     case 3:
                         Intent vidIntent = new Intent(Intent.ACTION_VIEW);
-                        vidIntent.setData(Uri.parse("https://buildafrique.com/resources/e-publications/"));
+                        vidIntent.setData(Uri.parse("https://partner-network.buildafrique.com/newsletters/"));
                         startActivity(vidIntent);
                         break;
                     case 4:

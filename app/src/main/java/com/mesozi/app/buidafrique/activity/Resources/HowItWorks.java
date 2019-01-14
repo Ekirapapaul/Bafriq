@@ -49,12 +49,12 @@ public class HowItWorks extends AppCompatActivity {
                 switch (position) {
                     case 0:
                         Intent vidIntent = new Intent(Intent.ACTION_VIEW);
-                        vidIntent.setData(Uri.parse("https://buildafrique.com/video/kenyas-real-estate-investments-our-perspective-approach-model/"));
+                        vidIntent.setData(Uri.parse("https://www.youtube.com/watch?v=O05wpC0Ukz0&t=5s"));
                         startActivity(vidIntent);
                         break;
                     case 1:
                         Intent flyerIntent = new Intent(Intent.ACTION_VIEW);
-                        flyerIntent.setData(Uri.parse("https://buildafrique.com/wp-content/uploads/2018/09/Buildafrique-Partner-Network-POSTER.jpg"));
+                        flyerIntent.setData(Uri.parse("https://buildafrique.com/wp-content/uploads/2019/01/Website-Flyer-HOW-IT-WORK-03-01-19.pdf"));
                         startActivity(flyerIntent);
                         break;
                     case 2:

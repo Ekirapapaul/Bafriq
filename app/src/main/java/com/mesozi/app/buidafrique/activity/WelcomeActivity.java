@@ -77,7 +77,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("https://buildafrique.com/privacy-policy/"));
+                intent.setData(Uri.parse("https://partner-network.buildafrique.com/privacy-policy/"));
                 startActivity(intent);
             }
         });
@@ -85,7 +85,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("https://buildafrique.com/terms-conditions/"));
+                intent.setData(Uri.parse("https://partner-network.buildafrique.com/terms-and-conditions/"));
                 startActivity(intent);
             }
         });

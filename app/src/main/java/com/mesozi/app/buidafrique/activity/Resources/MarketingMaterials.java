@@ -47,7 +47,7 @@ public class MarketingMaterials extends AppCompatActivity implements View.OnClic
             case R.id.btn_share2:
                 share("“Do you intend to venture into real estate investment or development  project?\n\n" +
                         "Buildafrique Consulting Group  is your prefered partner for inclusive \"End-to-End\" Real Estate and Development Solutions.\n\n" +
-                        "Learn more in the organization brochure below:\nhttps://www.buildafrique.com/wp-content/uploads/2015/09/2016-GROUP-BROCHURE.pdf");
+                        "Learn more in the organization brochure below:\nhttps://buildafrique.com/wp-content/uploads/2019/01/BCG-Brochure-JANUARY-2019.pdf");
                 break;
             case R.id.btn_view1:
                 Intent vidIntent = new Intent(Intent.ACTION_VIEW);
@@ -56,7 +56,7 @@ public class MarketingMaterials extends AppCompatActivity implements View.OnClic
                 break;
             case R.id.btn_view2:
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("https://www.buildafrique.com/wp-content/uploads/2015/09/2016-GROUP-BROCHURE.pdf"));
+                intent.setData(Uri.parse("https://buildafrique.com/wp-content/uploads/2019/01/BCG-Brochure-JANUARY-2019.pdf"));
                 startActivity(intent);
                 break;
         }
