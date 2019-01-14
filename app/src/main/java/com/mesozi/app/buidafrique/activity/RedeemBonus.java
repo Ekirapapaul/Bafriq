@@ -279,7 +279,7 @@ public class RedeemBonus extends AppCompatActivity {
 
     private void successfullDialog(String title, String message) {
         if (progressDialog != null) progressDialog.dismiss();
-        AlertDialog alertDialog = new AlertDialog.Builder(Objects.requireNonNull(getBaseContext())).create();
+        AlertDialog alertDialog = new AlertDialog.Builder(Objects.requireNonNull(RedeemBonus.this)).create();
         alertDialog.setTitle(title);
         alertDialog.setMessage(message);
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",

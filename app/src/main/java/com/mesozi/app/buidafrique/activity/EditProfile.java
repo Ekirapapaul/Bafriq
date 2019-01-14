@@ -146,7 +146,7 @@ public class EditProfile extends AppCompatActivity {
 
         JSONObject params = new JSONObject();
         if (!location.getText().toString().isEmpty()) {
-            params.put("location", location.getText().toString());
+            params.put("city", location.getText().toString());
         }
         if (!email.getText().toString().isEmpty()) {
             params.put("email", email.getText().toString());

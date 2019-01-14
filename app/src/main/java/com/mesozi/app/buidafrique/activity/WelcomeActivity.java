@@ -69,7 +69,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_welcome);
 
         ImageView imageView = findViewById(R.id.img_logo);
-        Picasso.get().load(R.drawable.icon).into(imageView);
+        Picasso.get().load(R.mipmap.logo).into(imageView);
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
 

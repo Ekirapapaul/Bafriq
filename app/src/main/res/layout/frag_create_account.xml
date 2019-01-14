@@ -26,7 +26,7 @@
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_weight=".5"
-                    android:src="@drawable/icon" />
+                    android:src="@mipmap/logo" />
             </LinearLayout>
 
             <LinearLayout
