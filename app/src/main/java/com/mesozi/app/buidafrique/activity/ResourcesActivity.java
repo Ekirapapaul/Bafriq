@@ -53,26 +53,25 @@ public class ResourcesActivity extends AppCompatActivity {
                         startActivity(new Intent(getBaseContext(), HowItWorks.class));
                         break;
                     case 1:
-                        startActivity(new Intent(getBaseContext(), ProductsActivity.class));
-                        break;
-                    case 2:
                         startActivity(new Intent(getBaseContext(), MarketingMaterials.class));
                         break;
-                    case 3:
+                    case 2:
                         Intent vidIntent = new Intent(Intent.ACTION_VIEW);
                         vidIntent.setData(Uri.parse("https://partner-network.buildafrique.com/newsletters/"));
                         startActivity(vidIntent);
                         break;
-                    case 4:
+                    case 3:
                         Intent intent = new Intent(Intent.ACTION_VIEW);
                         intent.setData(Uri.parse("https://partner-network.buildafrique.com/events/"));
                         startActivity(intent);
                         break;
-                    case 5:
+                    case 4:
                         startActivity(new Intent(getBaseContext(), Connect.class));
                         break;
-                    case 6:
+                    case 5:
                         startActivity(new Intent(getBaseContext(), About.class));
+                        break;
+                    case 6:
                         break;
 
                 }
@@ -84,7 +83,7 @@ public class ResourcesActivity extends AppCompatActivity {
     private void setResources() {
         List<String> resources = new ArrayList<>();
         resources.add("How it Works");
-        resources.add("Products");
+//        resources.add("Products");
         resources.add("Marketing Materials");
         resources.add("Monthly Newsletters");
         resources.add("Training Events");

@@ -58,9 +58,9 @@ public class HowItWorks extends AppCompatActivity {
                         startActivity(flyerIntent);
                         break;
                     case 2:
-                        Intent siteIntent = new Intent(Intent.ACTION_VIEW);
-                        siteIntent.setData(Uri.parse("https://partner-network.buildafrique.com/how-it-works/"));
-                        startActivity(siteIntent);
+//                        Intent siteIntent = new Intent(Intent.ACTION_VIEW);
+//                        siteIntent.setData(Uri.parse("https://partner-network.buildafrique.com/how-it-works/"));
+//                        startActivity(siteIntent);
                         break;
                 }
             }
@@ -72,7 +72,7 @@ public class HowItWorks extends AppCompatActivity {
         List<ChildResource> resources = new ArrayList<>();
         resources.add(new ChildResource("Videos",R.drawable.ic_videocam_black_24dp));
         resources.add(new ChildResource("Flyer", R.drawable.ic_import_contacts_black_24dp));
-        resources.add(new ChildResource("Website", R.drawable.ic_web_black_24dp));
+//        resources.add(new ChildResource("Website", R.drawable.ic_web_black_24dp));
 
         adapter = new ChildResourceAdapter(getBaseContext(), resources);
 
