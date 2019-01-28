@@ -159,7 +159,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(getBaseContext(), ProfileActivity.class));
             }
         });
-        navUsername.setText(account.getUsername());
+        if(account != null) {
+            navUsername.setText(account.getUsername());
+        }else{
+            navUsername.setText("User Name");
+        }
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
