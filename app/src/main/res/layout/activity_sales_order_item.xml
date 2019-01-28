@@ -112,11 +112,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:background="#eeeeee"
+                    android:visibility="invisible"
                     android:padding="15dp"
                     android:text="@string/order_line" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler"
+                    android:visibility="invisible"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
