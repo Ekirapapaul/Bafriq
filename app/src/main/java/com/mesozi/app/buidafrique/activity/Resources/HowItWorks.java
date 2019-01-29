@@ -49,7 +49,7 @@ public class HowItWorks extends AppCompatActivity {
                 switch (position) {
                     case 0:
                         Intent vidIntent = new Intent(Intent.ACTION_VIEW);
-                        vidIntent.setData(Uri.parse("https://www.youtube.com/watch?v=O05wpC0Ukz0&t=5s"));
+                        vidIntent.setData(Uri.parse("https://youtu.be/v_aLXWxUcAw"));
                         startActivity(vidIntent);
                         break;
                     case 1:

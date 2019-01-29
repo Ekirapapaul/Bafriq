@@ -6,9 +6,9 @@ import java.util.Locale;
  * Created by ekirapa on 7/8/18 .
  */
 public class UrlsConfig {
-    private static final String BASE_IP = "http://portal.buildafrique.com:8089/";
-    private static final String BASE_WEB_IP = "http://portal.buildafrique.com:8089/web/";
-    private static final String AFFILIATE_IP = "http://portal.buildafrique.com:8089/affiliates/";
+    private static final String BASE_IP = "http://portal.buildafrique.com:8069/";
+    private static final String BASE_WEB_IP = "http://portal.buildafrique.com:8069/web/";
+    private static final String AFFILIATE_IP = "http://portal.buildafrique.com:8069/affiliates/";
 
     public static final String URL_LOGIN = BASE_WEB_IP + "session/authenticate";
     public static final String URL_CREATE_MESSAGE = AFFILIATE_IP + "messaging/new_message";
