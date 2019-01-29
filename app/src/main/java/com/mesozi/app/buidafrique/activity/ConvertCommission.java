@@ -57,6 +57,7 @@ public class ConvertCommission extends AppCompatActivity {
             getConversionRate();
         } catch (JSONException e) {
             e.printStackTrace();
+            showAlertDialog("FAILED TO GET RATE","Failed to get conversion Rate from the server. You may not see the correct Conversion on your phone but you can still proceed.");
         }
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -155,6 +156,7 @@ public class ConvertCommission extends AppCompatActivity {
     }
 
     private void convertToLoyalty(JSONObject jsonObject) {
+        progressDialog.setTitle("Converting to loyalty points");
         progressDialog.show();
         final SessionManager sessionManager = new SessionManager(getBaseContext());
         String url = UrlsConfig.convertToloyaltyPoints(option);
@@ -217,6 +219,8 @@ public class ConvertCommission extends AppCompatActivity {
 
 
     private void getConversionRate() throws JSONException {
+        progressDialog.setTitle("Fetching Conversion Rate");
+        progressDialog.show();
         JSONObject jsonObject = RequestBuilder.getConversioRate();
         final SessionManager sessionManager = new SessionManager(getBaseContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlsConfig.URL_GET_CONVERSION_RATES, jsonObject, new Response.Listener<JSONObject>() {
@@ -231,6 +235,14 @@ public class ConvertCommission extends AppCompatActivity {
                             Gson gson = new Gson();
                             ConversionRate conversionRate = gson.fromJson(result.toString(), ConversionRate.class);
                             conversionRate.save();
+                            if (option.equals("bonus")) {
+                                tvVRate.setText(conversionRate.getBonus_to_loyalty());
+                                CONVERSION_RATE = Integer.parseInt(conversionRate.getBonus_to_loyalty());
+                            } else {
+                                tvVRate.setText(conversionRate.getCommission_to_loyalty());
+                                CONVERSION_RATE = Integer.parseInt(conversionRate.getCommission_to_loyalty());
+                            }
+                            if (progressDialog != null) progressDialog.dismiss();
                         } catch (Exception e) {
                             e.printStackTrace();
                             showAlertDialog("FAILED TO GET RATE","Failed to get conversion Rate from the server. You may not see the correct Conversion on your phone but you can still proceed.");
