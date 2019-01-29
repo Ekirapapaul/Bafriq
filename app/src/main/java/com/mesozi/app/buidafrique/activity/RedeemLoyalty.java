@@ -246,7 +246,7 @@ public class RedeemLoyalty extends AppCompatActivity implements View.OnClickList
                         } else if (response.getJSONObject("result").has("error")) {
                             error(response.getJSONObject("result").getString("error"));
                         } else if (response.has("result")) {
-                            successfullDialog(getString(R.string.successfull_redeem_loyalty), getString(R.string.message_successfull_commission_redemption));
+                            successfullDialog(getString(R.string.successfull_redeem_loyalty), getString(R.string.message_successful_redeem_loyalty));
                         } else {
                             error();
                         }

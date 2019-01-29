@@ -122,4 +122,5 @@
     <string name="successfull_redeem_commission">Commissions Redeemed Successfully</string>
     <string name="message_successfull_commission_redemption">You shall receive SMS notification once payment has been made.</string>
     <string name="successfull_redeem_loyalty">Loyalty Points Redeemed Successfully</string>
+    <string name="message_successful_redeem_loyalty">You shall receive SMS notification to confirm award of the service.</string>
 </resources>

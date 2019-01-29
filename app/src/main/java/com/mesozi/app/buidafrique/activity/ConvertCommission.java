@@ -1,8 +1,10 @@
 package com.mesozi.app.buidafrique.activity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -33,6 +35,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by ekirapa on 10/29/18 .
@@ -230,16 +233,19 @@ public class ConvertCommission extends AppCompatActivity {
                             conversionRate.save();
                         } catch (Exception e) {
                             e.printStackTrace();
+                            showAlertDialog("FAILED TO GET RATE","Failed to get conversion Rate from the server. You may not see the correct Conversion on your phone but you can still proceed.");
                         }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    showAlertDialog("FAILED TO GET RATE","Failed to get conversion Rate from the server. You may not see the correct Conversion on your phone but you can still proceed.");
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                showAlertDialog("FAILED TO GET RATE","Failed to get conversion Rate from the server. You may not see the correct Conversion on your phone but you can still proceed.");
             }
         }) {
             @Override
@@ -251,4 +257,19 @@ public class ConvertCommission extends AppCompatActivity {
         };
         VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(jsonObjectRequest);
     }
+
+    private void showAlertDialog(String title, String message) {
+        if (progressDialog != null) progressDialog.dismiss();
+        AlertDialog alertDialog = new AlertDialog.Builder(Objects.requireNonNull(ConvertCommission.this)).create();
+        alertDialog.setTitle(title);
+        alertDialog.setMessage(message);
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+        alertDialog.show();
+    }
+
 }
