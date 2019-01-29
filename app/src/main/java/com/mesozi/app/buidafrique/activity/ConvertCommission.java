@@ -53,6 +53,11 @@ public class ConvertCommission extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_convert);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Converting to loyalty points");
+        progressDialog.setMessage("Please Wait");
+        progressDialog.setCancelable(false);
+
         try {
             getConversionRate();
         } catch (JSONException e) {
@@ -73,10 +78,6 @@ public class ConvertCommission extends AppCompatActivity {
             option = bundle.getString("option");
         }
 
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Converting to loyalty points");
-        progressDialog.setMessage("Please Wait");
-        progressDialog.setCancelable(false);
 
         etAmount = findViewById(R.id.et_amount);
         tvPoints = findViewById(R.id.tv_points);

@@ -55,13 +55,13 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight=".5"
-                        android:text="Amount for 1 Loyalty point" />
+                        android:text="@string/amount_for_1_loyalty_point" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight=".5"
-                        android:text="1000"
+                        android:text="500"
                         android:id="@+id/tv_conversion_rate"
                         android:textSize="17sp"
                         android:textStyle="bold" />
@@ -79,7 +79,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight=".5"
-                        android:text="Number of Loyalty Points" />
+                        android:text="@string/number_of_loyalty_points" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -159,8 +159,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_margin="5dp"
-        android:layout_marginBottom="20dp"
+        android:layout_margin="20dp"
         android:background="@drawable/button_primary"
         android:text="@string/convert"
         android:textColor="@color/white" />
