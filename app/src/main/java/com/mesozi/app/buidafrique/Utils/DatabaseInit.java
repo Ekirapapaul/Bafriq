@@ -37,8 +37,8 @@ public class DatabaseInit {
         productCategories.add(new ProductCategory("Real Estate Sales Agency", String.format(Locale.getDefault(), "%sproperty-investments/property-management-facility-management/", ip), 4));
         productCategories.add(new ProductCategory("Real Estate Valuation", String.format(Locale.getDefault(), "%sproperty-investments/property-valuation/", ip), 4));
         productCategories.add(new ProductCategory("Property Management", String.format(Locale.getDefault(), "https://property-listings.buildafrique.com/"), 4));
-        productCategories.add(new ProductCategory("Property Listings", String.format(Locale.getDefault(), "https://property-listings.buildafrique.com/"), 4));
         productCategories.add(new ProductCategory("Investments Offerings", String.format(Locale.getDefault(), "https://investment-offerings.buildafrique.com/"), 4));
+        productCategories.add(new ProductCategory("Property Listings", String.format(Locale.getDefault(), "https://property-listings.buildafrique.com/"), 4));
 
         for (ProductCategory productCategory : productCategories) {
             productCategory.save();
