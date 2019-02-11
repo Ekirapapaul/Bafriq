@@ -44,7 +44,7 @@ public class ProductsFrag extends Fragment {
             public void onItemClick(View view, int position) {
                 ProductCategory product = productsAdapter.getSelected(position);
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(product.getUrl()));
-                startActivity(browserIntent);
+//                startActivity(browserIntent);
             }
         }));
         return view;

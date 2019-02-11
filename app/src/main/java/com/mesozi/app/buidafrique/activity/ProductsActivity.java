@@ -54,19 +54,19 @@ public class ProductsActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putInt("tag",1);
         frag1.setArguments(bundle);
-        adapter.addFragment(frag1, "FINANCE & MANAGEMENT");
+        adapter.addFragment(frag1, "FEASIBILTY STUDIES");
 
         ProductsFrag frag2 = new ProductsFrag();
         Bundle bundle2 = new Bundle();
         bundle2.putInt("tag",2);
         frag2.setArguments(bundle2);
-        adapter.addFragment(frag2, "COST ADVISORY");
+        adapter.addFragment(frag2, "CAPITAL STRUCTURING");
 
         ProductsFrag frag3 = new ProductsFrag();
         Bundle bundle3 = new Bundle();
         bundle3.putInt("tag",3);
         frag3.setArguments(bundle3);
-        adapter.addFragment(frag3, "LAND-USE & ENVIRONMENT");
+        adapter.addFragment(frag3, "PROJECT DEVELOPMENT");
 
         ProductsFrag frag4 = new ProductsFrag();
         Bundle bundle4 = new Bundle();

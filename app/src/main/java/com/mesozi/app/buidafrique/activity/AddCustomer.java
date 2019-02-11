@@ -114,6 +114,7 @@ public class AddCustomer extends AppCompatActivity {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    error();
                 }
 
             }
