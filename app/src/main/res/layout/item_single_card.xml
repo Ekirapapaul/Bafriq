@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:paddingBottom="25dp"
         android:paddingEnd="16dp"
-        android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
         android:textSize="15sp"
         android:paddingStart="16dp"
         android:paddingTop="25dp" />
