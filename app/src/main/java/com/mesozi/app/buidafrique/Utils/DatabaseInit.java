@@ -16,7 +16,7 @@ public class DatabaseInit {
         String ip = "https://buildafrique.com/our-solutions/";
         List<ProductCategory> productCategories = new ArrayList<>();
         productCategories.add(new ProductCategory("Feasibility Studies", String.format(Locale.getDefault(), "%sfinance-management/feasibility-studies-investment-appraisal/", ip), 1));
-        productCategories.add(new ProductCategory("Investment Appraisal", String.format(Locale.getDefault(), "%sfinance-management/feasibility-studies-investment-appraisal/", ip), 1));
+        productCategories.add(new ProductCategory("Investment Appraisals", String.format(Locale.getDefault(), "%sfinance-management/feasibility-studies-investment-appraisal/", ip), 1));
         productCategories.add(new ProductCategory("Market Research", String.format(Locale.getDefault(), "%sfinance-management/project-finance-capital-structuring/", ip), 1));
         productCategories.add(new ProductCategory("Development Design Appraisal", String.format(Locale.getDefault(), "%sfinance-management/project-management/", ip), 1));
         productCategories.add(new ProductCategory("Landuse Appraisal", String.format(Locale.getDefault(), "%sfinance-management/investment-design-appraisal/", ip), 1));
@@ -33,11 +33,11 @@ public class DatabaseInit {
         productCategories.add(new ProductCategory("Environmental Management", String.format(Locale.getDefault(), "%sland-environment/environmental-management-impact-assessment/", ip), 3));
         productCategories.add(new ProductCategory("Design Management", String.format(Locale.getDefault(), "%sland-environment/occupation-health-safety-management/", ip), 3));
 
-        productCategories.add(new ProductCategory("Real Estate Investments Solutions", String.format(Locale.getDefault(), "%sproperty-investments/113-2/", ip), 4));
+        productCategories.add(new ProductCategory("Real Estate Investment Solutions", String.format(Locale.getDefault(), "%sproperty-investments/113-2/", ip), 4));
         productCategories.add(new ProductCategory("Real Estate Sales Agency", String.format(Locale.getDefault(), "%sproperty-investments/property-management-facility-management/", ip), 4));
-        productCategories.add(new ProductCategory("Real Estate Valuation", String.format(Locale.getDefault(), "%sproperty-investments/property-valuation/", ip), 4));
+        productCategories.add(new ProductCategory("Property Management", String.format(Locale.getDefault(), "%sproperty-investments/property-valuation/", ip), 4));
         productCategories.add(new ProductCategory("Property Management", String.format(Locale.getDefault(), "https://property-listings.buildafrique.com/"), 4));
-        productCategories.add(new ProductCategory("Investments Offerings", String.format(Locale.getDefault(), "https://investment-offerings.buildafrique.com/"), 4));
+        productCategories.add(new ProductCategory("Investment Offerings", String.format(Locale.getDefault(), "https://investment-offerings.buildafrique.com/"), 4));
         productCategories.add(new ProductCategory("Property Listings", String.format(Locale.getDefault(), "https://property-listings.buildafrique.com/"), 4));
 
         for (ProductCategory productCategory : productCategories) {
