@@ -8,7 +8,7 @@
     android:paddingStart="16dp"
     android:paddingTop="30dp">
 
-    <com.mesozi.app.buidafrique.widgets.RoundedImageView
+    <com.buildafrique.pn.app.widgets.RoundedImageView
         android:id="@+id/img_profile"
         android:layout_width="80dp"
         android:layout_height="80dp"

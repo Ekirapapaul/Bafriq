@@ -26,7 +26,7 @@
             android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
-            <com.mesozi.app.buidafrique.widgets.RoundedImageView
+            <com.buildafrique.pn.app.widgets.RoundedImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:scaleType="center"

@@ -18,11 +18,11 @@ repositories {
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "com.mesozi.app.buidafrique"
+        applicationId "com.buildafrique.pn.app"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 8
-        versionName "8.0"
+        versionCode 9
+        versionName "9.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
