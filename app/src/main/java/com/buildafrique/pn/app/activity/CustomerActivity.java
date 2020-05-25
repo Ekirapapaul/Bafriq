@@ -171,7 +171,6 @@ public class CustomerActivity extends AppCompatActivity implements CustomerAdapt
     private void fetchCustomers() {
         progressDialog.show();
         final SessionManager sessionManager = new SessionManager(getBaseContext());
-        Log.d("session", sessionManager.getCookie());
         try {
             Account account = SQLite.select().from(Account.class).querySingle();
             JSONObject jsonObject = RequestBuilder.customersObject(Objects.requireNonNull(account).getUid());

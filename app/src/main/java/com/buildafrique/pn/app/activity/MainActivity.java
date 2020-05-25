@@ -250,7 +250,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 logout();
                 break;
             case R.id.compose:
-                startActivity(new Intent(getBaseContext(), Compose.class));
+                startActivity(new Intent(getBaseContext(), CustomerActivity.class));
                 break;
             case R.id.inbox:
                 startActivity(new Intent(getBaseContext(), InboxActivity.class));

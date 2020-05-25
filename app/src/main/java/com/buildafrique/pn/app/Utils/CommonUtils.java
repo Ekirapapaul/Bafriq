@@ -1,8 +1,19 @@
 package com.buildafrique.pn.app.Utils;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.Spanned;
+
+import com.buildafrique.pn.app.Models.Bonus;
+import com.buildafrique.pn.app.Models.Commission;
+import com.buildafrique.pn.app.Models.EmailMessage;
+import com.buildafrique.pn.app.Models.Lead;
+import com.buildafrique.pn.app.Models.Loyalty;
+import com.buildafrique.pn.app.activity.WelcomeActivity;
+import com.raizlabs.android.dbflow.sql.language.Delete;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -49,5 +60,22 @@ public class CommonUtils {
         }
 
         return sanitized;
+    }
+
+    public void logOut(AppCompatActivity context){
+        new SessionManager(context).setLoggedIn(false);
+        try {
+            Delete.table(Lead.class);
+//                    Delete.table(SalesOrder.class);
+            Delete.table(EmailMessage.class);
+            Delete.table(Commission.class);
+            Delete.table(Loyalty.class);
+            Delete.table(Bonus.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Intent intent = new Intent(context, WelcomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 }
